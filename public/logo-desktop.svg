@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="261" height="170" viewBox="0 0 261 170">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #002b51;
+      }
+
+      .cls-1, .cls-2 {
+        font-size: 80px;
+        font-family: Geist-Bold, Geist;
+        font-weight: 700;
+        letter-spacing: -0.033em;
+      }
+
+      .cls-2 {
+        fill: #005596;
+      }
+
+      .cls-3 {
+        fill: #101010;
+      }
+
+      .cls-4 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Group_42" data-name="Group 42" transform="translate(-1239 -797)">
+    <text id="Buyers" class="cls-1" transform="translate(1239 871)"><tspan x="0" y="0">Buyers</tspan></text>
+    <text id="First" class="cls-2" transform="translate(1240 949)"><tspan x="0" y="0">First</tspan></text>
+    <rect id="Rectangle_98" data-name="Rectangle 98" class="cls-3" width="57" height="57" rx="1" transform="translate(1438 893)"/>
+    <g id="Group_40" data-name="Group 40" transform="translate(13 218)">
+      <path id="Path_58" data-name="Path 58" class="cls-4" d="M5.091-51.878H3.04v4.139H8.782v17.412h5.667V-56.8H10.012C9.975-53.444,8.409-51.878,5.091-51.878Z" transform="translate(1438.187 748.651)"/>
+      <rect id="Rectangle_88" data-name="Rectangle 88" class="cls-4" width="12.445" height="4.894" transform="translate(1454.258 691.851)"/>
+      <rect id="Rectangle_89" data-name="Rectangle 89" class="cls-4" width="12.445" height="4.894" transform="translate(1454.258 703.036)"/>
+    </g>
+  </g>
+</svg>
