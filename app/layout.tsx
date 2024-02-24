@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
-import Logo from "./components/logo";
-import PostBanner from "./components/post-desire";
-import Profile from "./components/profile";
-import Tips from "./components/tips";
+import Logo from "../components/logo";
+import PostBanner from "../components/post-desire";
+import Profile from "../components/profile";
+import Tips from "../components/tips";
 
 export const metadata: Metadata = {
   title: "Buyers First",
@@ -27,7 +27,7 @@ export default function RootLayout({
           <PostBanner />
         </div>
         <div className="w-3/6 mr-3">{children}</div>
-        <div className="w-1/6">
+        <div className="w-1/6 relative">
           <Profile />
           <Tips />
         </div>

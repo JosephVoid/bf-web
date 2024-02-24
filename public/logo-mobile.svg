@@ -2,6 +2,7 @@
   <defs>
     <style>
       .cls-1 {
+        fill: #002b51;
         font-size: 80px;
         font-family: Geist-Bold, Geist;
         font-weight: 700;
@@ -9,11 +10,7 @@
       }
 
       .cls-2 {
-        fill: #002b51;
-      }
-
-      .cls-3 {
-        fill: #005596;
+        fill: #161616;
       }
     </style>
   </defs>
@@ -21,7 +18,7 @@
     <text id="Buyers" class="cls-1" transform="translate(1133 401)"><tspan x="0" y="0">Buyers</tspan></text>
     <text id="irst" class="cls-1" transform="translate(1455 401)"><tspan x="0" y="0">irst</tspan></text>
     <path id="Path_55" data-name="Path 55" class="cls-2" d="M7.44-46.24H3.04v8.88H15.36V0H27.52V-56.8H18C17.92-49.6,14.56-46.24,7.44-46.24Z" transform="translate(1394 401)"/>
-    <rect id="Rectangle_81" data-name="Rectangle 81" class="cls-3" width="26.704" height="10.5" transform="translate(1425 344.2)"/>
-    <rect id="Rectangle_82" data-name="Rectangle 82" class="cls-3" width="26.704" height="10.5" transform="translate(1425 368.2)"/>
+    <rect id="Rectangle_81" data-name="Rectangle 81" class="cls-2" width="26.704" height="10.5" transform="translate(1425 344.2)"/>
+    <rect id="Rectangle_82" data-name="Rectangle 82" class="cls-2" width="26.704" height="10.5" transform="translate(1425 368.2)"/>
   </g>
 </svg>
