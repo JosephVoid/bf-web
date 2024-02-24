@@ -1,5 +1,5 @@
+import DesireList from "@/components/desire-list";
 import DisplayParams from "@/components/display-params";
-import Image from "next/image";
 
 export default function Home() {
   return (
@@ -9,6 +9,9 @@ export default function Home() {
       </h1>
       <div className="m-3 rounded-lg p-3 border-[1px]">
         <DisplayParams />
+      </div>
+      <div className="m-3">
+        <DesireList />
       </div>
     </main>
   );
