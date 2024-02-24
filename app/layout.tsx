@@ -23,14 +23,18 @@ export default function RootLayout({
         className={`${GeistSans.className} flex justify-center h-screen p-8`}
       >
         <div className="w-1/6 mr-3 flex flex-col justify-start">
-          <Logo />
-          <Search />
-          <PostBanner />
+          <div className="w-1/6 fixed pr-3">
+            <Logo />
+            <Search />
+            <PostBanner />
+          </div>
         </div>
         <div className="w-3/6 mr-3">{children}</div>
         <div className="w-1/6 relative">
-          <Profile />
-          <Tips />
+          <div className="w-1/6 fixed h-5/6 flex flex-col justify-between">
+            <Profile />
+            <Tips />
+          </div>
         </div>
       </body>
     </html>
