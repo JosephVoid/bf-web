@@ -4,12 +4,11 @@ import { Card } from "./ui/card";
 
 export default function PostBanner() {
   return (
-    <Card className="p-8 font-bold text-wrap mt-3 cursor-pointer relative border">
-      <FontAwesomeIcon
-        icon={faArrowRight}
-        className="absolute w-[8%] top-3 right-3 -rotate-45 text-brand-yellow"
-      />
-      <p className="text-4xl">Post Your Desire</p>
-    </Card>
+    <div className="p-5 font-bold text-wrap mt-3 cursor-pointer relative flex justify-between border-[1px] rounded-lg">
+      <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
+        Post Your Desire
+      </h2>
+      <FontAwesomeIcon icon={faArrowRight} className="w-[10%]" />
+    </div>
   );
 }
