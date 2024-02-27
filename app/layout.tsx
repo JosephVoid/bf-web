@@ -29,7 +29,14 @@ export default function RootLayout({
             <PostBanner />
           </div>
         </div>
-        <div className="w-3/6 mr-3">{children}</div>
+        <div className="w-3/6 mr-3">
+          <div className="mb-5">
+            <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-center">
+              Desires
+            </h1>
+          </div>
+          {children}
+        </div>
         <div className="w-1/6 relative">
           <div className="w-1/6 fixed h-5/6 flex flex-col justify-between">
             <Profile />
