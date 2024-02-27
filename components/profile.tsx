@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React from "react";
 import Link from "next/link";
-import { RocketIcon, PersonIcon } from "@radix-ui/react-icons";
+import { RocketIcon, AvatarIcon } from "@radix-ui/react-icons";
 import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 
 export default function Profile() {
@@ -31,7 +31,7 @@ export default function Profile() {
 function UnSignedProfile() {
   return (
     <div className="p-4 mb-3 flex flex-col relative justify-center items-center border-[1px] rounded-lg">
-      <PersonIcon height={50} width={50} className="m-4" />
+      <AvatarIcon height={50} width={50} className="m-4" />
       <div>
         <Dialog>
           <DialogTrigger asChild>
