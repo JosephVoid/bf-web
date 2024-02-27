@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { faArrowRight, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React from "react";
 import Link from "next/link";
-import { RocketIcon } from "@radix-ui/react-icons";
+import { RocketIcon, PersonIcon } from "@radix-ui/react-icons";
 import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 
 export default function Profile() {
@@ -29,13 +31,18 @@ export default function Profile() {
 function UnSignedProfile() {
   return (
     <div className="p-4 mb-3 flex flex-col relative justify-center items-center border-[1px] rounded-lg">
-      <FontAwesomeIcon className="w-1/2 mb-4 text-muted" icon={faUserCircle} />
+      <PersonIcon height={50} width={50} className="m-4" />
       <div>
         <Dialog>
           <DialogTrigger asChild>
             <Button>Sign In</Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[825px] flex h-1/2 w-1/2">
+          <DialogContent
+            className="sm:max-w-[825px] flex h-1/2 w-1/2"
+            onInteractOutside={(e) => {
+              e.preventDefault();
+            }}
+          >
             <div className="w-1/2 relative">
               <Image
                 src="/black_box.png"
