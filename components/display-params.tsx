@@ -62,13 +62,17 @@ type Checked = DropdownMenuCheckboxItemProps["checked"];
 export default function DisplayParams() {
   return (
     <div className="flex justify-start">
-      <TagSelect />
+      <TagSelect tags={frameworks} />
       <SortBySelect />
     </div>
   );
 }
 
-export function TagSelect() {
+export function TagSelect({
+  tags,
+}: {
+  tags: { value: string; label: string }[];
+}) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
@@ -84,30 +88,30 @@ export function TagSelect() {
             className="w-[200px] justify-between"
           >
             {value
-              ? frameworks.find((framework) => framework.value === value)?.label
+              ? tags.find((tag) => tag.value === value)?.label
               : "Select tags"}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
           <Command>
-            <CommandInput placeholder="Search framework..." className="h-9" />
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandInput placeholder="Search tag..." className="h-9" />
+            <CommandEmpty>No tag found.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {tags.map((tag) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
+                  key={tag.value}
+                  value={tag.value}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue);
                     setOpen(false);
                   }}
                 >
-                  {framework.label}
+                  {tag.label}
                   <CheckIcon
                     className={cn(
                       "ml-auto h-4 w-4",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      value === tag.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
