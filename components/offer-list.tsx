@@ -1,7 +1,7 @@
 import { Card } from "./ui/card";
 import Image from "next/image";
 
-function Offer() {
+export function Offer() {
   return (
     <Card className="p-4 mb-5 flex flex-col">
       <div className="flex justify-start">
