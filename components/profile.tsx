@@ -17,13 +17,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React from "react";
 import Link from "next/link";
-import { RocketIcon, AvatarIcon } from "@radix-ui/react-icons";
+import { RocketIcon, AvatarIcon, ExitIcon } from "@radix-ui/react-icons";
 import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 
 export default function Profile() {
   return (
     <>
-      <UnSignedProfile />
+      <SignedInProfile />
     </>
   );
 }
@@ -59,6 +59,27 @@ function UnSignedProfile() {
           </DialogContent>
         </Dialog>
       </div>
+    </div>
+  );
+}
+
+function SignedInProfile() {
+  return (
+    <div className="p-4 mb-3 flex flex-col relative justify-center items-center border-[1px] rounded-lg">
+      <Image
+        height={70}
+        width={70}
+        src={"/black_box.png"}
+        alt="prof pic"
+        className="rounded-full mb-3"
+      />
+      <h3 className="text-xl text-wrap font-medium mb-3">Buyer User</h3>
+      <Button variant={"outline"} className="mb-3">
+        Profile
+      </Button>
+      <Button variant={"ghost"}>
+        <p className="text-sm opacity-70">Sign Out</p>
+      </Button>
     </div>
   );
 }
