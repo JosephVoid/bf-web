@@ -74,9 +74,11 @@ function SignedInProfile() {
         className="rounded-full mb-3"
       />
       <h3 className="text-xl text-wrap font-medium mb-3">Buyer User</h3>
-      <Button variant={"outline"} className="mb-3">
-        Profile
-      </Button>
+      <Link href={"/profile"}>
+        <Button variant={"outline"} className="mb-3">
+          Profile
+        </Button>
+      </Link>
       <Button variant={"ghost"}>
         <p className="text-sm opacity-70">Sign Out</p>
       </Button>

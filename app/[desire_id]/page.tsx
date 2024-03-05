@@ -1,3 +1,5 @@
+"use client";
+
 import OfferList from "@/components/offer-list";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,8 +9,11 @@ import {
   HandIcon,
 } from "@radix-ui/react-icons";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function SingleDesire() {
+  const current_path = usePathname();
   return (
     <div className="flex flex-col">
       <div className="my-4 flex justify-between">
@@ -47,7 +52,9 @@ export default function SingleDesire() {
           <Button variant={"ghost"}>
             <HandIcon className="mr-1" />I want this
           </Button>
-          <Button>Make an Offer</Button>
+          <Link href={`${current_path}/make-an-offer`}>
+            <Button>Make an Offer</Button>
+          </Link>
         </div>
         <div className="mt-4">
           <h3 className="scroll-m-20 text-2xl font-medium tracking-tight first:mt-0 mb-4">
