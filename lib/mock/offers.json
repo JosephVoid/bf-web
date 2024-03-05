@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "for_desire": 1,
+    "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati illo consequatur magni quo asperiores accusamus dicta ullam sint iste porro, rem eligendi ex ipsum delectus maiores veritatis adipisci similique eaque.",
+    "price": 600,
+    "user": "Gonzal Juidad",
+    "picture": "/black_box.png",
+    "posted_on": "29/02/24"
+  },
+  {
+    "id": 2,
+    "for_desire": 1,
+    "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati illo consequatur magni quo asperiores accusamus dicta ullam sint iste porro, rem eligendi ex ipsum delectus maiores veritatis adipisci similique eaque.",
+    "price": 800,
+    "user": "Jos Hector",
+    "picture": "/sample.jpg",
+    "posted_on": "29/02/24"
+  },
+  {
+    "id": 3,
+    "for_desire": 2,
+    "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati illo consequatur magni quo asperiores accusamus dicta ullam sint iste porro, rem eligendi ex ipsum delectus maiores veritatis adipisci similique eaque.",
+    "price": 1600,
+    "user": "Ana Uzer",
+    "picture": "",
+    "posted_on": "29/02/24"
+  },
+  {
+    "id": 4,
+    "for_desire": 2,
+    "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati illo consequatur magni quo asperiores accusamus dicta ullam sint iste porro, rem eligendi ex ipsum delectus maiores veritatis adipisci similique eaque.",
+    "price": 500,
+    "user": "Ana Uzer",
+    "picture": "/sample.jpg",
+    "posted_on": "05/02/24"
+  }
+]

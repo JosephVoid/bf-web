@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "title": "A sample desire, from some where",
+    "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati illo consequatur magni quo asperiores accusamus dicta ullam sint iste porro, rem eligendi ex ipsum delectus maiores veritatis adipisci similique eaque.",
+    "price": 800,
+    "tags": ["Electronics", "Accessories", "Mobile"],
+    "views": 8,
+    "wants": 4,
+    "picture": "/sample.jpg",
+    "posted_on": "29/02/24"
+  },
+  {
+    "id": 2,
+    "title": "I need this kind of cloth in Black",
+    "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati illo consequatur magni quo asperiores accusamus dicta ullam sint iste porro, rem eligendi ex ipsum delectus maiores veritatis adipisci similique eaque.",
+    "price": 1600,
+    "tags": ["Cloth", "Shoe"],
+    "views": 2,
+    "wants": 0,
+    "picture": "/sample.jpg",
+    "posted_on": "29/02/24"
+  },
+  {
+    "id": 3,
+    "title": "I want a tutor for my kid who is highschool",
+    "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati illo consequatur magni quo asperiores accusamus dicta ullam sint iste porro, rem eligendi ex ipsum delectus maiores veritatis adipisci similique eaque.",
+    "price": 3000,
+    "tags": ["Service"],
+    "views": 10,
+    "wants": 0,
+    "picture": "",
+    "posted_on": "29/02/24"
+  }
+]

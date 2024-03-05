@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "tag": "Electronics"
+  },
+  {
+    "id": 2,
+    "tag": "Accessories"
+  },
+  {
+    "id": 3,
+    "tag": "Service"
+  },
+  {
+    "id": 4,
+    "tag": "Mobile"
+  },
+  {
+    "id": 5,
+    "tag": "Shoe"
+  },
+  {
+    "id": 6,
+    "tag": "Other"
+  }
+]
