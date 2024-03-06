@@ -8,7 +8,7 @@
     "views": 8,
     "wants": 4,
     "picture": "/sample.jpg",
-    "posted_on": "29/02/24"
+    "posted_on": "02/02/24"
   },
   {
     "id": 2,
@@ -19,7 +19,7 @@
     "views": 2,
     "wants": 0,
     "picture": "/sample.jpg",
-    "posted_on": "29/02/24"
+    "posted_on": "02/02/24"
   },
   {
     "id": 3,
@@ -30,6 +30,6 @@
     "views": 10,
     "wants": 0,
     "picture": "",
-    "posted_on": "29/02/24"
+    "posted_on": "02/02/24"
   }
 ]
