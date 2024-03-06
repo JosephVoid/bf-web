@@ -39,3 +39,11 @@ export interface IDesire {
   picture?: string;
   posted_on: Date;
 }
+
+export interface IOffer {
+  id: number;
+  description: string;
+  price: number;
+  picture?: string;
+  posted_on: Date;
+}
