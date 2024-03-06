@@ -1,38 +1,17 @@
 import { Cross1Icon, ExitIcon } from "@radix-ui/react-icons";
-import { TagSelect } from "./display-params";
+import { TagSelect } from "./tag-sort-select";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { fetchTags } from "@/lib/actions/fetch/tags.fetch";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
-
-export default function SetAlert() {
+export default async function SetAlert() {
+  const tags = await fetchTags();
   return (
     <>
       <h2 className="text-2xl font-medium mb-3"> Set Alerts</h2>
       <div className="rounded-md p-4 border-[1px] mb-8 flex flex-col">
         <div className="flex space-x-5 items-center mb-4">
-          <TagSelect tags={frameworks} />
+          <TagSelect tags={tags} />
           <div className="flex space-x-3">
             <Badge className="text-sm" variant={"outline"}>
               Electornics
