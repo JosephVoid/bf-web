@@ -10,13 +10,15 @@ export function Desire({ prop }: { prop: IDesire }) {
     <Link href={"/0"}>
       <Card className="p-4 mb-5 flex flex-col">
         <div className="flex justify-start">
-          <Image
-            src={"/sample.jpg"}
-            height={150}
-            width={150}
-            alt="desire"
-            className="rounded-md mr-5"
-          />
+          {prop.picture && (
+            <Image
+              src={prop.picture}
+              height={150}
+              width={150}
+              alt="desire"
+              className="rounded-md mr-5"
+            />
+          )}
           <div className="flex flex-col justify-between">
             <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight line-clamp-1">
               {prop.title}
