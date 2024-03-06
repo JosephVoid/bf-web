@@ -1,6 +1,7 @@
 import DesireList from "@/components/desire-list";
 import DisplayParams from "@/components/display-params";
 import Paginate from "@/components/paginate";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -9,7 +10,9 @@ export default function Home() {
         <DisplayParams />
       </div>
       <div className="m-3">
-        <DesireList />
+        <Suspense fallback={<>Loading...</>}>
+          <DesireList />
+        </Suspense>
       </div>
       <div className="m-3">
         <Paginate />
