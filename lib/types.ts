@@ -1,14 +1,9 @@
 export interface ISearchParams {}
 
-enum sortBy {
-  PRICE = "desired_price",
-  DATE = "created",
-  WANTED = "wants",
-}
 export interface IFilterParams {
   sortDir: "ASC" | "DESC";
   filterBy: string;
-  sortBy: sortBy;
+  sortBy: "Date" | "Price" | "Wanted";
 }
 
 export interface IPaginationParams {
@@ -46,4 +41,9 @@ export interface IOffer {
   price: number;
   picture?: string;
   posted_on: Date;
+}
+
+export interface ITag {
+  id: number;
+  tag: string;
 }
