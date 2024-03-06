@@ -2,8 +2,10 @@ import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
 import Image from "next/image";
+import { fetchDesires } from "@/lib/actions/fetch/desire.fetch";
+import { IDesire } from "@/lib/types";
 
-export function Desire() {
+export function Desire({ prop }: { prop: IDesire }) {
   return (
     <Link href={"/0"}>
       <Card className="p-4 mb-5 flex flex-col">
@@ -17,39 +19,30 @@ export function Desire() {
           />
           <div className="flex flex-col justify-between">
             <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight line-clamp-1">
-              I need a sample desire, like this sample desire, like this
+              {prop.title}
             </h3>
             <small className="text-sm font-normal line-clamp-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure quae
-              recusandae quaerat commodi vero tenetur possimus quos distinctio
-              fugit sed dolor sapiente architecto, quidem error est beatae,
-              alias corporis magnam? recusandae quaerat commodi vero tenetur
-              possimus quos distinctio fugit sed dolor sapiente architecto,
-              quidem error est beatae, alias corporis magnam?
+              {prop.description}
             </small>
             <div className="mt-2">
-              <Badge className="mr-2" variant={"secondary"}>
-                Electronics
-              </Badge>
-              <Badge className="mr-2" variant={"secondary"}>
-                Accessories
-              </Badge>
-              <Badge className="mr-2" variant={"secondary"}>
-                Mobile
-              </Badge>
+              {prop.tags.map((tag: string, index: number) => (
+                <Badge className="mr-2" variant={"secondary"} key={index}>
+                  {tag}
+                </Badge>
+              ))}
             </div>
           </div>
         </div>
         <div className="flex justify-between mt-3 items-baseline">
           <p className="text-sm">
             Looking for
-            <b> 800 Br</b>
+            <b> {prop.price} Br</b>
           </p>
           <p className="text-sm">
-            <b>4</b> want this
+            <b>{prop.wants}</b> want this
           </p>
           <p className="text-sm">
-            <b>8</b> views
+            <b>{prop.views}</b> views
           </p>
         </div>
       </Card>
@@ -57,11 +50,12 @@ export function Desire() {
   );
 }
 
-export default function DesireList() {
+export default async function DesireList() {
+  const desireList = await fetchDesires();
   return (
     <div>
-      {Array.from({ length: 5 }).map((_, index) => (
-        <Desire key={index} />
+      {desireList.map((desire: IDesire, index: number) => (
+        <Desire prop={desire} key={index} />
       ))}
     </div>
   );

@@ -1,11 +1,14 @@
+import { fetchUserPostedDesires } from "@/lib/actions/fetch/desire.fetch";
 import { Desire } from "./desire-list";
+import { IDesire } from "@/lib/types";
 
-export default function UserDesireList() {
+export default async function UserDesireList() {
+  const userDesire = await fetchUserPostedDesires(0);
   return (
     <div className="mb-8">
       <h2 className="text-2xl font-medium mb-3">Posted Desires</h2>
-      {Array.from({ length: 2 }).map((_, index) => (
-        <Desire key={index} />
+      {userDesire.map((desire: IDesire, index: number) => (
+        <Desire key={index} prop={desire} />
       ))}
     </div>
   );
