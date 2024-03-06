@@ -15,7 +15,9 @@ export default function ProfilePage() {
       <Suspense fallback={<>Loading...</>}>
         <UserDesireList />
       </Suspense>
-      <UserOfferList />
+      <Suspense fallback={<>Loading...</>}>
+        <UserOfferList />
+      </Suspense>
     </div>
   );
 }

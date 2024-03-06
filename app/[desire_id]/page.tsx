@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Suspense } from "react";
 
 export default function SingleDesire() {
   const current_path = usePathname();
@@ -60,7 +61,9 @@ export default function SingleDesire() {
           <h3 className="scroll-m-20 text-2xl font-medium tracking-tight first:mt-0 mb-4">
             Offers
           </h3>
-          <OfferList />
+          <Suspense fallback={<>Loading</>}>
+            <OfferList />
+          </Suspense>
         </div>
       </div>
     </div>
