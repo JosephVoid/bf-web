@@ -47,3 +47,13 @@ export interface ITag {
   id: number;
   tag: string;
 }
+
+export interface IUser {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  description?: string;
+  picture?: string;
+}
