@@ -26,12 +26,18 @@ import {
 } from "@/components/ui/command";
 import React from "react";
 import { Button } from "./ui/button";
+import { fetchTags } from "@/lib/actions/fetch/tags.fetch";
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 
-export function TagSelect({ tags }: { tags: ITag[] }) {
+export function TagSelect() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
+  const [tags, setTags] = React.useState<ITag[]>([]);
+
+  React.useEffect(() => {
+    fetchTags().then((result) => setTags(result));
+  }, []);
 
   return (
     <div className="flex flex-col mr-3">
