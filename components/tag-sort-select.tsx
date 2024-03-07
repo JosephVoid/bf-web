@@ -30,7 +30,11 @@ import { fetchTags } from "@/lib/actions/fetch/tags.fetch";
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 
-export function TagSelect() {
+export function TagSelect({
+  onSelectProp,
+}: {
+  onSelectProp?: (tag: ITag) => void;
+}) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   const [tags, setTags] = React.useState<ITag[]>([]);
@@ -71,6 +75,7 @@ export function TagSelect() {
                   key={tag.id}
                   value={tag.tag}
                   onSelect={(currentValue) => {
+                    onSelectProp ? onSelectProp(tag) : null;
                     setValue(currentValue === value ? value : currentValue);
                     setOpen(false);
                   }}

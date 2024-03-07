@@ -18,7 +18,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IUser } from "@/lib/types";
 import Image from "next/image";
-import { base64ToBlob } from "@/lib/helpers";
+import { base64ToFile } from "@/lib/helpers";
 import React from "react";
 import {
   TooltipProvider,
@@ -59,8 +59,14 @@ const formSchema = z
       .min(8, "Password too short"),
     description: z.string().max(500, "Description too long").optional(),
     picture: z
-      .instanceof(File)
-      .refine((file) => file.size < MAX_PIC_SIZE, "Image too big")
+      .any()
+      .transform((value) => {
+        return value as File | null | undefined;
+      })
+      .refine((file) => {
+        if (!file) return true;
+        file.size < MAX_PIC_SIZE, "Image too big";
+      })
       .optional(),
   })
   .refine(
@@ -79,19 +85,19 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
       oldPass: "",
       newPass: "",
       description: prop.description,
-      picture: new File([], ""),
     },
   });
 
-  const [picturePreview, setPicturePreview] = React.useState<
-    File | Blob | null
-  >(prop.picture ? base64ToBlob(prop.picture) : null);
+  const [picturePreview, setPicturePreview] = React.useState<File | null>(
+    prop.picture ? base64ToFile(prop.picture) : null
+  );
 
   const [enableEdit, setEnableEdit] = React.useState(false);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
+
   return (
     <>
       <h2 className="text-2xl font-medium mb-3"> Edit Profile</h2>
