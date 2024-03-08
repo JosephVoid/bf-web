@@ -269,12 +269,12 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
                   {picturePreview ? (
                     <Image
                       src={URL.createObjectURL(picturePreview)}
-                      width={50}
-                      height={50}
+                      width={150}
+                      height={150}
                       alt="profile"
                     />
                   ) : (
-                    <AvatarIcon width={50} height={50} />
+                    <AvatarIcon width={50} height={50} className="opacity-50" />
                   )}
                 </div>
               </div>

@@ -13,7 +13,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { Label } from "./ui/label";
-import { AvatarIcon, Cross1Icon, Pencil2Icon } from "@radix-ui/react-icons";
+import {
+  AvatarIcon,
+  Cross1Icon,
+  ImageIcon,
+  Pencil2Icon,
+} from "@radix-ui/react-icons";
 import { TagSelect } from "./tag-sort-select";
 import { Badge } from "./ui/badge";
 import React from "react";
@@ -163,12 +168,12 @@ export default function PostDesireForm() {
                   {picturePreview ? (
                     <Image
                       src={URL.createObjectURL(picturePreview)}
-                      width={50}
-                      height={50}
+                      width={150}
+                      height={150}
                       alt="profile"
                     />
                   ) : (
-                    <AvatarIcon width={50} height={50} />
+                    <ImageIcon width={50} height={50} className="opacity-50" />
                   )}
                 </div>
               </div>
