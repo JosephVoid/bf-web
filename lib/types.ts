@@ -1,6 +1,8 @@
-import { formSchema as PostDesireFromSchema } from "@/components/post-desire-form";
-import { signInFormSchema } from "@/components/profile";
-import z from "zod";
+import { postDesireFromSchematype } from "@/components/post-desire-form";
+import {
+  signInFormSchematype,
+  signUpFormSchematype,
+} from "@/components/profile";
 
 export interface ISearchParams {}
 
@@ -15,16 +17,15 @@ export interface IPaginationParams {
   perPage: number;
 }
 
-export interface IDesirePostParams
-  extends z.infer<typeof PostDesireFromSchema> {}
+export interface IDesirePostParams extends postDesireFromSchematype {}
 
 export interface IOfferMakeParams {}
 
 export interface IEditProfile {}
 
-export interface ISignIn extends z.infer<typeof signInFormSchema> {}
+export interface ISignIn extends signInFormSchematype {}
 
-export interface ISignUp {}
+export interface ISignUp extends signUpFormSchematype {}
 
 export interface IFileUpload {}
 

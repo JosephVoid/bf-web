@@ -32,7 +32,7 @@ import Loader from "./loader";
 
 const MAX_PIC_SIZE = 1000000;
 
-export const formSchema = z.object({
+const formSchema = z.object({
   title: z.string().max(25, "Title too long"),
   description: z.string().max(500, "Description too long"),
   price: z.coerce
@@ -50,6 +50,8 @@ export const formSchema = z.object({
     return tgs.length > 0;
   }, "You need at least one tag"),
 });
+
+export type postDesireFromSchematype = z.infer<typeof formSchema>;
 
 export default function PostDesireForm() {
   const form = useForm<z.infer<typeof formSchema>>({
