@@ -20,10 +20,11 @@ export async function signIn(params: ISignIn): Promise<void> {
   redirect("/");
 }
 
-export async function signUp(params: ISignUp, OTP: number): Promise<boolean> {
+export async function signUp(params: ISignUp, OTP: number): Promise<void> {
   await wait();
   cookies().set("auth", "12345678", { secure: true });
-  return true;
+  revalidatePath("/");
+  redirect("/");
 }
 
 export async function sendOTP(params: IOTP): Promise<boolean> {
