@@ -10,7 +10,7 @@ import React from "react";
 export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
   const [selectedtags, setSelectedTags] = React.useState<ITag[]>(alertTags);
 
-  function handleRemoveAlert(id: number) {
+  function handleRemoveAlert(id: string) {
     setSelectedTags(selectedtags.filter((tag) => tag.id !== id));
   }
 
@@ -25,8 +25,8 @@ export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
   function alertChanged() {
     if (alertTags.length !== selectedtags.length) return true;
 
-    const sortedAlArr = alertTags.sort((a, b) => a.id - b.id);
-    const sortedSlArr = selectedtags.sort((a, b) => a.id - b.id);
+    const sortedAlArr = alertTags.sort((a, b) => a.id.localeCompare(b.id));
+    const sortedSlArr = selectedtags.sort((a, b) => a.id.localeCompare(b.id));
 
     for (let index = 0; index < alertTags.length; index++) {
       if (sortedAlArr[index].id !== sortedSlArr[index].id) return true;

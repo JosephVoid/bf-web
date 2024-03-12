@@ -24,7 +24,7 @@ export interface ISignUp {}
 export interface IFileUpload {}
 
 export interface IDesire {
-  id: number;
+  id: string;
   title: string;
   description: string;
   tags: string[];
@@ -36,7 +36,7 @@ export interface IDesire {
 }
 
 export interface IOffer {
-  id: number;
+  id: string;
   description: string;
   price: number;
   picture?: string;
@@ -44,12 +44,12 @@ export interface IOffer {
 }
 
 export interface ITag {
-  id: number;
+  id: string;
   tag: string;
 }
 
 export interface IUser {
-  id: number;
+  id: string;
   firstname: string;
   lastname: string;
   email: string;

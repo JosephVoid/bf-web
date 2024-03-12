@@ -40,7 +40,7 @@ const formSchema = z.object({
       return file.size < MAX_PIC_SIZE;
     }, "Image too big")
     .optional(),
-  tags: z.array(z.number()).refine((tgs) => {
+  tags: z.array(z.string()).refine((tgs) => {
     return tgs.length > 0;
   }, "You need at least one tag"),
 });
@@ -59,7 +59,7 @@ export default function PostDesireForm() {
   const [selectedtags, setSelectedTags] = React.useState<ITag[]>([]);
   const [picturePreview, setPicturePreview] = React.useState<File | null>();
 
-  function handleRemoveAlert(id: number) {
+  function handleRemoveAlert(id: string) {
     setSelectedTags(selectedtags.filter((tag) => tag.id !== id));
     form.setValue(
       "tags",
