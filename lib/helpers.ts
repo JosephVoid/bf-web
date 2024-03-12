@@ -1,5 +1,5 @@
 export async function wait() {
-  return new Promise((res) => setTimeout(res, 1000));
+  return new Promise((res) => setTimeout(res, Math.random() * 2000));
 }
 
 export function base64ToFile(base64String: string, contentType = "") {
