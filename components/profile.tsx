@@ -31,16 +31,14 @@ import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn, signOut } from "@/lib/actions/act/user.act";
+import { hasCookie } from "cookies-next";
 
 export default function Profile() {
-  return (
-    <>
-      <UnSignedProfile />
-    </>
-  );
+  return <>{hasCookie("auth") ? <SignedInProfile /> : <UnSignedProfile />}</>;
 }
 
-const signInFormSchema = z.object({
+export const signInFormSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
@@ -111,6 +109,10 @@ function UnSignedProfile() {
 }
 
 function SignedInProfile() {
+  async function handleSignOut() {
+    await signOut();
+  }
+
   return (
     <div className="p-4 mb-3 flex flex-col relative justify-center items-center border-[1px] rounded-lg">
       <Image
@@ -126,7 +128,7 @@ function SignedInProfile() {
           Profile
         </Button>
       </Link>
-      <Button variant={"ghost"}>
+      <Button variant={"ghost"} onClick={handleSignOut}>
         <p className="text-sm opacity-70">Sign Out</p>
       </Button>
     </div>
@@ -141,13 +143,15 @@ function LoginForm() {
       password: "",
     },
   });
+
+  async function handleLogin(data: z.infer<typeof signInFormSchema>) {
+    await signIn(data);
+  }
+
   return (
     <>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit((data) => console.log(data))}
-          className="py-5"
-        >
+        <form onSubmit={form.handleSubmit(handleLogin)} className="py-5">
           <div className="flex flex-col justify-center h-3/4">
             <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-start mb-5">
               Sign In
