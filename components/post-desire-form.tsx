@@ -26,13 +26,19 @@ import { ITag } from "@/lib/types";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { postDesire } from "@/lib/actions/act/desire.act";
+import { redirect } from "next/navigation";
+import Loader from "./loader";
 
 const MAX_PIC_SIZE = 1000000;
 
-const formSchema = z.object({
+export const formSchema = z.object({
   title: z.string().max(25, "Title too long"),
   description: z.string().max(500, "Description too long"),
-  price: z.coerce.number().lte(999999, "Price too much"),
+  price: z.coerce
+    .number()
+    .lte(999999, "Price too much")
+    .min(1, "Price can't be zero"),
   picture: z
     .custom<File>()
     .refine((file) => {
@@ -58,6 +64,7 @@ export default function PostDesireForm() {
 
   const [selectedtags, setSelectedTags] = React.useState<ITag[]>([]);
   const [picturePreview, setPicturePreview] = React.useState<File | null>();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   function handleRemoveAlert(id: string) {
     setSelectedTags(selectedtags.filter((tag) => tag.id !== id));
@@ -76,12 +83,19 @@ export default function PostDesireForm() {
     selectedtags.map((tag) => tag.id);
     form.setValue("tags", [...form.getValues("tags"), tag.id]);
   }
+
+  async function handleSubmit(data: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    await postDesire(data);
+    setIsLoading(false);
+  }
+
   return (
     <>
       <h2 className="text-2xl font-medium mb-3"> Post a Desire</h2>
       <div className="rounded-md border-[1px] p-4 mb-8">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit((data) => console.log(data))}>
+          <form onSubmit={form.handleSubmit((data) => handleSubmit(data))}>
             <div className="flex flex-col relative">
               <div className="mb-4 flex">
                 <FormField
@@ -212,7 +226,7 @@ export default function PostDesireForm() {
                 </div>
               </div>
               <Button type="submit" className="w-1/4">
-                Post
+                {isLoading ? <Loader /> : "Post"}
               </Button>
             </div>
           </form>

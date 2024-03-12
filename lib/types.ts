@@ -1,3 +1,6 @@
+import { formSchema as PostDesireFromSchema } from "@/components/post-desire-form";
+import z from "zod";
+
 export interface ISearchParams {}
 
 export interface IFilterParams {
@@ -11,7 +14,8 @@ export interface IPaginationParams {
   perPage: number;
 }
 
-export interface IDesirePostParams {}
+export interface IDesirePostParams
+  extends z.infer<typeof PostDesireFromSchema> {}
 
 export interface IOfferMakeParams {}
 
