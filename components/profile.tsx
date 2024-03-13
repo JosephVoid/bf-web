@@ -36,7 +36,20 @@ import { hasCookie } from "cookies-next";
 import Loader from "./loader";
 
 export default function Profile() {
-  return <>{hasCookie("auth") ? <SignedInProfile /> : <UnSignedProfile />}</>;
+  /* These methods ensure that this component is rendered on the client 
+    The components `<SignedInProfile /> & <UnSignedProfile />` will be rendered on hydration
+  */
+  const [isClient, setIsClient] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return isClient ? (
+    <div>{hasCookie("auth") ? <SignedInProfile /> : <UnSignedProfile />}</div>
+  ) : (
+    <></>
+  );
 }
 
 const signInFormSchema = z.object({
@@ -157,7 +170,13 @@ function SignedInProfile() {
   );
 }
 
-function LoginForm({ onSignUpSwitch }: { onSignUpSwitch: () => void }) {
+export function LoginForm({
+  onSignUpSwitch,
+  onComplete,
+}: {
+  onSignUpSwitch: () => void;
+  onComplete?: () => void;
+}) {
   const form = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
@@ -171,6 +190,7 @@ function LoginForm({ onSignUpSwitch }: { onSignUpSwitch: () => void }) {
   async function handleLogin(data: z.infer<typeof signInFormSchema>) {
     setIsLoading(true);
     await signIn(data);
+    onComplete?.();
   }
 
   return (
@@ -228,7 +248,13 @@ function LoginForm({ onSignUpSwitch }: { onSignUpSwitch: () => void }) {
   );
 }
 
-function SignUpForm({ onSignInSwitch }: { onSignInSwitch: () => void }) {
+export function SignUpForm({
+  onSignInSwitch,
+  onComplete,
+}: {
+  onSignInSwitch: () => void;
+  onComplete?: () => void;
+}) {
   const form = useForm<signUpFormSchematype>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
@@ -354,7 +380,7 @@ function SignUpForm({ onSignInSwitch }: { onSignInSwitch: () => void }) {
       </div>
     </>
   ) : (
-    <OTPInput data={signUpDetails!} />
+    <OTPInput data={signUpDetails!} onComplete={onComplete} />
   );
 }
 
@@ -375,7 +401,13 @@ function SupportLink({
   );
 }
 
-function OTPInput({ data }: { data: signUpFormSchematype }) {
+function OTPInput({
+  data,
+  onComplete,
+}: {
+  data: signUpFormSchematype;
+  onComplete?: () => void;
+}) {
   const form = useForm<z.infer<typeof OTPForm>>({
     resolver: zodResolver(OTPForm),
   });
@@ -385,6 +417,7 @@ function OTPInput({ data }: { data: signUpFormSchematype }) {
     setIsLoading(true);
     let otp = form.getValues("otp");
     await signUp(data, otp);
+    onComplete?.();
   }
 
   return (

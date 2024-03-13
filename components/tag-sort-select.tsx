@@ -8,8 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuSeparator,
   DropdownMenuItem,
-  DropdownMenuCheckboxItemProps,
-} from "@radix-ui/react-dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { Label } from "@radix-ui/react-label";
 import {
@@ -27,8 +26,6 @@ import {
 import React from "react";
 import { Button } from "./ui/button";
 import { fetchTags } from "@/lib/actions/fetch/tags.fetch";
-
-type Checked = DropdownMenuCheckboxItemProps["checked"];
 
 export function TagSelect({
   onSelectProp,
