@@ -1,13 +1,29 @@
-import * as React from "react";
-import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
-import { fetchTags } from "@/lib/actions/fetch/tags.fetch";
-import { SortBySelect, TagSelect } from "./tag-sort-select";
+"use client";
 
-export default async function DisplayParams() {
+import * as React from "react";
+import { SortBySelect, TagSelect } from "./tag-sort-select";
+import { useSearchParams, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+
+export default function DisplayParams() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  function setURL(tagId?: string, filter?: string, sortDir?: string) {
+    const params = new URLSearchParams(searchParams);
+    if (tagId) params.set("tag", tagId);
+    if (filter) params.set("filter", filter);
+    if (sortDir) params.set("sortdir", sortDir);
+    replace(`${pathname}?${params.toString()}`);
+  }
+
   return (
     <div className="flex justify-start">
-      <TagSelect />
-      <SortBySelect />
+      <TagSelect onSelectProp={(tag) => setURL(tag.id)} />
+      <SortBySelect
+        onSelectProp={(params) => setURL(undefined, params[0], params[1])}
+      />
     </div>
   );
 }

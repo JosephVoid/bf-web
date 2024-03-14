@@ -94,9 +94,18 @@ export function TagSelect({
   );
 }
 
-export function SortBySelect() {
+export function SortBySelect({
+  onSelectProp,
+}: {
+  onSelectProp: ([]: string[]) => void;
+}) {
   const [sortBy, setSortBy] = React.useState("Date");
   const [sortDir, setSortDir] = React.useState("Asc");
+
+  React.useEffect(() => {
+    onSelectProp([sortBy, sortDir]);
+  }, [sortBy, sortDir]);
+
   return (
     <div className="flex flex-col mr-3">
       <Label className="mb-2">Sort By</Label>
