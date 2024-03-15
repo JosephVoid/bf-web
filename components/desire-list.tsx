@@ -4,6 +4,7 @@ import { Card } from "./ui/card";
 import Image from "next/image";
 import { fetchDesires } from "@/lib/actions/fetch/desire.fetch";
 import { IDesire } from "@/lib/types";
+import Paginate from "./paginate";
 
 export function Desire({ prop }: { prop: IDesire }) {
   return (
@@ -55,10 +56,18 @@ export function Desire({ prop }: { prop: IDesire }) {
 export default async function DesireList() {
   const desireList = await fetchDesires();
   return (
-    <div>
-      {desireList.map((desire: IDesire, index: number) => (
-        <Desire prop={desire} key={index} />
-      ))}
-    </div>
+    <>
+      <div>
+        {desireList.result.map((desire: IDesire, index: number) => (
+          <Desire prop={desire} key={index} />
+        ))}
+      </div>
+      <div className="m-3">
+        <Paginate
+          itemCount={desireList.meta.total}
+          perPage={desireList.meta.perPage}
+        />
+      </div>
+    </>
   );
 }

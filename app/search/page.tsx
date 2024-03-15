@@ -11,9 +11,6 @@ export default function Search() {
       <div className="m-3">
         <DesireList />
       </div>
-      <div className="m-3">
-        <Paginate />
-      </div>
     </main>
   );
 }

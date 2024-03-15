@@ -26,6 +26,7 @@ import {
 import React from "react";
 import { Button } from "./ui/button";
 import { fetchTags } from "@/lib/actions/fetch/tags.fetch";
+import { useSearchParams } from "next/navigation";
 
 export function TagSelect({
   onSelectProp,
@@ -35,9 +36,17 @@ export function TagSelect({
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   const [tags, setTags] = React.useState<ITag[]>([]);
+  const searchParams = useSearchParams();
 
   React.useEffect(() => {
-    fetchTags().then((result) => setTags(result));
+    fetchTags().then((result: ITag[]) => {
+      let tagId = searchParams.get("tag");
+      setTags(result);
+      if (tagId) {
+        let tag = result.find((tag) => tag.id === tagId);
+        setValue(tag?.tag.toLowerCase() ?? "");
+      }
+    });
   }, []);
 
   return (
@@ -99,8 +108,12 @@ export function SortBySelect({
 }: {
   onSelectProp: ([]: string[]) => void;
 }) {
-  const [sortBy, setSortBy] = React.useState("Date");
-  const [sortDir, setSortDir] = React.useState("Asc");
+  const searchParams = useSearchParams();
+  let sortByURL = searchParams.get("filter");
+  let sortDirURL = searchParams.get("sortdir");
+
+  const [sortBy, setSortBy] = React.useState(sortByURL ?? "Date");
+  const [sortDir, setSortDir] = React.useState(sortDirURL ?? "Asc");
 
   React.useEffect(() => {
     onSelectProp([sortBy, sortDir]);
@@ -112,8 +125,9 @@ export function SortBySelect({
       <div className="flex">
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-36">
+            <Button variant="outline" className="w-36 flex justify-between">
               {sortBy}
+              <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-24">

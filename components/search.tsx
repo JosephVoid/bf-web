@@ -16,6 +16,10 @@ export default function Search() {
 
   function handleSearchClick() {
     params.set("query", searchQ);
+    params.delete("page");
+    params.set("filter", "Date");
+    params.set("sortdir", "Asc");
+    params.delete("tag");
     router.push(`/search?${params.toString()}`);
   }
 

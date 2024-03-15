@@ -14,9 +14,6 @@ export default function Home() {
           <DesireList />
         </Suspense>
       </div>
-      <div className="m-3">
-        <Paginate />
-      </div>
     </main>
   );
 }

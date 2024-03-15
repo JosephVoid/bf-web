@@ -1,5 +1,6 @@
 import {
   IDesire,
+  IDesireMeta,
   IFilterParams,
   IPaginationParams,
   ISearchParams,
@@ -11,10 +12,18 @@ export async function fetchDesires(
   pagination?: IPaginationParams,
   filterParams?: IFilterParams,
   searchParams?: ISearchParams
-): Promise<IDesire[]> {
+): Promise<IDesireMeta> {
   await wait();
   const desires = mockDesires as unknown;
-  return desires as IDesire[];
+  const desiresWMeta = {
+    meta: {
+      total: 9,
+      page: 1,
+      perPage: 3,
+    },
+    result: desires as IDesire[],
+  } as IDesireMeta;
+  return desiresWMeta;
 }
 
 export async function fetchUserPostedDesires(

@@ -41,6 +41,15 @@ export interface IDesire {
   posted_on: Date;
 }
 
+export interface IDesireMeta {
+  meta: {
+    total: number;
+    perPage: number;
+    page: number;
+  };
+  result: IDesire[];
+}
+
 export interface IOffer {
   id: string;
   description: string;
