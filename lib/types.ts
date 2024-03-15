@@ -7,9 +7,11 @@ import {
 export interface ISearchParams {}
 
 export interface IFilterParams {
-  sortDir: "ASC" | "DESC";
+  sortDir: string;
   filterBy: string;
-  sortBy: "Date" | "Price" | "Wanted";
+  sortBy: string;
+  page: string;
+  search: string;
 }
 
 export interface IPaginationParams {
@@ -49,6 +51,8 @@ export interface IDesireMeta {
   };
   result: IDesire[];
 }
+
+export interface IDesireDisplayParams {}
 
 export interface IOffer {
   id: string;

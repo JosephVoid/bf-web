@@ -10,10 +10,10 @@ export default function DisplayParams() {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  function setURL(tagId?: string, filter?: string, sortDir?: string) {
+  function setURL(tagId?: string, sortBy?: string, sortDir?: string) {
     const params = new URLSearchParams(searchParams);
     if (tagId) params.set("tag", tagId);
-    if (filter) params.set("filter", filter);
+    if (sortBy) params.set("sortby", sortBy);
     if (sortDir) params.set("sortdir", sortDir);
     replace(`${pathname}?${params.toString()}`);
   }

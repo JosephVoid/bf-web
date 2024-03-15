@@ -27,7 +27,6 @@ export default function Paginate({
   const currentPage = Number(searchParams.get("page") ?? 1);
 
   function setPage(page: number) {
-    console.log(page, pageCount, itemCount, perPage);
     const params = new URLSearchParams(searchParams);
     if (page > 0 && page <= pageCount) {
       params.set("page", page.toString());

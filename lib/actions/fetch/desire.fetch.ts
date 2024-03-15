@@ -9,19 +9,23 @@ import mockDesires from "../../mock/desires.json";
 import { wait } from "@/lib/helpers";
 
 export async function fetchDesires(
-  pagination?: IPaginationParams,
-  filterParams?: IFilterParams,
-  searchParams?: ISearchParams
+  filterParams?: IFilterParams
 ): Promise<IDesireMeta> {
   await wait();
   const desires = mockDesires as unknown;
+  const resultDesires = desires as IDesire[];
+  const filtereDesires = resultDesires.slice(
+    3 * (Number(filterParams?.page ?? 1) - 1),
+    Number(filterParams?.page ?? 1) * 3
+  );
+
   const desiresWMeta = {
     meta: {
       total: 9,
-      page: 1,
+      page: Number(filterParams?.page) ?? 1,
       perPage: 3,
     },
-    result: desires as IDesire[],
+    result: filtereDesires,
   } as IDesireMeta;
   return desiresWMeta;
 }

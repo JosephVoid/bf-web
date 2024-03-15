@@ -1,10 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
 import Image from "next/image";
 import { fetchDesires } from "@/lib/actions/fetch/desire.fetch";
-import { IDesire } from "@/lib/types";
+import { IDesire, IDesireMeta, IFilterParams } from "@/lib/types";
 import Paginate from "./paginate";
+import React from "react";
 
 export function Desire({ prop }: { prop: IDesire }) {
   return (
@@ -53,19 +56,29 @@ export function Desire({ prop }: { prop: IDesire }) {
   );
 }
 
-export default async function DesireList() {
-  const desireList = await fetchDesires();
+export default function DesireList({ params }: { params: IFilterParams }) {
+  const [desireFetched, setDesireFetched] = React.useState<IDesireMeta>();
+
+  React.useEffect(() => {
+    if (params.sortBy !== "" && params.sortDir !== "") {
+      console.log(params);
+      fetchDesires().then((fetched) => {
+        setDesireFetched(fetched);
+      });
+    }
+  }, [params]);
+
   return (
     <>
       <div>
-        {desireList.result.map((desire: IDesire, index: number) => (
+        {desireFetched?.result.map((desire: IDesire, index: number) => (
           <Desire prop={desire} key={index} />
         ))}
       </div>
       <div className="m-3">
         <Paginate
-          itemCount={desireList.meta.total}
-          perPage={desireList.meta.perPage}
+          itemCount={desireFetched?.meta.total ?? 0}
+          perPage={desireFetched?.meta.perPage ?? 1}
         />
       </div>
     </>

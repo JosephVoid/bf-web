@@ -109,7 +109,7 @@ export function SortBySelect({
   onSelectProp: ([]: string[]) => void;
 }) {
   const searchParams = useSearchParams();
-  let sortByURL = searchParams.get("filter");
+  let sortByURL = searchParams.get("sortby");
   let sortDirURL = searchParams.get("sortdir");
 
   const [sortBy, setSortBy] = React.useState(sortByURL ?? "Date");
