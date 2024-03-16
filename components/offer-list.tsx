@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { fetchOffers } from "@/lib/actions/fetch/offer.fetch";
+import React from "react";
 
 export function Offer({ prop }: { prop: IOffer }) {
   const current_path = usePathname();
@@ -39,8 +40,9 @@ export function Offer({ prop }: { prop: IOffer }) {
   );
 }
 
-export default async function OfferList() {
-  const offerList = await fetchOffers(0);
+async function OfferList() {
+  const current_path = usePathname();
+  const offerList = await fetchOffers(current_path.slice(1));
   return (
     <div>
       {offerList.map((offer: IOffer, index: number) => (
@@ -49,3 +51,5 @@ export default async function OfferList() {
     </div>
   );
 }
+
+export default React.memo(OfferList);

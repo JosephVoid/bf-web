@@ -11,7 +11,7 @@ import React from "react";
 
 export function Desire({ prop }: { prop: IDesire }) {
   return (
-    <Link href={"/0"}>
+    <Link href={`/${prop.id}`}>
       <Card className="p-4 mb-5 flex flex-col">
         <div className="flex justify-start">
           {prop.picture && (
@@ -61,7 +61,6 @@ export default function DesireList({ params }: { params: IFilterParams }) {
 
   React.useEffect(() => {
     if (params.sortBy !== "" && params.sortDir !== "") {
-      console.log(params);
       fetchDesires().then((fetched) => {
         setDesireFetched(fetched);
       });

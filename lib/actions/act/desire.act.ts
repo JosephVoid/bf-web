@@ -21,6 +21,14 @@ export async function wantDesire(
   return true;
 }
 
+export async function unWantDesire(
+  userId: string,
+  desireId: string
+): Promise<boolean> {
+  await wait();
+  return true;
+}
+
 export async function viewDesire(userId: string, desireId: string) {
   await wait();
 }

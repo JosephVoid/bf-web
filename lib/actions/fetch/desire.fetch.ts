@@ -7,6 +7,7 @@ import {
 } from "@/lib/types";
 import mockDesires from "../../mock/desires.json";
 import { wait } from "@/lib/helpers";
+import { string } from "zod";
 
 export async function fetchDesires(
   filterParams?: IFilterParams
@@ -36,4 +37,12 @@ export async function fetchUserPostedDesires(
   await wait();
   const desires = mockDesires as unknown;
   return desires as IDesire[];
+}
+
+export async function fetchSingleDesire(
+  id: string
+): Promise<IDesire | undefined> {
+  await wait();
+  const desires = mockDesires as unknown;
+  return (desires as IDesire[]).find((desire) => desire.id === id);
 }
