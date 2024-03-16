@@ -57,6 +57,8 @@ export interface IDesireDisplayParams {}
 export interface IOffer {
   id: string;
   description: string;
+  for_desire: string;
+  user: string;
   price: number;
   picture?: string;
   posted_on: Date;

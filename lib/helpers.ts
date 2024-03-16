@@ -13,3 +13,14 @@ export function base64ToFile(base64String: string, contentType = "") {
   const byteArray = new Uint8Array(byteArrays);
   return new File([new Blob([byteArray], { type: contentType })], "");
 }
+
+export function getUUID(str: string) {
+  let temp = str.split("-");
+  temp.length = 5;
+  return temp.join("-");
+}
+
+export function getTitle(str: string) {
+  let temp = str.slice(37);
+  return decodeURIComponent(temp);
+}

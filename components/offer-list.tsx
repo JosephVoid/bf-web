@@ -11,7 +11,7 @@ import React from "react";
 export function Offer({ prop }: { prop: IOffer }) {
   const current_path = usePathname();
   return (
-    <Link href={`${current_path}/0`}>
+    <Link href={`${current_path}/${prop.id}`}>
       <Card className="p-4 mb-5 flex flex-col">
         <div className="flex justify-start">
           {prop.picture && (

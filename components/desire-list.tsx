@@ -11,7 +11,7 @@ import React from "react";
 
 export function Desire({ prop }: { prop: IDesire }) {
   return (
-    <Link href={`/${prop.id}`}>
+    <Link href={`/${prop.id}-${encodeURIComponent(prop.title)}`}>
       <Card className="p-4 mb-5 flex flex-col">
         <div className="flex justify-start">
           {prop.picture && (

@@ -43,6 +43,7 @@ export async function fetchSingleDesire(
   id: string
 ): Promise<IDesire | undefined> {
   await wait();
+  console.log(id);
   const desires = mockDesires as unknown;
   return (desires as IDesire[]).find((desire) => desire.id === id);
 }

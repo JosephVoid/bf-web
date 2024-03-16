@@ -21,6 +21,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { hasCookie } from "cookies-next";
 import { LoginForm, SignUpForm } from "@/components/profile";
 import { unWantDesire, wantDesire } from "@/lib/actions/act/desire.act";
+import { getUUID } from "@/lib/helpers";
 
 export default function SingleDesire() {
   const current_path = usePathname();
@@ -51,7 +52,7 @@ export default function SingleDesire() {
   }
 
   React.useEffect(() => {
-    fetchSingleDesire(current_path.slice(1)).then((result) => {
+    fetchSingleDesire(getUUID(current_path.split("/")[1])).then((result) => {
       if (result) setDesire(result);
       else setFound(false);
       setLoading(false);
