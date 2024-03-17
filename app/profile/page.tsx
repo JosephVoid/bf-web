@@ -12,8 +12,8 @@ import { Pencil1Icon } from "@radix-ui/react-icons";
 import { Suspense } from "react";
 
 export default async function ProfilePage() {
-  const user = await fetchUserProfile(0);
-  const tagsAlerted = await fetchUserAlerts(0);
+  const user = await fetchUserProfile("0");
+  const tagsAlerted = await fetchUserAlerts("0");
   return (
     <div className="m-3 p-4">
       <EditProfileForm prop={user} />

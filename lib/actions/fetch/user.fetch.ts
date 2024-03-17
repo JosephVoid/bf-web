@@ -4,13 +4,13 @@ import mockTags from "@/lib/mock/tags.json";
 import { ITag } from "@/lib/types";
 import { wait } from "@/lib/helpers";
 
-export async function fetchUserProfile(userId: number): Promise<IUser> {
+export async function fetchUserProfile(userId: string): Promise<IUser> {
   await wait();
   const user = mockUser[0] as unknown;
   return <IUser>user;
 }
 
-export async function fetchUserAlerts(userId: number): Promise<ITag[]> {
+export async function fetchUserAlerts(userId: string): Promise<ITag[]> {
   await wait();
   const tags = mockTags as unknown;
   return (<ITag[]>tags).slice(0, 3);

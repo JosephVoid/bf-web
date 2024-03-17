@@ -18,6 +18,9 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import React from "react";
+import { makeOffer } from "@/lib/actions/act/offer.act";
+import { usePathname, useRouter } from "next/navigation";
+import { getUUID } from "@/lib/helpers";
 
 const MAX_PIC_SIZE = 1000000;
 
@@ -39,6 +42,8 @@ const formSchema = z.object({
     .optional(),
 });
 
+export type MakeAnOfferSchemaType = z.infer<typeof formSchema>;
+
 export default function MakeAnOfferForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,13 +54,21 @@ export default function MakeAnOfferForm() {
   });
 
   const [picturePreview, setPicturePreview] = React.useState<File | null>();
+  const router = useRouter();
+  const current_path = usePathname();
+
+  function handleOffer(data: MakeAnOfferSchemaType) {
+    makeOffer(data).then((result) => {
+      if (result) router.replace(`/${current_path.split("/")[1]}`);
+    });
+  }
 
   return (
     <>
       <h2 className="text-2xl font-medium mb-3"> Make an Offer</h2>
       <div className="rounded-md border-[1px] p-4 mb-8">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit((data) => console.log(data))}>
+          <form onSubmit={form.handleSubmit(handleOffer)}>
             <div className="flex flex-col relative">
               <div className="mb-4 flex">
                 <FormField
@@ -130,7 +143,8 @@ export default function MakeAnOfferForm() {
                       src={URL.createObjectURL(picturePreview)}
                       width={150}
                       height={150}
-                      alt="profile"
+                      alt="offer"
+                      className="rounded-lg"
                     />
                   ) : (
                     <ImageIcon width={50} height={50} className="opacity-50" />

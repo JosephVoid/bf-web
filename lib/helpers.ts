@@ -2,16 +2,11 @@ export async function wait() {
   return new Promise((res) => setTimeout(res, Math.random() * 2000));
 }
 
-export function base64ToFile(base64String: string, contentType = "") {
-  const byteCharacters = atob(base64String);
-  const byteArrays = [];
-
-  for (let i = 0; i < byteCharacters.length; i++) {
-    byteArrays.push(byteCharacters.charCodeAt(i));
-  }
-
-  const byteArray = new Uint8Array(byteArrays);
-  return new File([new Blob([byteArray], { type: contentType })], "");
+export async function urlToFile(url?: string): Promise<File | null> {
+  if (!url) return null;
+  let response = await fetch(url);
+  let fileBlob = await response.blob();
+  return new File([fileBlob], "");
 }
 
 export function getUUID(str: string) {

@@ -1,3 +1,4 @@
+import { MakeAnOfferSchemaType } from "@/components/make-an-offer-form";
 import { postDesireFromSchematype } from "@/components/post-desire-form";
 import {
   signInFormSchematype,
@@ -21,7 +22,7 @@ export interface IPaginationParams {
 
 export interface IDesirePostParams extends postDesireFromSchematype {}
 
-export interface IOfferMakeParams {}
+export interface IOfferMakeParams extends MakeAnOfferSchemaType {}
 
 export interface IEditProfile {}
 

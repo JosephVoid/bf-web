@@ -18,7 +18,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IUser } from "@/lib/types";
 import Image from "next/image";
-import { base64ToFile } from "@/lib/helpers";
+import { urlToFile } from "@/lib/helpers";
 import React from "react";
 import {
   TooltipProvider,
@@ -52,11 +52,13 @@ const formSchema = z
     oldPass: z
       .string()
       .max(30, "Password too long")
-      .min(8, "Password too short"),
+      .min(8, "Password too short")
+      .optional(),
     newPass: z
       .string()
       .max(30, "Password too long")
-      .min(8, "Password too short"),
+      .min(8, "Password too short")
+      .optional(),
     description: z.string().max(500, "Description too long").optional(),
     picture: z
       .any()
@@ -65,7 +67,7 @@ const formSchema = z
       })
       .refine((file) => {
         if (!file) return true;
-        file.size < MAX_PIC_SIZE, "Image too big";
+        return file.size < MAX_PIC_SIZE, "Image too big";
       })
       .optional(),
   })
@@ -82,17 +84,18 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
       lastname: prop.lastname,
       email: prop.email,
       phone: prop.phone,
-      oldPass: "",
-      newPass: "",
       description: prop.description,
     },
   });
 
-  const [picturePreview, setPicturePreview] = React.useState<File | null>(
-    prop.picture ? base64ToFile(prop.picture) : null
-  );
-
+  const [picturePreview, setPicturePreview] = React.useState<File | null>();
   const [enableEdit, setEnableEdit] = React.useState(false);
+
+  React.useEffect(() => {
+    urlToFile(prop.picture).then((result: File | null) => {
+      if (result) setPicturePreview(result);
+    });
+  }, []);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -272,6 +275,7 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
                       width={150}
                       height={150}
                       alt="profile"
+                      className="rounded-full"
                     />
                   ) : (
                     <AvatarIcon width={50} height={50} className="opacity-50" />

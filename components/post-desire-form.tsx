@@ -186,7 +186,8 @@ export default function PostDesireForm() {
                       src={URL.createObjectURL(picturePreview)}
                       width={150}
                       height={150}
-                      alt="profile"
+                      alt="post-desire"
+                      className="rounded-lg"
                     />
                   ) : (
                     <ImageIcon width={50} height={50} className="opacity-50" />

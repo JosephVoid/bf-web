@@ -6,6 +6,7 @@ import PostBanner from "../components/post-desire";
 import Profile from "../components/profile";
 import Tips from "../components/tips";
 import Search from "@/components/search";
+import Header from "@/components/header";
 
 export const metadata: Metadata = {
   title: "Buyers First",
@@ -31,9 +32,7 @@ export default function RootLayout({
         </div>
         <div className="w-3/6 mr-3">
           <div className="mb-5">
-            <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-center">
-              Desires
-            </h1>
+            <Header />
           </div>
           {children}
         </div>

@@ -34,6 +34,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { sendOTP, signIn, signOut, signUp } from "@/lib/actions/act/user.act";
 import { hasCookie } from "cookies-next";
 import Loader from "./loader";
+import { fetchUserProfile } from "@/lib/actions/fetch/user.fetch";
+import { IUser } from "@/lib/types";
+import { usePathname } from "next/navigation";
 
 export default function Profile() {
   /* These methods ensure that this component is rendered on the client 
@@ -144,20 +147,29 @@ function UnSignedProfile() {
 }
 
 function SignedInProfile() {
+  const [user, setUser] = React.useState<IUser>();
   async function handleSignOut() {
     await signOut();
   }
+
+  React.useEffect(() => {
+    fetchUserProfile("0").then((result) => {
+      if (result) setUser(result);
+    });
+  }, []);
 
   return (
     <div className="p-4 mb-3 flex flex-col relative justify-center items-center border-[1px] rounded-lg">
       <Image
         height={70}
         width={70}
-        src={"/black_box.png"}
+        src={user?.picture ?? ""}
         alt="prof pic"
         className="rounded-full mb-3"
       />
-      <h3 className="text-xl text-wrap font-medium mb-3">Buyer User</h3>
+      <h3 className="text-xl text-wrap font-medium mb-3">{`${
+        user?.firstname ?? ""
+      } ${user?.lastname ?? ""}`}</h3>
       <Link href={"/profile"}>
         <Button variant={"outline"} className="mb-3">
           Profile
@@ -185,11 +197,12 @@ export function LoginForm({
     },
   });
 
+  const current_path = usePathname();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   async function handleLogin(data: z.infer<typeof signInFormSchema>) {
     setIsLoading(true);
-    await signIn(data);
+    await signIn(data, current_path);
     onComplete?.();
   }
 
@@ -411,12 +424,14 @@ function OTPInput({
   const form = useForm<z.infer<typeof OTPForm>>({
     resolver: zodResolver(OTPForm),
   });
+
+  const current_path = usePathname();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   async function handleOTP() {
     setIsLoading(true);
     let otp = form.getValues("otp");
-    await signUp(data, otp);
+    await signUp(data, otp, current_path);
     onComplete?.();
   }
 
