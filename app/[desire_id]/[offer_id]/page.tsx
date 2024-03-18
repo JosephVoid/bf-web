@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { hasCookie } from "cookies-next";
 import { LoginForm, SignUpForm } from "@/components/profile";
 import { acceptOffer } from "@/lib/actions/act/offer.act";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function SingleOffer() {
   const [offer, setOffer] = React.useState<IOffer>();
@@ -24,6 +25,7 @@ export default function SingleOffer() {
     "SIGNIN"
   );
   const current_path = usePathname();
+  const { toast } = useToast();
 
   React.useEffect(() => {
     fetchSingleOffer(current_path.split("/")[2]).then((result) => {
@@ -36,7 +38,20 @@ export default function SingleOffer() {
   function handleAcceptOnClick() {
     if (hasCookie("auth")) {
       acceptOffer("0", "0").then((result: boolean) => {
-        if (result) setAccepted(true);
+        if (result) {
+          setAccepted(true);
+          toast({
+            title: (
+              <div className="flex items-center">
+                <CheckIcon className="mr-2" />
+                <span className="first-letter:capitalize">
+                  successfully updated ssid
+                </span>
+              </div>
+            ),
+            description: "description",
+          });
+        }
       });
     }
   }

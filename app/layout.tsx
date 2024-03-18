@@ -7,6 +7,7 @@ import Profile from "../components/profile";
 import Tips from "../components/tips";
 import Search from "@/components/search";
 import Header from "@/components/header";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Buyers First",
@@ -35,6 +36,7 @@ export default function RootLayout({
             <Header />
           </div>
           {children}
+          <Toaster />
         </div>
         <div className="w-1/6 relative">
           <div className="w-1/6 fixed h-5/6 flex flex-col justify-between">
