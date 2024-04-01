@@ -15,3 +15,11 @@ export async function fetchUserAlerts(userId: string): Promise<ITag[]> {
   const tags = mockTags as unknown;
   return (<ITag[]>tags).slice(0, 3);
 }
+
+export async function fetchUserActivity(
+  userId: string,
+  activityType: "OFFER" | "WANT" | "ACCEPT" | "VIEW"
+): Promise<String[]> {
+  await wait();
+  return ["a", "b", "c"];
+}
