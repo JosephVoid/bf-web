@@ -72,8 +72,8 @@ export interface ITag {
 
 export interface IUser {
   id: string;
-  firstname: string;
-  lastname: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
   description?: string;

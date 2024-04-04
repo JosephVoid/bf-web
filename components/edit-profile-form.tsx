@@ -31,7 +31,7 @@ const MAX_PIC_SIZE = 100000;
 
 const formSchema = z
   .object({
-    firstname: z
+    first_name: z
       .string()
       .min(2, {
         message: "First name must be at least 2 characters.",
@@ -39,7 +39,7 @@ const formSchema = z
       .max(15, {
         message: "First name must be less than 15 characters.",
       }),
-    lastname: z
+    last_name: z
       .string()
       .min(2, {
         message: "Last name must be at least 2 characters.",
@@ -80,8 +80,8 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstname: prop.firstname,
-      lastname: prop.lastname,
+      first_name: prop.first_name,
+      last_name: prop.last_name,
       email: prop.email,
       phone: prop.phone,
       description: prop.description,
@@ -111,7 +111,7 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
               <div className="mb-4 flex space-x-5">
                 <FormField
                   control={form.control}
-                  name="firstname"
+                  name="first_name"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>First Name</FormLabel>
@@ -128,7 +128,7 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
                 />
                 <FormField
                   control={form.control}
-                  name="lastname"
+                  name="last_name"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Last Name</FormLabel>

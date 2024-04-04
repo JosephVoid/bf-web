@@ -70,7 +70,7 @@ const signInFormSchema = z.object({
 });
 
 const signUpFormSchema = z.object({
-  firstname: z
+  first_name: z
     .string()
     .min(2, {
       message: "First name must be at least 2 characters.",
@@ -78,7 +78,7 @@ const signUpFormSchema = z.object({
     .max(15, {
       message: "First name must be less than 15 characters.",
     }),
-  lastname: z
+  last_name: z
     .string()
     .min(2, {
       message: "Last name must be at least 2 characters.",
@@ -162,7 +162,8 @@ function SignedInProfile() {
   }
 
   React.useEffect(() => {
-    fetchUserProfile("0").then((result) => {
+    fetchUserProfile(getUserId()).then((result) => {
+      console.log(result);
       if (result) setUser(result);
     });
   }, []);
@@ -178,9 +179,12 @@ function SignedInProfile() {
           className="rounded-full mb-3"
         />
       )}
-      <h3 className="text-xl text-wrap font-medium mb-3">{`${
-        user?.firstname ?? ""
-      } ${user?.lastname ?? ""}`}</h3>
+      {!user?.picture && (
+        <AvatarIcon height={50} width={50} className="m-4 opacity-50" />
+      )}
+      <h3 className="text-xl text-wrap font-medium mb-3 text-center">{`${
+        user?.first_name ?? ""
+      } ${user?.last_name ?? ""}`}</h3>
       <Link href={"/profile"}>
         <Button variant={"outline"} className="mb-3">
           Profile
@@ -289,8 +293,8 @@ export function SignUpForm({
   const form = useForm<signUpFormSchematype>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
-      firstname: "",
-      lastname: "",
+      first_name: "",
+      last_name: "",
       email: "",
       phone: "",
       password: "",
@@ -320,7 +324,7 @@ export function SignUpForm({
                 <div className="flex flex-col w-1/2 mr-2">
                   <FormField
                     control={form.control}
-                    name="firstname"
+                    name="first_name"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>First Name</FormLabel>
@@ -335,7 +339,7 @@ export function SignUpForm({
                 <div className="flex flex-col w-1/2">
                   <FormField
                     control={form.control}
-                    name="lastname"
+                    name="last_name"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Last Name</FormLabel>

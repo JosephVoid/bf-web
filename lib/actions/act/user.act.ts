@@ -4,7 +4,7 @@ import { IEditProfile, IOTP, ISignIn, ISignUp } from "@/lib/types";
 import { wait } from "@/lib/helpers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { AuthAPI } from "@/lib/api";
+import { AuthAPI, CoreAPI } from "@/lib/api";
 
 export async function editProfile(params: IEditProfile) {}
 

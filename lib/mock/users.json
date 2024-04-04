@@ -1,8 +1,8 @@
 [
   {
     "id": 1,
-    "firstname": "Gonzal",
-    "lastname": "Juidad",
+    "first_name": "Gonzal",
+    "last_name": "Juidad",
     "email": "gonzaljuidad@gmail.com",
     "phone": "+251912345678",
     "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati illo consequatur magni quo asperiores accusamus dicta ullam sint iste porro, rem eligendi ex ipsum delectus maiores veritatis adipisci similique eaque.",
