@@ -30,7 +30,10 @@ export interface ISignIn extends signInFormSchematype {}
 
 export interface ISignUp extends signUpFormSchematype {}
 
-export interface IFileUpload {}
+export interface IFileUpload {
+  file: File;
+  name: string;
+}
 
 export interface IDesire {
   id: string;
