@@ -1,5 +1,6 @@
 import { getCookie } from "cookies-next";
 import { JwtPayload, jwtDecode } from "jwt-decode";
+import { IFilterParams } from "./types";
 
 export async function wait() {
   return new Promise((res) => setTimeout(res, Math.random() * 2000));
@@ -27,4 +28,23 @@ export function getUserId() {
   const token = getCookie("auth") ?? "";
   const decodedJWT = <JwtPayload & { userId: string }>jwtDecode(token);
   return decodedJWT.userId!;
+}
+
+export function transformParams(FP: IFilterParams): IFilterParams {
+  switch (FP.sortBy) {
+    case "Date":
+      FP.sortBy = "created";
+      FP.sortDir = FP.sortDir.toUpperCase();
+      return FP;
+    case "Price":
+      FP.sortBy = "desired_price";
+      FP.sortDir = FP.sortDir.toUpperCase();
+      return FP;
+    case "Wanted":
+      FP.sortBy = "wants";
+      FP.sortDir = FP.sortDir.toUpperCase();
+      return FP;
+    default:
+      return FP;
+  }
 }

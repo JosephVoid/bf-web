@@ -61,8 +61,8 @@ export default function DesireList({ params }: { params: IFilterParams }) {
 
   React.useEffect(() => {
     if (params.sortBy !== "" && params.sortDir !== "") {
-      fetchDesires().then((fetched) => {
-        setDesireFetched(fetched);
+      fetchDesires(params).then((fetched) => {
+        if (fetched) setDesireFetched(fetched);
       });
     }
   }, [params]);
