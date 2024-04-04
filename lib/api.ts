@@ -20,7 +20,10 @@ class AuthStub extends APIStub {
     super(process.env.NEXT_PUBLIC_AUTH_BASE_URL ?? "");
   }
 
-  async signIn(body: any): Promise<AxiosResponse> {
+  async signIn(body: {
+    email: string;
+    password: string;
+  }): Promise<AxiosResponse> {
     return this.axios.post("/auth", body);
   }
 

@@ -26,17 +26,26 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React from "react";
 import Link from "next/link";
-import { RocketIcon, AvatarIcon, ExitIcon } from "@radix-ui/react-icons";
+import {
+  RocketIcon,
+  AvatarIcon,
+  ExitIcon,
+  ExclamationTriangleIcon,
+} from "@radix-ui/react-icons";
 import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { sendOTP, signIn, signOut, signUp } from "@/lib/actions/act/user.act";
-import { hasCookie } from "cookies-next";
+import { getCookie, hasCookie } from "cookies-next";
 import Loader from "./loader";
 import { fetchUserProfile } from "@/lib/actions/fetch/user.fetch";
 import { IUser } from "@/lib/types";
 import { usePathname } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import BFAlert from "./custom-alert";
+import { getUserId } from "@/lib/helpers";
 
 export default function Profile() {
   /* These methods ensure that this component is rendered on the client 
@@ -160,13 +169,15 @@ function SignedInProfile() {
 
   return (
     <div className="p-4 mb-3 flex flex-col relative justify-center items-center border-[1px] rounded-lg">
-      <Image
-        height={70}
-        width={70}
-        src={user?.picture ?? ""}
-        alt="prof pic"
-        className="rounded-full mb-3"
-      />
+      {user?.picture && (
+        <Image
+          height={70}
+          width={70}
+          src={user?.picture}
+          alt="prof pic"
+          className="rounded-full mb-3"
+        />
+      )}
       <h3 className="text-xl text-wrap font-medium mb-3">{`${
         user?.firstname ?? ""
       } ${user?.lastname ?? ""}`}</h3>
@@ -182,13 +193,7 @@ function SignedInProfile() {
   );
 }
 
-export function LoginForm({
-  onSignUpSwitch,
-  onComplete,
-}: {
-  onSignUpSwitch: () => void;
-  onComplete?: () => void;
-}) {
+export function LoginForm({ onSignUpSwitch }: { onSignUpSwitch: () => void }) {
   const form = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
@@ -199,11 +204,19 @@ export function LoginForm({
 
   const current_path = usePathname();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isError, setIsError] = React.useState(false);
+  const router = useRouter();
 
   async function handleLogin(data: z.infer<typeof signInFormSchema>) {
     setIsLoading(true);
-    await signIn(data, current_path);
-    onComplete?.();
+    const response = await signIn(data, current_path);
+
+    if (response) {
+      router.replace(current_path ?? "/");
+    } else {
+      setIsError(true);
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -249,6 +262,11 @@ export function LoginForm({
                 )}
               />
             </div>
+            <BFAlert
+              variant={"destructive"}
+              text="Check Email or Password!"
+              show={isError}
+            />
             <Button type="submit"> {isLoading ? <Loader /> : "Sign In"}</Button>
           </div>
         </form>
