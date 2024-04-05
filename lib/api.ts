@@ -38,9 +38,9 @@ class CoreStub extends APIStub {
     super(process.env.NEXT_PUBLIC_CORE_BASE_URL ?? "");
   }
 
-  async createDesires(body: any): Promise<AxiosResponse> {
+  async createDesires(body: any, token: string): Promise<AxiosResponse> {
     return this.axios.post(`/desires/create`, body, {
-      headers: { Authorization: getCookie("auth") },
+      headers: { Authorization: token },
     });
   }
 

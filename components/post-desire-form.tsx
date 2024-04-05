@@ -15,7 +15,9 @@ import { useForm } from "react-hook-form";
 import { Label } from "./ui/label";
 import {
   AvatarIcon,
+  CheckIcon,
   Cross1Icon,
+  ExclamationTriangleIcon,
   ImageIcon,
   Pencil2Icon,
 } from "@radix-ui/react-icons";
@@ -31,6 +33,8 @@ import { redirect } from "next/navigation";
 import Loader from "./loader";
 import { fileUpload } from "@/lib/actions/act/file.act";
 import { fileToBase64 } from "@/lib/helpers";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const MAX_PIC_SIZE = 1000000;
 
@@ -69,6 +73,8 @@ export default function PostDesireForm() {
   const [selectedtags, setSelectedTags] = React.useState<ITag[]>([]);
   const [picturePreview, setPicturePreview] = React.useState<File | null>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const { toast } = useToast();
+  const router = useRouter();
 
   function handleRemoveAlert(id: string) {
     setSelectedTags(selectedtags.filter((tag) => tag.id !== id));
@@ -96,13 +102,36 @@ export default function PostDesireForm() {
       data.picture?.name ?? null
     );
 
-    await postDesire(
+    const result = await postDesire(
       data.title,
       data.description,
       data.price,
       picFile,
       data.tags
     );
+
+    toast({
+      title: (
+        <div className="flex items-center">
+          {result && (
+            <>
+              {" "}
+              <CheckIcon className="mr-2" />
+              <span className="first-letter:capitalize">Desire Posted</span>
+            </>
+          )}
+          {!result && (
+            <>
+              {" "}
+              <ExclamationTriangleIcon className="mr-2" />
+              <span className="first-letter:capitalize">Error Encounterd</span>
+            </>
+          )}
+        </div>
+      ),
+    });
+
+    if (result) setTimeout(() => router.replace(`/${result}`), 1000);
     setIsLoading(false);
   }
 
