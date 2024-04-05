@@ -29,6 +29,8 @@ import Image from "next/image";
 import { postDesire } from "@/lib/actions/act/desire.act";
 import { redirect } from "next/navigation";
 import Loader from "./loader";
+import { fileUpload } from "@/lib/actions/act/file.act";
+import { fileToBase64 } from "@/lib/helpers";
 
 const MAX_PIC_SIZE = 1000000;
 
@@ -88,7 +90,19 @@ export default function PostDesireForm() {
 
   async function handleSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    await postDesire(data);
+
+    const picFile = await fileUpload(
+      await fileToBase64(data.picture),
+      data.picture?.name ?? null
+    );
+
+    await postDesire(
+      data.title,
+      data.description,
+      data.price,
+      picFile,
+      data.tags
+    );
     setIsLoading(false);
   }
 
