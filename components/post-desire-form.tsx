@@ -90,10 +90,19 @@ export default function PostDesireForm() {
 
   async function handleSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    console.log(data);
-    if (data.picture)
-      await fileUpload(await fileToBase64(data.picture), data.picture.name);
-    await postDesire(JSON.stringify(data));
+
+    const picFile = await fileUpload(
+      await fileToBase64(data.picture),
+      data.picture?.name ?? null
+    );
+
+    await postDesire(
+      data.title,
+      data.description,
+      data.price,
+      picFile,
+      data.tags
+    );
     setIsLoading(false);
   }
 

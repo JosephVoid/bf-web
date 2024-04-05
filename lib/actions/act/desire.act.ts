@@ -1,13 +1,16 @@
 "use server";
 
 import { wait } from "@/lib/helpers";
-import { IDesirePostParams } from "@/lib/types";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { fileUpload } from "./file.act";
 
-export async function postDesire(params: string): Promise<string | null> {
-  const data = <IDesirePostParams>JSON.parse(params);
+export async function postDesire(
+  title: string,
+  description: string,
+  price: number,
+  picture: string | null,
+  tags: string[]
+): Promise<string | null> {
+  console.log({ title, description, price, picture, tags });
+  // const data = <IDesirePostParams>JSON.parse(params);
   // await wait();
   // revalidatePath("/6fdede6a-c0ed-4d3a-b705-d192b75e9df9");
   // redirect("/6fdede6a-c0ed-4d3a-b705-d192b75e9df9");
