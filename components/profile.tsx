@@ -197,7 +197,13 @@ function SignedInProfile() {
   );
 }
 
-export function LoginForm({ onSignUpSwitch }: { onSignUpSwitch: () => void }) {
+export function LoginForm({
+  onSignUpSwitch,
+  onComplete,
+}: {
+  onSignUpSwitch: () => void;
+  onComplete?: () => void;
+}) {
   const form = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
@@ -217,6 +223,7 @@ export function LoginForm({ onSignUpSwitch }: { onSignUpSwitch: () => void }) {
 
     if (response) {
       router.replace(current_path ?? "/");
+      onComplete?.();
     } else {
       setIsError(true);
       setIsLoading(false);

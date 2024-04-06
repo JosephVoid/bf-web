@@ -21,11 +21,14 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { hasCookie } from "cookies-next";
 import { LoginForm, SignUpForm } from "@/components/profile";
 import { unWantDesire, wantDesire } from "@/lib/actions/act/desire.act";
-import { getUUID } from "@/lib/helpers";
+import { getUUID, getUserId } from "@/lib/helpers";
+import { fetchUserActivity } from "@/lib/actions/fetch/user.fetch";
 
 export default function SingleDesire() {
   const current_path = usePathname();
   const [desire, setDesire] = React.useState<IDesire>();
+  const [wantAct, setWantAct] = React.useState<string[]>([]);
+  const [offerAct, setOfferAct] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [found, setFound] = React.useState(true);
   const [wanted, setWanted] = React.useState(false);
@@ -36,6 +39,7 @@ export default function SingleDesire() {
   const router = useRouter();
 
   function handleWantOnClick() {
+    if (wantAct.includes(desire?.id!)) return null;
     if (hasCookie("auth") && !wanted) {
       wantDesire("user", desire?.id ?? "").then((result) => {
         if (result) setWanted(true);
@@ -48,6 +52,7 @@ export default function SingleDesire() {
   }
 
   function handleOfferOnClick() {
+    if (offerAct.includes(desire?.id!)) return null;
     if (hasCookie("auth")) router.push(`${current_path}/make-an-offer`);
   }
 
@@ -57,6 +62,17 @@ export default function SingleDesire() {
       else setFound(false);
       setLoading(false);
     });
+
+    const userId = getUserId();
+
+    if (userId) {
+      fetchUserActivity(userId, "wanted").then((result) => {
+        setWantAct(result);
+      });
+      fetchUserActivity(userId, "offered").then((result) => {
+        setOfferAct(result);
+      });
+    }
   }, []);
 
   return loading ? (
@@ -112,7 +128,11 @@ export default function SingleDesire() {
                     hasCookie("auth") ? e.preventDefault() : setModalState(true)
                   }
                 >
-                  <Button variant={"ghost"} onClick={handleWantOnClick}>
+                  <Button
+                    variant={"ghost"}
+                    onClick={handleWantOnClick}
+                    disabled={wantAct.includes(desire?.id!)}
+                  >
                     {wanted ? (
                       <>
                         <CheckIcon className="mr-1" />
@@ -132,7 +152,9 @@ export default function SingleDesire() {
                   }
                 >
                   <div onClick={handleOfferOnClick}>
-                    <Button>Make an Offer</Button>
+                    <Button disabled={offerAct.includes(desire?.id!)}>
+                      Make an Offer
+                    </Button>
                   </div>
                 </DialogTrigger>
               </div>

@@ -62,7 +62,7 @@ export interface IOffer {
   id: string;
   description: string;
   for_desire: string;
-  user: string;
+  bidder: string;
   price: number;
   picture?: string;
   bidOn: Date;

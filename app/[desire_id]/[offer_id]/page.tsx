@@ -63,7 +63,7 @@ export default function SingleOffer() {
       <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
         {getTitle(current_path.split("/")[1])}
       </h2>
-      <p className="mt-4 opacity-85">{offer?.user} offered:</p>
+      <p className="mt-4 opacity-85">{offer?bidder} offered:</p>
       <div className="flex mt-4">
         {offer?.picture && (
           <div className="w-1/2 h-fit rounded-md mr-4 mb-8">

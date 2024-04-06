@@ -60,10 +60,14 @@ class CoreStub extends APIStub {
     return this.axios.get(`/tags`);
   }
 
-  async getActivity(id: string, type: string): Promise<AxiosResponse> {
+  async getActivity(
+    id: string,
+    type: string,
+    token: string
+  ): Promise<AxiosResponse> {
     return this.axios.get(`/activity/${id}`, {
       params: { type: type },
-      headers: { Authorization: getCookie("auth") },
+      headers: { Authorization: token },
     });
   }
 
@@ -120,15 +124,11 @@ class CoreStub extends APIStub {
   }
 
   async getAllBids(desireId: string): Promise<AxiosResponse> {
-    return this.axios.get(`/bids/all/${desireId}`, {
-      headers: { Authorization: getCookie("auth") },
-    });
+    return this.axios.get(`/bids/all/${desireId}`);
   }
 
   async getSingleBid(bidId: string): Promise<AxiosResponse> {
-    return this.axios.get(`/bids/${bidId}`, {
-      headers: { Authorization: getCookie("auth") },
-    });
+    return this.axios.get(`/bids/${bidId}`);
   }
 
   async getSingleUser(userId: string): Promise<AxiosResponse> {

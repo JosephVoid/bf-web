@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { fetchOffers } from "@/lib/actions/fetch/offer.fetch";
 import React from "react";
+import { getUUID } from "@/lib/helpers";
 
 export function Offer({ prop }: { prop: IOffer }) {
   const current_path = usePathname();
@@ -45,7 +46,7 @@ function OfferList() {
   const [offerList, setOfferList] = React.useState<IOffer[]>([]);
 
   React.useEffect(() => {
-    fetchOffers(current_path.slice(1)).then((result) => {
+    fetchOffers(getUUID(current_path.split("/")[1])).then((result) => {
       setOfferList(result);
     });
   }, []);
