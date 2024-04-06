@@ -4,6 +4,7 @@ import { wait } from "@/lib/helpers";
 import { CoreAPI } from "@/lib/api";
 
 export async function fetchOffers(desireId: string): Promise<IOffer[]> {
+  /* While Mocking */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     await wait();
     const offers = mockOffers as unknown;
@@ -22,6 +23,7 @@ export async function fetchOffers(desireId: string): Promise<IOffer[]> {
 export async function fetchSingleOffer(
   offerId: string
 ): Promise<IOffer | undefined> {
+  /* While Mocking */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     await wait();
     const offers = mockOffers as unknown;
@@ -37,7 +39,17 @@ export async function fetchSingleOffer(
 }
 
 export async function fetchUserOffers(userId: string): Promise<IOffer[]> {
-  await wait();
-  const offers = mockOffers as unknown;
-  return offers as IOffer[];
+  /* While Mocking */
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    await wait();
+    const offers = mockOffers as unknown;
+    return offers as IOffer[];
+  }
+
+  try {
+    const response = await CoreAPI.getUserBids(userId);
+    return <IOffer[]>response.data;
+  } catch (error) {
+    return [];
+  }
 }

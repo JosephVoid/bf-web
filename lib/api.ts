@@ -60,6 +60,10 @@ class CoreStub extends APIStub {
     return this.axios.get(`/tags`);
   }
 
+  async getAlertTags(userId: string): Promise<AxiosResponse> {
+    return this.axios.get(`/user-tags/${userId}`);
+  }
+
   async getActivity(
     id: string,
     type: string,
@@ -144,15 +148,11 @@ class CoreStub extends APIStub {
   }
 
   async getUserDesires(userId: string): Promise<AxiosResponse> {
-    return this.axios.get(`/users/desires/${userId}`, {
-      headers: { Authorization: getCookie("auth") },
-    });
+    return this.axios.get(`/users/desires/${userId}`);
   }
 
   async getUserBids(userId: string): Promise<AxiosResponse> {
-    return this.axios.get(`/users/bids/${userId}`, {
-      headers: { Authorization: getCookie("auth") },
-    });
+    return this.axios.get(`/users/bids/${userId}`);
   }
 }
 

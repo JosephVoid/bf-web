@@ -36,6 +36,17 @@ export function getUserId() {
   return null;
 }
 
+export function getUserFromTokenId(jwt: string) {
+  /* While Mocking */
+  if (process.env.NEXT_PUBLIC_API_MOCK)
+    return "e03291f5-e54e-11ee-8430-704d7bc2ec86";
+  const decodedJWT = <JwtPayload & { userId: string }>jwtDecode(jwt);
+  if (decodedJWT.userId) {
+    return decodedJWT.userId;
+  }
+  return null;
+}
+
 export function transformParams(FP: IFilterParams): IFilterParams {
   switch (FP.sortBy) {
     case "Date":

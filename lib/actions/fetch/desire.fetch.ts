@@ -44,19 +44,29 @@ export async function fetchDesires(
 }
 
 export async function fetchUserPostedDesires(
-  userId: number
+  userId: string
 ): Promise<IDesire[]> {
-  await wait();
-  const desires = mockDesires as unknown;
-  return desires as IDesire[];
+  /* While Mocking */
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    await wait();
+    const desires = mockDesires as unknown;
+    return desires as IDesire[];
+  }
+
+  try {
+    const response = await CoreAPI.getUserDesires(userId);
+    return <IDesire[]>response.data;
+  } catch (error) {
+    return [];
+  }
 }
 
 export async function fetchSingleDesire(
   id: string
 ): Promise<IDesire | undefined> {
+  /* While Mocking */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     await wait();
-    console.log(id);
     const desires = mockDesires as unknown;
     return (desires as IDesire[]).find((desire) => desire.id === id);
   }

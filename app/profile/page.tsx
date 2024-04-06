@@ -1,3 +1,5 @@
+"use server";
+
 import EditProfileForm from "@/components/edit-profile-form";
 import SetAlert from "@/components/set-alert";
 import { Input } from "@/components/ui/input";
@@ -8,15 +10,18 @@ import {
   fetchUserAlerts,
   fetchUserProfile,
 } from "@/lib/actions/fetch/user.fetch";
+import { getUserFromTokenId, getUserId } from "@/lib/helpers";
 import { Pencil1Icon } from "@radix-ui/react-icons";
+import { cookies } from "next/headers";
 import { Suspense } from "react";
 
 export default async function ProfilePage() {
-  const user = await fetchUserProfile("0");
-  const tagsAlerted = await fetchUserAlerts("0");
+  const userId = getUserFromTokenId(cookies().get("auth")?.value ?? "");
+  const user = await fetchUserProfile(userId!);
+  const tagsAlerted = await fetchUserAlerts(userId!);
   return (
     <div className="m-3 p-4">
-      <EditProfileForm prop={user} />
+      {user && <EditProfileForm prop={user} />}
       <SetAlert alertTags={tagsAlerted} />
       <Suspense fallback={<>Loading...</>}>
         <UserDesireList />
