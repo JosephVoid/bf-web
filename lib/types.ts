@@ -44,7 +44,7 @@ export interface IDesire {
   views: number;
   wants: number;
   picture?: string;
-  posted_on: Date;
+  postedOn: Date;
 }
 
 export interface IDesireMeta {
@@ -65,12 +65,12 @@ export interface IOffer {
   user: string;
   price: number;
   picture?: string;
-  posted_on: Date;
+  bidOn: Date;
 }
 
 export interface ITag {
   id: string;
-  tag: string;
+  name: string;
 }
 
 export interface IUser {

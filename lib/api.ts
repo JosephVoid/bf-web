@@ -57,9 +57,7 @@ class CoreStub extends APIStub {
   }
 
   async getTags(): Promise<AxiosResponse> {
-    return this.axios.get(`/tags`, {
-      headers: { Authorization: getCookie("auth") },
-    });
+    return this.axios.get(`/tags`);
   }
 
   async getActivity(id: string, type: string): Promise<AxiosResponse> {
@@ -118,9 +116,7 @@ class CoreStub extends APIStub {
   }
 
   async getSingleDesire(id: string): Promise<AxiosResponse> {
-    return this.axios.get(`/desires/${id}`, {
-      headers: { Authorization: getCookie("auth") },
-    });
+    return this.axios.get(`/desires/${id}`);
   }
 
   async getAllBids(desireId: string): Promise<AxiosResponse> {

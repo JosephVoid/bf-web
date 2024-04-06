@@ -44,7 +44,7 @@ export function TagSelect({
       setTags(result);
       if (tagId) {
         let tag = result.find((tag) => tag.id === tagId);
-        setValue(tag?.tag.toLowerCase() ?? "");
+        setValue(tag?.name.toLowerCase() ?? "");
       }
     });
   }, []);
@@ -61,7 +61,7 @@ export function TagSelect({
             className="w-[200px] justify-between"
           >
             {value
-              ? tags.find((tag) => tag.tag.toLowerCase() === value)?.tag
+              ? tags.find((tag) => tag.name.toLowerCase() === value)?.name
               : "Select tags"}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -79,18 +79,18 @@ export function TagSelect({
               {tags.map((tag) => (
                 <CommandItem
                   key={tag.id}
-                  value={tag.tag}
+                  value={tag.name}
                   onSelect={(currentValue) => {
                     onSelectProp ? onSelectProp(tag) : null;
                     setValue(currentValue === value ? value : currentValue);
                     setOpen(false);
                   }}
                 >
-                  {tag.tag}
+                  {tag.name}
                   <CheckIcon
                     className={cn(
                       "ml-auto h-4 w-4",
-                      value === tag.tag ? "opacity-100" : "opacity-0"
+                      value === tag.name ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>

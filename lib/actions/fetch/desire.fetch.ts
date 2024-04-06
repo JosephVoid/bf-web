@@ -1,3 +1,5 @@
+"use server";
+
 import {
   IDesire,
   IDesireMeta,
@@ -7,7 +9,6 @@ import {
 } from "@/lib/types";
 import mockDesires from "../../mock/desires.json";
 import { transformParams, wait } from "@/lib/helpers";
-import { string } from "zod";
 import { CoreAPI } from "@/lib/api";
 
 export async function fetchDesires(
@@ -53,8 +54,17 @@ export async function fetchUserPostedDesires(
 export async function fetchSingleDesire(
   id: string
 ): Promise<IDesire | undefined> {
-  await wait();
-  console.log(id);
-  const desires = mockDesires as unknown;
-  return (desires as IDesire[]).find((desire) => desire.id === id);
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    await wait();
+    console.log(id);
+    const desires = mockDesires as unknown;
+    return (desires as IDesire[]).find((desire) => desire.id === id);
+  }
+
+  try {
+    const response = await CoreAPI.getSingleDesire(id);
+    return <IDesire>response.data;
+  } catch (error) {
+    console.log(error);
+  }
 }

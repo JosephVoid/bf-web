@@ -40,9 +40,16 @@ export function Offer({ prop }: { prop: IOffer }) {
   );
 }
 
-async function OfferList() {
+function OfferList() {
   const current_path = usePathname();
-  const offerList = await fetchOffers(current_path.slice(1));
+  const [offerList, setOfferList] = React.useState<IOffer[]>([]);
+
+  React.useEffect(() => {
+    fetchOffers(current_path.slice(1)).then((result) => {
+      setOfferList(result);
+    });
+  }, []);
+
   return (
     <div>
       {offerList.map((offer: IOffer, index: number) => (

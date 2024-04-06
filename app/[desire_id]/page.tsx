@@ -76,7 +76,7 @@ export default function SingleDesire() {
           <div className="my-4 flex justify-between opacity-80">
             <p className="text-sm flex items-center">
               <ClockIcon className="mr-1" /> Posted on{" "}
-              {new Date(desire?.posted_on ?? "").toLocaleDateString()}
+              {new Date(desire?.postedOn ?? "").toLocaleDateString()}
             </p>
             <p className="text-sm flex items-center">
               <PersonIcon className="mr-1" /> {desire?.wants} want this

@@ -261,7 +261,7 @@ export default function PostDesireForm() {
                         variant={"outline"}
                         key={index}
                       >
-                        {tag.tag}
+                        {tag.name}
                         <Cross1Icon
                           className="ml-2 cursor-pointer"
                           onClick={() => handleRemoveAlert(tag.id)}

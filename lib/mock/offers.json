@@ -6,7 +6,7 @@
     "price": 600,
     "user": "Gonzal Juidad",
     "picture": "/black_box.png",
-    "posted_on": "29/02/24"
+    "postedOn": "29/02/24"
   },
   {
     "id": "162b3b99-f447c637-4153-4a369b851-080",
@@ -15,7 +15,7 @@
     "price": 800,
     "user": "Jos Hector",
     "picture": "/sample.jpg",
-    "posted_on": "29/02/24"
+    "postedOn": "29/02/24"
   },
   {
     "id": "162b3b9c637-499-f4474a36153-b851-080",
@@ -24,7 +24,7 @@
     "price": 1600,
     "user": "Ana Uzer",
     "picture": "",
-    "posted_on": "29/02/24"
+    "postedOn": "29/02/24"
   },
   {
     "id": "162b3b4a369c637-4153-b99-f447851-080",
@@ -33,6 +33,6 @@
     "price": 500,
     "user": "Ana Uzer",
     "picture": "/sample.jpg",
-    "posted_on": "05/02/24"
+    "postedOn": "05/02/24"
   }
 ]
