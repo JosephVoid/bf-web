@@ -50,6 +50,7 @@ export async function fetchUserActivity(
     | "accepted"
     | "viewed-desire"
     | "viewed-bid"
+    | "posted-desire"
 ): Promise<string[]> {
   /* ---When Mocking---- */
   if (process.env.NEXT_PUBLIC_API_MOCK) {

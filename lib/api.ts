@@ -44,9 +44,15 @@ class CoreStub extends APIStub {
     });
   }
 
-  async wantDesires(id: string): Promise<AxiosResponse> {
+  async wantDesires(id: string, token: string): Promise<AxiosResponse> {
     return this.axios.post(`/desires/want/${id}`, null, {
-      headers: { Authorization: getCookie("auth") },
+      headers: { Authorization: token },
+    });
+  }
+
+  async unWantDesires(id: string, token: string): Promise<AxiosResponse> {
+    return this.axios.post(`/desires/not-want/${id}`, null, {
+      headers: { Authorization: token },
     });
   }
 

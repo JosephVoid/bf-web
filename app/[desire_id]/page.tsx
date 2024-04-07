@@ -10,6 +10,8 @@ import {
   EyeOpenIcon,
   HandIcon,
   CheckIcon,
+  ExclamationTriangleIcon,
+  BellIcon,
 } from "@radix-ui/react-icons";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,12 +25,14 @@ import { LoginForm, SignUpForm } from "@/components/profile";
 import { unWantDesire, wantDesire } from "@/lib/actions/act/desire.act";
 import { getUUID, getUserId } from "@/lib/helpers";
 import { fetchUserActivity } from "@/lib/actions/fetch/user.fetch";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function SingleDesire() {
   const current_path = usePathname();
   const [desire, setDesire] = React.useState<IDesire>();
   const [wantAct, setWantAct] = React.useState<string[]>([]);
   const [offerAct, setOfferAct] = React.useState<string[]>([]);
+  const [desirePosted, setDesirePosted] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [found, setFound] = React.useState(true);
   const [wanted, setWanted] = React.useState(false);
@@ -37,42 +41,94 @@ export default function SingleDesire() {
   );
   const [modalState, setModalState] = React.useState<boolean>(false);
   const router = useRouter();
+  const { toast } = useToast();
 
-  function handleWantOnClick() {
+  async function handleWantOnClick() {
     if (wantAct.includes(desire?.id!)) return null;
     if (hasCookie("auth") && !wanted) {
-      wantDesire("user", desire?.id ?? "").then((result) => {
-        if (result) setWanted(true);
+      const result = await wantDesire(desire?.id ?? "");
+      if (result) setWanted(true);
+
+      toast({
+        title: (
+          <div className="flex items-center">
+            {result && (
+              <>
+                <CheckIcon className="mr-2" />
+                <span className="first-letter:capitalize">
+                  You will be Alerted on Offers
+                </span>
+              </>
+            )}
+            {!result && (
+              <>
+                <ExclamationTriangleIcon className="mr-2" />
+                <span className="first-letter:capitalize">
+                  Error Encounterd
+                </span>
+              </>
+            )}
+          </div>
+        ),
       });
     } else if (hasCookie("auth") && wanted) {
-      unWantDesire("user", desire?.id ?? "").then((result) => {
-        if (result) setWanted(false);
+      const result = await unWantDesire(desire?.id ?? "");
+      if (result) setWanted(false);
+
+      toast({
+        title: (
+          <div className="flex items-center">
+            {result && (
+              <>
+                <CheckIcon className="mr-2" />
+                <span className="first-letter:capitalize">
+                  You won't be Alerted on Offers
+                </span>
+              </>
+            )}
+            {!result && (
+              <>
+                <ExclamationTriangleIcon className="mr-2" />
+                <span className="first-letter:capitalize">
+                  Error Encounterd
+                </span>
+              </>
+            )}
+          </div>
+        ),
       });
     }
   }
 
   function handleOfferOnClick() {
-    if (offerAct.includes(desire?.id!)) return null;
+    if (offerAct.includes(desire?.id!) || desirePosted.includes(desire?.id!))
+      return null;
     if (hasCookie("auth")) router.push(`${current_path}/make-an-offer`);
   }
 
   React.useEffect(() => {
-    fetchSingleDesire(getUUID(current_path.split("/")[1])).then((result) => {
-      if (result) setDesire(result);
-      else setFound(false);
-      setLoading(false);
-    });
+    fetchSingleDesire(getUUID(current_path.split("/")[1])).then(
+      (desire_result) => {
+        if (desire_result) setDesire(desire_result);
+        else setFound(false);
 
-    const userId = getUserId();
+        const userId = getUserId();
 
-    if (userId) {
-      fetchUserActivity(userId, "wanted").then((result) => {
-        setWantAct(result);
-      });
-      fetchUserActivity(userId, "offered").then((result) => {
-        setOfferAct(result);
-      });
-    }
+        if (userId) {
+          fetchUserActivity(userId, "wanted").then((result) => {
+            if (result.includes(desire_result?.id!)) setWanted(true);
+          });
+          fetchUserActivity(userId, "offered").then((result) => {
+            setOfferAct(result);
+          });
+          fetchUserActivity(userId, "posted-desire").then((result) => {
+            setDesirePosted(result);
+          });
+        }
+
+        setLoading(false);
+      }
+    );
   }, []);
 
   return loading ? (
@@ -129,18 +185,16 @@ export default function SingleDesire() {
                   }
                 >
                   <Button
-                    variant={"ghost"}
+                    variant={"secondary"}
                     onClick={handleWantOnClick}
-                    disabled={wantAct.includes(desire?.id!)}
+                    disabled={desirePosted.includes(desire?.id!)}
                   >
                     {wanted ? (
-                      <>
-                        <CheckIcon className="mr-1" />
-                        You'll be Alerted
-                      </>
+                      <>Don't Alert Me</>
                     ) : (
                       <>
-                        <HandIcon className="mr-1" />I want this
+                        <BellIcon className="mr-1" />
+                        Alert Me
                       </>
                     )}
                   </Button>
@@ -152,7 +206,12 @@ export default function SingleDesire() {
                   }
                 >
                   <div onClick={handleOfferOnClick}>
-                    <Button disabled={offerAct.includes(desire?.id!)}>
+                    <Button
+                      disabled={
+                        offerAct.includes(desire?.id!) ||
+                        desirePosted.includes(desire?.id!)
+                      }
+                    >
                       Make an Offer
                     </Button>
                   </div>

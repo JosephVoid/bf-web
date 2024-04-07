@@ -36,20 +36,48 @@ export async function postDesire(
   }
 }
 
-export async function wantDesire(
-  userId: string,
-  desireId: string
-): Promise<boolean> {
-  await wait();
-  return true;
+export async function wantDesire(desireId: string): Promise<boolean> {
+  /* While Mocking */
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    await wait();
+    return true;
+  }
+
+  try {
+    const response = await CoreAPI.wantDesires(
+      desireId,
+      cookies().get("auth")?.value ?? ""
+    );
+    if (response.status === 200) return true;
+    else {
+      console.log(response.data);
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
 }
 
-export async function unWantDesire(
-  userId: string,
-  desireId: string
-): Promise<boolean> {
-  await wait();
-  return true;
+export async function unWantDesire(desireId: string): Promise<boolean> {
+  /* While Mocking */
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    await wait();
+    return true;
+  }
+
+  try {
+    const response = await CoreAPI.unWantDesires(
+      desireId,
+      cookies().get("auth")?.value ?? ""
+    );
+    if (response.status === 200) return true;
+    else {
+      console.log(response.data);
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
 }
 
 export async function viewDesire(userId: string, desireId: string) {
