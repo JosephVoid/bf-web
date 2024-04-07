@@ -56,9 +56,9 @@ class CoreStub extends APIStub {
     });
   }
 
-  async viewItem(id: string): Promise<AxiosResponse> {
+  async viewItem(id: string, token: string): Promise<AxiosResponse> {
     return this.axios.post(`/view/desire/${id}`, null, {
-      headers: { Authorization: getCookie("auth") },
+      headers: { Authorization: token },
     });
   }
 

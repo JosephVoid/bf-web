@@ -51,3 +51,14 @@ export async function sendOTP(params: IOTP): Promise<boolean> {
   await wait();
   return true;
 }
+
+export async function viewItem(id: string, userId: string): Promise<void> {
+  /* ---When Mocking---- */
+  if (process.env.NEXT_PUBLIC_API_MOCK) await wait();
+
+  try {
+    await CoreAPI.viewItem(id, cookies().get("auth")?.value ?? "");
+  } catch (error) {
+    console.log(error);
+  }
+}

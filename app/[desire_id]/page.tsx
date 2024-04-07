@@ -26,6 +26,8 @@ import { unWantDesire, wantDesire } from "@/lib/actions/act/desire.act";
 import { getUUID, getUserId } from "@/lib/helpers";
 import { fetchUserActivity } from "@/lib/actions/fetch/user.fetch";
 import { useToast } from "@/components/ui/use-toast";
+import { CoreAPI } from "@/lib/api";
+import { viewItem } from "@/lib/actions/act/user.act";
 
 export default function SingleDesire() {
   const current_path = usePathname();
@@ -114,9 +116,9 @@ export default function SingleDesire() {
 
         const userId = getUserId();
 
-        if (userId) {
+        if (userId && desire_result) {
           fetchUserActivity(userId, "wanted").then((result) => {
-            if (result.includes(desire_result?.id!)) setWanted(true);
+            if (result.includes(desire_result?.id)) setWanted(true);
           });
           fetchUserActivity(userId, "offered").then((result) => {
             setOfferAct(result);
@@ -124,6 +126,7 @@ export default function SingleDesire() {
           fetchUserActivity(userId, "posted-desire").then((result) => {
             setDesirePosted(result);
           });
+          viewItem(desire_result?.id, userId);
         }
 
         setLoading(false);
