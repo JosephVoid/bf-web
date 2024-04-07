@@ -13,14 +13,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { Label } from "./ui/label";
-import { AvatarIcon, ImageIcon, Pencil2Icon } from "@radix-ui/react-icons";
+import {
+  AvatarIcon,
+  CheckIcon,
+  ExclamationTriangleIcon,
+  ImageIcon,
+  Pencil2Icon,
+} from "@radix-ui/react-icons";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import React from "react";
 import { makeOffer } from "@/lib/actions/act/offer.act";
 import { usePathname, useRouter } from "next/navigation";
-import { getUUID } from "@/lib/helpers";
+import { fileToBase64, getUUID } from "@/lib/helpers";
+import { fileUpload } from "@/lib/actions/act/file.act";
+import { useToast } from "@/components/ui/use-toast";
+import Loader from "./loader";
 
 const MAX_PIC_SIZE = 1000000;
 
@@ -54,13 +63,48 @@ export default function MakeAnOfferForm() {
   });
 
   const [picturePreview, setPicturePreview] = React.useState<File | null>();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
   const current_path = usePathname();
+  const { toast } = useToast();
 
-  function handleOffer(data: MakeAnOfferSchemaType) {
-    makeOffer(data).then((result) => {
-      if (result) router.replace(`/${current_path.split("/")[1]}`);
+  async function handleOffer(data: MakeAnOfferSchemaType) {
+    setIsLoading(true);
+    const picFile = await fileUpload(
+      await fileToBase64(data.picture),
+      data.picture?.name ?? null
+    );
+
+    const result = await makeOffer({
+      description: data.description,
+      price: data.price,
+      picture: picFile,
+      desireId: getUUID(current_path.split("/")[1]),
     });
+
+    toast({
+      title: (
+        <div className="flex items-center">
+          {result && (
+            <>
+              <CheckIcon className="mr-2" />
+              <span className="first-letter:capitalize">Offer Posted</span>
+            </>
+          )}
+          {!result && (
+            <>
+              <ExclamationTriangleIcon className="mr-2" />
+              <span className="first-letter:capitalize">Error Encounterd</span>
+            </>
+          )}
+        </div>
+      ),
+    });
+
+    if (result)
+      setTimeout(() => router.replace(`/${current_path.split("/")[1]}`), 1000);
+
+    setIsLoading(false);
   }
 
   return (
@@ -152,7 +196,7 @@ export default function MakeAnOfferForm() {
                 </div>
               </div>
               <Button className="w-1/3" type="submit">
-                Submit Offer
+                {isLoading ? <Loader /> : "Submit Offer"}
               </Button>
             </div>
           </form>

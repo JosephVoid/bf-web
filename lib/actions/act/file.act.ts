@@ -14,6 +14,11 @@ export async function fileUpload(
   file: string | null,
   name: string | null
 ): Promise<string | null> {
+  /* While Mocking */
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    return "/mock/picture.jpg";
+  }
+
   if (file && name) {
     let blob = Base64ToBlob(file);
     const buffer = Buffer.from(await blob.arrayBuffer());

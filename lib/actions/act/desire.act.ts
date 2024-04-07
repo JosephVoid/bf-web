@@ -12,6 +12,7 @@ export async function postDesire(
   picture: string | null,
   tags_id: string[]
 ): Promise<string | boolean> {
+  /* While Mocking */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     console.log({ title, description, price, picture, tags_id });
     return true;
