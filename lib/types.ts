@@ -63,6 +63,10 @@ export interface IOffer {
   description: string;
   for_desire: string;
   bidder: string;
+  bidder_phone?: string;
+  bidder_email?: string;
+  bidder_description?: string;
+  bidder_picture?: string;
   price: number;
   picture?: string;
   bidOn: Date;

@@ -40,7 +40,21 @@ export async function makeOffer(
   }
 }
 
-export async function acceptOffer(offerId: string, userId: string) {
-  await wait();
-  return true;
+export async function acceptOffer(offerId: string): Promise<boolean> {
+  /* While Mocking */
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    return true;
+  }
+
+  try {
+    const response = await CoreAPI.acceptBid(
+      offerId,
+      cookies().get("auth")?.value ?? ""
+    );
+    if (response.status === 200) return true;
+    else return false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 }

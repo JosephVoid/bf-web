@@ -97,9 +97,9 @@ class CoreStub extends APIStub {
     });
   }
 
-  async acceptBid(bidId: string): Promise<AxiosResponse> {
+  async acceptBid(bidId: string, token: string): Promise<AxiosResponse> {
     return this.axios.post(`/bids/accept/${bidId}`, null, {
-      headers: { Authorization: getCookie("auth") },
+      headers: { Authorization: token },
     });
   }
 

@@ -3,9 +3,9 @@
 import Loader from "@/components/loader";
 import { Button } from "@/components/ui/button";
 import { fetchSingleOffer } from "@/lib/actions/fetch/offer.fetch";
-import { getTitle } from "@/lib/helpers";
-import { IOffer } from "@/lib/types";
-import { CheckIcon } from "@radix-ui/react-icons";
+import { getTitle, getUserId } from "@/lib/helpers";
+import { IOffer, IUser } from "@/lib/types";
+import { CheckIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -14,6 +14,10 @@ import { hasCookie } from "cookies-next";
 import { LoginForm, SignUpForm } from "@/components/profile";
 import { acceptOffer } from "@/lib/actions/act/offer.act";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  fetchUserActivity,
+  fetchUserProfile,
+} from "@/lib/actions/fetch/user.fetch";
 
 export default function SingleOffer() {
   const [offer, setOffer] = React.useState<IOffer>();
@@ -27,31 +31,50 @@ export default function SingleOffer() {
   const current_path = usePathname();
   const { toast } = useToast();
 
-  React.useEffect(() => {
-    fetchSingleOffer(current_path.split("/")[2]).then((result) => {
-      if (result) setOffer(result);
+  React.useLayoutEffect(() => {
+    fetchSingleOffer(current_path.split("/")[2]).then((offer_result) => {
+      if (offer_result) setOffer(offer_result);
       else setFound(false);
+
+      const userId = getUserId();
+
+      if (userId && offer_result) {
+        fetchUserActivity(userId, "accepted").then((result) => {
+          if (result.includes(offer_result?.id)) setAccepted(true);
+        });
+      }
+
       setLoading(false);
     });
   }, []);
 
   function handleAcceptOnClick() {
-    if (hasCookie("auth")) {
-      acceptOffer("0", "0").then((result: boolean) => {
-        if (result) {
-          setAccepted(true);
-          toast({
-            title: (
-              <div className="flex items-center">
-                <CheckIcon className="mr-2" />
-                <span className="first-letter:capitalize">
-                  successfully updated ssid
-                </span>
-              </div>
-            ),
-            description: "description",
-          });
-        }
+    if (hasCookie("auth") && offer?.id && !accepted) {
+      acceptOffer(offer?.id).then((result: boolean) => {
+        if (result) setAccepted(true);
+
+        toast({
+          title: (
+            <div className="flex items-center">
+              {result && (
+                <>
+                  <CheckIcon className="mr-2" />
+                  <span className="first-letter:capitalize">
+                    Offer Accepted
+                  </span>
+                </>
+              )}
+              {!result && (
+                <>
+                  <ExclamationTriangleIcon className="mr-2" />
+                  <span className="first-letter:capitalize">
+                    Error Encounterd
+                  </span>
+                </>
+              )}
+            </div>
+          ),
+        });
       });
     }
   }
@@ -94,6 +117,7 @@ export default function SingleOffer() {
             <Button
               onClick={handleAcceptOnClick}
               variant={accepted ? "secondary" : "default"}
+              disabled={accepted}
             >
               {accepted ? (
                 <>
@@ -137,6 +161,32 @@ export default function SingleOffer() {
           </div>
         </DialogContent>
       </Dialog>
+      {accepted && (
+        <>
+          <p className="mb-2 opacity-70 italic">
+            Contact {offer?.bidder} with the below details, to get your item
+          </p>
+          <div className="flex bg-slate-100 p-3 rounded-md outline outline-slate-400 outline-1">
+            {offer?.bidder_picture && (
+              <div className="w-1/3">
+                <Image
+                  src={offer?.bidder_picture}
+                  height={100}
+                  width={100}
+                  alt="desire"
+                  className="rounded-md mr-5"
+                />
+              </div>
+            )}
+            <div className="flex flex-col">
+              <p className="font-bold">{offer?.bidder}</p>
+              <p>Phone: {offer?.bidder_phone}</p>
+              <p>Email: {offer?.bidder_email}</p>
+              <p>{offer?.bidder_description}</p>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
