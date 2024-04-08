@@ -1,11 +1,19 @@
 "use client";
 
-import { Cross1Icon, ExitIcon } from "@radix-ui/react-icons";
+import {
+  CheckIcon,
+  Cross1Icon,
+  ExclamationTriangleIcon,
+  ExitIcon,
+} from "@radix-ui/react-icons";
 import { TagSelect } from "./tag-sort-select";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { ITag } from "@/lib/types";
 import React from "react";
+import { setAlerts } from "@/lib/actions/act/user.act";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
   /* These methods ensure that this component is rendered on the client
@@ -17,6 +25,9 @@ export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
   }, []);
 
   const [selectedtags, setSelectedTags] = React.useState<ITag[]>(alertTags);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const { toast } = useToast();
+  const router = useRouter();
 
   function handleRemoveAlert(id: string) {
     setSelectedTags(selectedtags.filter((tag) => tag.id !== id));
@@ -43,6 +54,36 @@ export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
     return false;
   }
 
+  async function saveAlerts() {
+    setIsLoading(true);
+    const alerts: string[] = [];
+    selectedtags.forEach((tag) => alerts.push(tag.id));
+    const result = await setAlerts(alerts);
+
+    toast({
+      title: (
+        <div className="flex items-center">
+          {result && (
+            <>
+              {" "}
+              <CheckIcon className="mr-2" />
+              <span className="first-letter:capitalize">Alerts Updated</span>
+            </>
+          )}
+          {!result && (
+            <>
+              <ExclamationTriangleIcon className="mr-2" />
+              <span className="first-letter:capitalize">Error Encounterd</span>
+            </>
+          )}
+        </div>
+      ),
+    });
+
+    setIsLoading(false);
+    setTimeout(() => window.location.reload(), 1000);
+  }
+
   return isClient ? (
     <>
       <h2 className="text-2xl font-medium mb-3"> Set Alerts</h2>
@@ -65,7 +106,11 @@ export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
             ))}
           </div>
         </div>
-        <Button className="w-1/3" disabled={!alertChanged()}>
+        <Button
+          className="w-1/3"
+          disabled={!alertChanged()}
+          onClick={saveAlerts}
+        >
           Save Alert
         </Button>
       </div>

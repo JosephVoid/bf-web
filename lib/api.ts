@@ -81,9 +81,9 @@ class CoreStub extends APIStub {
     });
   }
 
-  async setAlert(body: any): Promise<AxiosResponse> {
+  async setAlert(body: any, token: string): Promise<AxiosResponse> {
     return this.axios.post(`/set-alert`, body, {
-      headers: { Authorization: getCookie("auth") },
+      headers: { Authorization: token },
     });
   }
 

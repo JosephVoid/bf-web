@@ -26,7 +26,24 @@ export async function editProfile(params: any): Promise<boolean> {
   }
 }
 
-export async function setAlerts(tags: number[]) {}
+export async function setAlerts(tags: string[]): Promise<boolean> {
+  /* ---When Mocking---- */
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    console.log(tags);
+    return true;
+  }
+  try {
+    const response = await CoreAPI.setAlert(
+      { tag_ids: tags },
+      cookies().get("auth")?.value ?? ""
+    );
+    if (response.status === 200) return true;
+    else return false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
 
 export async function signOut(): Promise<void> {
   cookies().delete("auth");

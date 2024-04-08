@@ -145,6 +145,7 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
 
     if (result) setEnableEdit(false);
     setIsLoading(false);
+    setTimeout(() => window.location.reload(), 1000);
   }
 
   function isolateChanges(values: z.infer<typeof formSchema>, user: IUser) {
