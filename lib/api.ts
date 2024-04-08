@@ -151,9 +151,9 @@ class CoreStub extends APIStub {
     });
   }
 
-  async updateUser(): Promise<AxiosResponse> {
-    return this.axios.get(`/users`, {
-      headers: { Authorization: getCookie("auth") },
+  async updateUser(body: any, token: string): Promise<AxiosResponse> {
+    return this.axios.patch(`/users/`, body, {
+      headers: { Authorization: token },
     });
   }
 

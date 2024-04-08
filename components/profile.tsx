@@ -162,7 +162,7 @@ function SignedInProfile() {
   }
 
   React.useEffect(() => {
-    fetchUserProfile(getUserId()).then((result) => {
+    fetchUserProfile(getUserId()!).then((result) => {
       console.log(result);
       if (result) setUser(result);
     });

@@ -19,10 +19,7 @@ export async function fetchDesires(
     await wait();
     const desires = mockDesires as unknown;
     const resultDesires = desires as IDesire[];
-    const filtereDesires = resultDesires.slice(
-      3 * (Number(filterParams?.page ?? 1) - 1),
-      Number(filterParams?.page ?? 1) * 3
-    );
+    const filtereDesires = resultDesires.slice(0, 3);
 
     const desiresWMeta = {
       meta: {

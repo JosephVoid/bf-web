@@ -6,7 +6,25 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { AuthAPI, CoreAPI } from "@/lib/api";
 
-export async function editProfile(params: IEditProfile) {}
+export async function editProfile(params: any): Promise<boolean> {
+  /* ---When Mocking---- */
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    console.log(params);
+    return true;
+  }
+
+  try {
+    const response = await CoreAPI.updateUser(
+      params,
+      cookies().get("auth")?.value ?? ""
+    );
+    if (response.status === 200) return true;
+    else return false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
 
 export async function setAlerts(tags: number[]) {}
 

@@ -8,6 +8,14 @@ import { ITag } from "@/lib/types";
 import React from "react";
 
 export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
+  /* These methods ensure that this component is rendered on the client
+   */
+  const [isClient, setIsClient] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const [selectedtags, setSelectedTags] = React.useState<ITag[]>(alertTags);
 
   function handleRemoveAlert(id: string) {
@@ -35,7 +43,7 @@ export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
     return false;
   }
 
-  return (
+  return isClient ? (
     <>
       <h2 className="text-2xl font-medium mb-3"> Set Alerts</h2>
       <div className="rounded-md p-4 border-[1px] mb-8 flex flex-col">
@@ -62,5 +70,7 @@ export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
         </Button>
       </div>
     </>
+  ) : (
+    <></>
   );
 }

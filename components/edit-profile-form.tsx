@@ -13,12 +13,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { Label } from "./ui/label";
-import { AvatarIcon, Pencil2Icon } from "@radix-ui/react-icons";
+import {
+  AvatarIcon,
+  CheckIcon,
+  ExclamationTriangleIcon,
+  Pencil2Icon,
+} from "@radix-ui/react-icons";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IUser } from "@/lib/types";
 import Image from "next/image";
-import { urlToFile } from "@/lib/helpers";
+import { fileToBase64, urlToFile } from "@/lib/helpers";
 import React from "react";
 import {
   TooltipProvider,
@@ -26,6 +31,10 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip";
+import { fileUpload } from "@/lib/actions/act/file.act";
+import { editProfile } from "@/lib/actions/act/user.act";
+import { useToast } from "@/components/ui/use-toast";
+import Loader from "./loader";
 
 const MAX_PIC_SIZE = 100000;
 
@@ -49,12 +58,12 @@ const formSchema = z
       }),
     email: z.string().email("Invalid Email"),
     phone: z.string().length(13, "Phone number must be 13 characters"),
-    oldPass: z
+    old_password: z
       .string()
       .max(30, "Password too long")
       .min(8, "Password too short")
       .optional(),
-    newPass: z
+    new_password: z
       .string()
       .max(30, "Password too long")
       .min(8, "Password too short")
@@ -90,6 +99,8 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
 
   const [picturePreview, setPicturePreview] = React.useState<File | null>();
   const [enableEdit, setEnableEdit] = React.useState(false);
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     urlToFile(prop.picture).then((result: File | null) => {
@@ -97,8 +108,53 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
     });
   }, []);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    const updateData = isolateChanges(values, prop);
+
+    const picFile = updateData.picture
+      ? await fileUpload(
+          await fileToBase64(updateData.picture),
+          updateData.picture?.name ?? null
+        )
+      : null;
+
+    if (updateData.picture) updateData.picture = picFile;
+
+    const result = await editProfile(updateData);
+
+    toast({
+      title: (
+        <div className="flex items-center">
+          {result && (
+            <>
+              {" "}
+              <CheckIcon className="mr-2" />
+              <span className="first-letter:capitalize">Profile Updated</span>
+            </>
+          )}
+          {!result && (
+            <>
+              <ExclamationTriangleIcon className="mr-2" />
+              <span className="first-letter:capitalize">Error Encounterd</span>
+            </>
+          )}
+        </div>
+      ),
+    });
+
+    if (result) setEnableEdit(false);
+    setIsLoading(false);
+  }
+
+  function isolateChanges(values: z.infer<typeof formSchema>, user: IUser) {
+    const requestObject: any = {};
+
+    Object.entries(values).forEach(([k, v]) => {
+      if (v !== undefined && v !== (user as any)[k]) requestObject[k] = v;
+    });
+
+    return requestObject;
   }
 
   return (
@@ -183,7 +239,7 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
               <div className="mb-4 flex space-x-5">
                 <FormField
                   control={form.control}
-                  name="oldPass"
+                  name="old_password"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Old Password</FormLabel>
@@ -201,7 +257,7 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
                 />
                 <FormField
                   control={form.control}
-                  name="newPass"
+                  name="new_password"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>New Password</FormLabel>
@@ -283,7 +339,7 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
                 </div>
               </div>
               <Button type="submit" className="w-1/3" disabled={!enableEdit}>
-                Update
+                {isLoading ? <Loader /> : "Update"}
               </Button>
               <TooltipProvider>
                 <Tooltip>
