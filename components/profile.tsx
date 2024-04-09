@@ -31,6 +31,7 @@ import {
   AvatarIcon,
   ExitIcon,
   ExclamationTriangleIcon,
+  CheckIcon,
 } from "@radix-ui/react-icons";
 import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 import z from "zod";
@@ -46,6 +47,7 @@ import { redirect, useRouter } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import BFAlert from "./custom-alert";
 import { getUserId } from "@/lib/helpers";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Profile() {
   /* These methods ensure that this component is rendered on the client 
@@ -311,10 +313,21 @@ export function SignUpForm({
   const [signUpDetails, setSignUpDetails] =
     React.useState<signUpFormSchematype>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const { toast } = useToast();
 
   async function handleDetails(data: signUpFormSchematype) {
     setIsLoading(true);
-    await sendOTP(data);
+    const result = await sendOTP(data);
+    result
+      ? toast({
+          title: (
+            <div className="flex items-center">
+              <ExclamationTriangleIcon className="mr-2" />
+              <span className="first-letter:capitalize">OTP Error</span>
+            </div>
+          ),
+        })
+      : null;
     setSignUpDetails(data);
   }
 
@@ -456,11 +469,35 @@ function OTPInput({
 
   const current_path = usePathname();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const { toast } = useToast();
 
   async function handleOTP() {
     setIsLoading(true);
     let otp = form.getValues("otp");
-    await signUp(data, otp, current_path);
+    const result = await signUp(data, otp.toString(), current_path);
+
+    toast({
+      title: (
+        <div className="flex items-center">
+          {result && (
+            <>
+              {" "}
+              <CheckIcon className="mr-2" />
+              <span className="first-letter:capitalize">
+                Sucessfully Signed Up, Welcome aboard!
+              </span>
+            </>
+          )}
+          {!result && (
+            <>
+              {" "}
+              <ExclamationTriangleIcon className="mr-2" />
+              <span className="first-letter:capitalize">Error Encounterd</span>
+            </>
+          )}
+        </div>
+      ),
+    });
     onComplete?.();
   }
 

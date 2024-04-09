@@ -33,7 +33,6 @@ export async function fetchDesires(
   }
 
   try {
-    console.log(filterParams.search);
     const response =
       filterParams.search !== ""
         ? await CoreAPI.searchDesires(
