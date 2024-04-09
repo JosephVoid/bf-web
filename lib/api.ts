@@ -112,7 +112,6 @@ class CoreStub extends APIStub {
         "per-page": 20,
         page: params.page,
       },
-      headers: { Authorization: getCookie("auth") },
     });
   }
 
@@ -129,7 +128,6 @@ class CoreStub extends APIStub {
         "per-page": 20,
         page: params.page,
       },
-      headers: { Authorization: getCookie("auth") },
     });
   }
 

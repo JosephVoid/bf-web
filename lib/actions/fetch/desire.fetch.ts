@@ -33,7 +33,14 @@ export async function fetchDesires(
   }
 
   try {
-    const response = await CoreAPI.getDesires(transformParams(filterParams));
+    console.log(filterParams.search);
+    const response =
+      filterParams.search !== ""
+        ? await CoreAPI.searchDesires(
+            transformParams(filterParams),
+            filterParams.search
+          )
+        : await CoreAPI.getDesires(transformParams(filterParams));
     return <IDesireMeta>response.data;
   } catch (error) {
     return null;
