@@ -9,6 +9,7 @@ export default function Header() {
 
   function getHeader() {
     if (current_path.split("/")[1] === "profile") return "Profile";
+    else if (current_path.split("/")[1] === "search") return "Search";
     else if (current_path.split("/")[2] === "make-an-offer") return "Offer";
     else if (
       current_path.split("/")[2] !== "make-an-offer" &&

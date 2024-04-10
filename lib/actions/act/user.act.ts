@@ -118,7 +118,10 @@ export async function sendOTP(params: IOTP): Promise<boolean> {
 
 export async function viewItem(id: string, userId: string): Promise<void> {
   /* ---When Mocking---- */
-  if (process.env.NEXT_PUBLIC_API_MOCK) await wait();
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    await wait();
+    return;
+  }
 
   try {
     await CoreAPI.viewItem(id, cookies().get("auth")?.value ?? "");

@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { fetchOffers } from "@/lib/actions/fetch/offer.fetch";
 import React from "react";
 import { getUUID } from "@/lib/helpers";
+import { ArchiveIcon } from "@radix-ui/react-icons";
 
 export function Offer({ prop }: { prop: IOffer }) {
   const current_path = usePathname();
@@ -51,11 +52,18 @@ function OfferList() {
     });
   }, []);
 
-  return (
+  return offerList.length > 0 ? (
     <div>
       {offerList.map((offer: IOffer, index: number) => (
         <Offer key={index} prop={offer} />
       ))}
+    </div>
+  ) : (
+    <div className="flex justify-center">
+      <div className="flex flex-col items-center text-lg my-6 opacity-45">
+        <ArchiveIcon width={40} height={40} className="mb-4" />
+        No Offers
+      </div>
     </div>
   );
 }

@@ -8,6 +8,8 @@ import { fetchDesires } from "@/lib/actions/fetch/desire.fetch";
 import { IDesire, IDesireMeta, IFilterParams } from "@/lib/types";
 import Paginate from "./paginate";
 import React from "react";
+import { ArchiveIcon } from "@radix-ui/react-icons";
+import Loader from "./loader";
 
 export function Desire({ prop }: { prop: IDesire }) {
   return (
@@ -58,16 +60,20 @@ export function Desire({ prop }: { prop: IDesire }) {
 
 export default function DesireList({ params }: { params: IFilterParams }) {
   const [desireFetched, setDesireFetched] = React.useState<IDesireMeta>();
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     if (params.sortBy !== "" && params.sortDir !== "") {
       fetchDesires(params).then((fetched) => {
         if (fetched) setDesireFetched(fetched);
+        setIsLoading(false);
       });
     }
   }, [params]);
 
-  return (
+  return isLoading ? (
+    <Loader dark />
+  ) : desireFetched?.result.length! > 0 ? (
     <>
       <div>
         {desireFetched?.result.map((desire: IDesire, index: number) => (
@@ -79,6 +85,15 @@ export default function DesireList({ params }: { params: IFilterParams }) {
           itemCount={desireFetched?.meta.total ?? 0}
           perPage={desireFetched?.meta.perPage ?? 1}
         />
+      </div>
+    </>
+  ) : (
+    <>
+      <div className="flex justify-center">
+        <div className="flex flex-col items-center text-lg my-6 opacity-45">
+          <ArchiveIcon width={40} height={40} className="mb-4" />
+          No Desires
+        </div>
       </div>
     </>
   );
