@@ -36,11 +36,11 @@ import { fileToBase64 } from "@/lib/helpers";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
-const MAX_PIC_SIZE = 1000000;
+const MAX_PIC_SIZE = 5000000;
 
 const formSchema = z.object({
-  title: z.string().max(25, "Title too long"),
-  description: z.string().max(500, "Description too long"),
+  title: z.string().max(50, "Title too long"),
+  description: z.string().max(800, "Description too long"),
   price: z.coerce
     .number()
     .lte(999999, "Price too much")

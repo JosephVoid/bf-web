@@ -31,7 +31,12 @@ export default function Search() {
         onChange={(e) => setSearchQ(e.target.value)}
         defaultValue={useSearchParams().get("query") ?? ""}
       />
-      <Button type="submit" className="relative" onClick={handleSearchClick}>
+      <Button
+        type="submit"
+        className="relative"
+        onClick={handleSearchClick}
+        variant={"default"}
+      >
         <FontAwesomeIcon
           icon={faSearch}
           className="text-muted w-1/2 absolute"

@@ -166,9 +166,9 @@ export default function SingleOffer() {
           <p className="mb-2 opacity-70 italic">
             Contact {offer?.bidder} with the below details, to get your item
           </p>
-          <div className="flex bg-slate-100 p-3 rounded-md outline outline-slate-400 outline-1">
+          <div className="flex bg-slate-100 p-3 rounded-md outline outline-slate-400 outline-1 mb-4">
             {offer?.bidder_picture && (
-              <div className="w-1/3">
+              <div>
                 <Image
                   src={offer?.bidder_picture}
                   height={100}

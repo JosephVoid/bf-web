@@ -5,7 +5,7 @@ import * as Minio from "minio";
 const minioClient = new Minio.Client({
   endPoint: process.env.NEXT_PUBLIC_MINIO_URL ?? "",
   port: Number(process.env.NEXT_PUBLIC_MINIO_PORT),
-  useSSL: true,
+  useSSL: false,
   accessKey: process.env.NEXT_PUBLIC_MINIO_ACSK ?? "",
   secretKey: process.env.NEXT_PUBLIC_MINIO_SECK ?? "",
 });
@@ -23,7 +23,7 @@ export async function fileUpload(
     let blob = Base64ToBlob(file);
     const buffer = Buffer.from(await blob.arrayBuffer());
 
-    const bucket = "yoseph-test-bucket";
+    const bucket = process.env.NEXT_PUBLIC_MINIO_BUCKET ?? "";
 
     const exists = await minioClient.bucketExists(bucket);
     if (exists) {

@@ -36,7 +36,7 @@ import { editProfile } from "@/lib/actions/act/user.act";
 import { useToast } from "@/components/ui/use-toast";
 import Loader from "./loader";
 
-const MAX_PIC_SIZE = 100000;
+const MAX_PIC_SIZE = 5000000;
 
 const formSchema = z
   .object({

@@ -31,7 +31,7 @@ import { fileUpload } from "@/lib/actions/act/file.act";
 import { useToast } from "@/components/ui/use-toast";
 import Loader from "./loader";
 
-const MAX_PIC_SIZE = 1000000;
+const MAX_PIC_SIZE = 5000000;
 
 const formSchema = z.object({
   description: z

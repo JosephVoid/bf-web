@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [process.env.NEXT_PUBLIC_MINIO_URL],
+    remotePatterns: [
+      {
+        protocol: process.env.NEXT_PUBLIC_MINIO_PROT,
+        hostname: process.env.NEXT_PUBLIC_MINIO_URL,
+        port: process.env.NEXT_PUBLIC_MINIO_PORT,
+      },
+    ],
   },
 };
 

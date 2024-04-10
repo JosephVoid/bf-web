@@ -318,7 +318,7 @@ export function SignUpForm({
   async function handleDetails(data: signUpFormSchematype) {
     setIsLoading(true);
     const result = await sendOTP(data);
-    result
+    !result
       ? toast({
           title: (
             <div className="flex items-center">
@@ -328,6 +328,7 @@ export function SignUpForm({
           ),
         })
       : null;
+    setIsLoading(false);
     setSignUpDetails(data);
   }
 
@@ -498,6 +499,7 @@ function OTPInput({
         </div>
       ),
     });
+    setIsLoading(false);
     onComplete?.();
   }
 
