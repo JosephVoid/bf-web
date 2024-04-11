@@ -12,7 +12,7 @@ export default async function UserDesireList() {
   const userDesire = await fetchUserPostedDesires(userId!);
   return (
     <div className="mb-8">
-      <h2 className="text-2xl font-medium mb-3">Posted Desires</h2>
+      <h2 className="text-2xl font-medium mb-3">Your Posted Desires</h2>
       {userDesire.length < 1 && (
         <div className="flex justify-center">
           <div className="flex flex-col items-center text-lg my-6 opacity-45">

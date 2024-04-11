@@ -134,6 +134,13 @@ export default function SingleDesire() {
     );
   }, []);
 
+  React.useLayoutEffect(() => {
+    /* When only recieving ID, redirect with title encoded in URL */
+    if (current_path.split("/")[1].length === 36 && desire) {
+      router.push(`/${desire?.id}-${encodeURIComponent(desire?.title ?? "")}`);
+    }
+  }, [desire]);
+
   return loading ? (
     <Loader dark />
   ) : (
@@ -144,7 +151,6 @@ export default function SingleDesire() {
         </>
       ) : (
         <>
-          {" "}
           <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
             {desire?.title}
           </h2>

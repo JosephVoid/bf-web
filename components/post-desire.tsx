@@ -8,14 +8,14 @@ import React from "react";
 import Image from "next/image";
 import { LoginForm, SignUpForm } from "./profile";
 
-export default function PostBanner() {
+export default function Banner({ text, href }: { text: string; href: string }) {
   const router = useRouter();
   const [viewState, setViewState] = React.useState<"SIGNIN" | "SIGNUP">(
     "SIGNIN"
   );
   const [modalState, setModalState] = React.useState<boolean>(false);
   function handleOnClick() {
-    if (hasCookie("auth")) router.push("/post-a-desire");
+    if (hasCookie("auth")) router.push(`/${href}`);
   }
 
   return (
@@ -31,7 +31,7 @@ export default function PostBanner() {
             <div onClick={handleOnClick}>
               <div className="p-5 font-bold text-wrap mt-3 cursor-pointer relative flex justify-between border-[1px] rounded-lg items-center">
                 <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
-                  Post Your Desire
+                  {text}
                 </h2>
                 <ArrowRightIcon
                   width={35}

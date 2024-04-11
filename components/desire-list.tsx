@@ -64,6 +64,7 @@ export default function DesireList({ params }: { params: IFilterParams }) {
 
   React.useEffect(() => {
     if (params.sortBy !== "" && params.sortDir !== "") {
+      setIsLoading(true);
       fetchDesires(params).then((fetched) => {
         if (fetched) setDesireFetched(fetched);
         setIsLoading(false);
