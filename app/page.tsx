@@ -3,6 +3,7 @@
 import DesireList from "@/components/desire-list";
 import DisplayParams from "@/components/display-params";
 import Paginate from "@/components/paginate";
+import Banner from "@/components/post-desire";
 import { IFilterParams } from "@/lib/types";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
@@ -21,6 +22,10 @@ export default function Home() {
     <main className="flex flex-col h-f-v-h">
       <div className="m-3 rounded-lg p-3 border-[1px]">
         <DisplayParams />
+      </div>
+      <div className="md:hidden px-3 flex justify-between">
+        <Banner text="Post a Desire" href="post-a-desire" />
+        <Banner text="Setup Alerts" href="profile" variant="secondary" />
       </div>
       <div className="m-3">
         <Suspense fallback={<>Loading...</>}>

@@ -9,7 +9,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CaretSortIcon,
+  CheckIcon,
+} from "@radix-ui/react-icons";
 import { Label } from "@radix-ui/react-label";
 import {
   Popover,
@@ -58,7 +63,7 @@ export function TagSelect({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="md:w-[200px] justify-between"
           >
             {value
               ? tags.find((tag) => tag.name.toLowerCase() === value)?.name
@@ -125,12 +130,12 @@ export function SortBySelect({
       <div className="flex">
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-36 flex justify-between">
+            <Button variant="outline" className="md:w-36 flex justify-between">
               {sortBy}
               <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-24">
+          <DropdownMenuContent className="md:w-24">
             <DropdownMenuSeparator />
             <DropdownMenuItem onSelect={() => setSortBy("Date")}>
               Date
@@ -145,10 +150,13 @@ export function SortBySelect({
         </DropdownMenu>
         <Button
           className="ml-3"
-          variant={"ghost"}
+          variant={"link"}
           onClick={() => setSortDir(sortDir === "Asc" ? "Desc" : "Asc")}
         >
-          {sortDir}
+          <div className="md:block hidden"> {sortDir}</div>
+          <div className="md:hidden">
+            {sortDir === "Asc" ? <ArrowUpIcon /> : <ArrowDownIcon />}
+          </div>
         </Button>
       </div>
     </div>

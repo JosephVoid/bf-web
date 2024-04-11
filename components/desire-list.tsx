@@ -14,7 +14,7 @@ import Loader from "./loader";
 export function Desire({ prop }: { prop: IDesire }) {
   return (
     <Link href={`/${prop.id}-${encodeURIComponent(prop.title)}`}>
-      <Card className="p-4 mb-5 flex flex-col">
+      <Card className="md:p-4 md:mb-5 md:flex md:flex-col hidden">
         <div className="flex justify-start">
           {prop.picture && (
             <Image
@@ -48,6 +48,47 @@ export function Desire({ prop }: { prop: IDesire }) {
           </p>
           <p className="text-sm">
             <b>{prop.wants}</b> want this
+          </p>
+          <p className="text-sm">
+            <b>{prop.views}</b> views
+          </p>
+        </div>
+      </Card>
+      {/* Mobile Verison */}
+      <Card className="p-4 mb-5 flex flex-col md:hidden">
+        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight line-clamp-2 leading-6 mb-3">
+          {prop.title}
+        </h3>
+        <div className="flex justify-start relative w-full h-[250px] mb-3">
+          {prop.picture && (
+            <Image
+              src={prop.picture}
+              alt="desire"
+              fill
+              style={{ objectFit: "cover" }}
+              className="rounded-md mr-5"
+            />
+          )}
+        </div>
+        <div className="flex flex-col justify-between mb-3">
+          <div className="mt-2">
+            {prop.tags.map((tag: string, index: number) => (
+              <Badge className="mr-2" variant={"secondary"} key={index}>
+                {tag}
+              </Badge>
+            ))}
+          </div>
+        </div>
+        <small className="text-sm font-normal line-clamp-4">
+          {prop.description}
+        </small>
+        <div className="flex justify-between mt-3 items-baseline">
+          <p className="text-sm">
+            Looking for
+            <b> {prop.price} Br</b>
+          </p>
+          <p className="text-sm">
+            <b>{prop.wants}</b> wants
           </p>
           <p className="text-sm">
             <b>{prop.views}</b> views

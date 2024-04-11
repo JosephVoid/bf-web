@@ -22,25 +22,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${GeistSans.className} flex justify-center h-screen p-8`}
+        className={`${GeistSans.className} md:flex md:justify-center md:h-screen md:p-8 p-3`}
       >
-        <div className="w-1/6 mr-3 flex flex-col justify-start">
-          <div className="w-1/6 fixed pr-3">
+        <div className="md:w-1/6 md:mr-3 md:flex md:flex-col md:justify-start hidden">
+          <div className="md:w-1/6 md:fixed md:pr-3">
             <Logo />
             <Search />
             <Banner text="Post a Desire" href="post-a-desire" />
             <Banner text="Setup Alerts" href="profile" />
           </div>
         </div>
-        <div className="w-3/6 mr-3">
-          <div className="mb-5">
+        <div className="md:w-3/6 md:mr-3">
+          <div className="md:mb-5">
             <Header />
           </div>
           {children}
           <Toaster />
         </div>
-        <div className="w-1/6 relative">
-          <div className="w-1/6 fixed h-5/6 flex flex-col justify-between">
+        <div className="md:w-1/6 md:relative">
+          <div className="md:w-1/6 md:fixed md:h-5/6 md:flex md:flex-col md:justify-between hidden">
             <Profile />
             <Tips />
           </div>
