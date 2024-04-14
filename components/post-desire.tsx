@@ -64,7 +64,7 @@ export default function Banner({
           >
             <div className="w-1/2 relative md:block hidden">
               <Image
-                src="/black_box.png"
+                src="/stock-min.jpg"
                 alt="login"
                 fill={true}
                 objectFit="cover"

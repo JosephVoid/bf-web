@@ -1,17 +1,13 @@
-"use server";
-
 import EditProfileForm from "@/components/edit-profile-form";
+import Loader from "@/components/loader";
 import SetAlert from "@/components/set-alert";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import UserDesireList from "@/components/user-desires";
 import UserOfferList from "@/components/user-offers";
 import {
   fetchUserAlerts,
   fetchUserProfile,
 } from "@/lib/actions/fetch/user.fetch";
-import { getUserFromTokenId, getUserId } from "@/lib/helpers";
-import { Pencil1Icon } from "@radix-ui/react-icons";
+import { getUserFromTokenId } from "@/lib/helpers";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
 
@@ -23,10 +19,10 @@ export default async function ProfilePage() {
     <div className="m-3 p-4">
       {user && <EditProfileForm prop={user} />}
       <SetAlert alertTags={tagsAlerted} />
-      <Suspense fallback={<>Loading...</>}>
+      <Suspense fallback={<Loader />}>
         <UserDesireList />
       </Suspense>
-      <Suspense fallback={<>Loading...</>}>
+      <Suspense fallback={<Loader />}>
         <UserOfferList />
       </Suspense>
     </div>

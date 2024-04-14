@@ -234,7 +234,7 @@ export default function SingleDesire() {
               >
                 <div className="w-1/2 relative">
                   <Image
-                    src="/black_box.png"
+                    src="/stock-min.jpg"
                     alt="login"
                     fill={true}
                     objectFit="cover"

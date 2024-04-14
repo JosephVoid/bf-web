@@ -1,12 +1,9 @@
-"use client";
 import PostDesireForm from "@/components/post-desire-form";
-import { hasCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default function PostADesire() {
-  const router = useRouter();
-
-  if (!hasCookie("auth")) router.replace("/");
+  if (!cookies().has("auth")) redirect("/");
 
   return (
     <div className="m-3">

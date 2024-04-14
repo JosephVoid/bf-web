@@ -138,7 +138,7 @@ export default function SingleOffer() {
         >
           <div className="w-1/2 relative">
             <Image
-              src="/black_box.png"
+              src="/stock-min.jpg"
               alt="login"
               fill={true}
               objectFit="cover"

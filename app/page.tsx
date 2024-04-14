@@ -1,21 +1,28 @@
-"use client";
-
 import DesireList from "@/components/desire-list";
 import DisplayParams from "@/components/display-params";
+import Loader from "@/components/loader";
 import Paginate from "@/components/paginate";
 import Banner from "@/components/post-desire";
 import { IFilterParams } from "@/lib/types";
-import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
-export default function Home() {
-  const searchParams = useSearchParams();
+export default function Home({
+  searchParams,
+}: {
+  searchParams: {
+    sortby?: string;
+    sortdir?: string;
+    query?: string;
+    page?: string;
+    tag?: string;
+  };
+}) {
   const desireListParams: IFilterParams = {
-    filterBy: searchParams.get("tag") ?? "",
-    sortBy: searchParams.get("sortby") ?? "Date",
-    sortDir: searchParams.get("sortdir") ?? "",
-    search: searchParams.get("query") ?? "",
-    page: searchParams.get("page") ?? "",
+    filterBy: searchParams.tag ?? "",
+    sortBy: searchParams.sortby ?? "",
+    sortDir: searchParams.sortdir ?? "",
+    search: searchParams.query ?? "",
+    page: searchParams.query ?? "",
   };
 
   return (
@@ -28,7 +35,7 @@ export default function Home() {
         <Banner text="Setup Alerts" href="profile" variant="secondary" />
       </div>
       <div className="m-3">
-        <Suspense fallback={<>Loading...</>}>
+        <Suspense fallback={<Loader />}>
           <DesireList params={desireListParams} />
         </Suspense>
       </div>
