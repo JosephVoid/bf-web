@@ -1,5 +1,5 @@
 "use server";
-import { Base64ToBlob, fileToBase64, sanitizeName } from "@/lib/helpers";
+import { Base64ToBlob, sanitizeRandomizeName } from "@/lib/helpers";
 import * as Minio from "minio";
 
 const minioClient = new Minio.Client({
@@ -29,23 +29,18 @@ export async function fileUpload(
     if (exists) {
       console.log("Bucket " + bucket + " exists.");
     } else {
-      await minioClient.makeBucket(bucket, "us-east-1");
-      console.log("Bucket " + bucket + ' created in "us-east-1".');
+      await minioClient.makeBucket(bucket);
+      console.log("Bucket " + bucket + " created");
     }
 
-    minioClient.putObject(
-      bucket,
-      sanitizeName(name),
-      buffer,
-      function (err, objInfo) {
-        if (err) {
-          return console.log(err); // err should be null
-        }
+    let fileName = sanitizeRandomizeName(name);
+
+    minioClient.putObject(bucket, fileName, buffer, function (err, objInfo) {
+      if (err) {
+        return console.log(err); // err should be null
       }
-    );
-    let URL = `${process.env.NEXT_PUBLIC_MINIO_PROT}://${
-      process.env.NEXT_PUBLIC_MINIO_URL
-    }:${process.env.NEXT_PUBLIC_MINIO_PORT}/${bucket}/${sanitizeName(name)}`;
+    });
+    let URL = `${process.env.NEXT_PUBLIC_MINIO_PROT}://${process.env.NEXT_PUBLIC_MINIO_URL}:${process.env.NEXT_PUBLIC_MINIO_PORT}/${bucket}/${fileName}`;
     return URL;
   }
 

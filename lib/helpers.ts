@@ -1,6 +1,7 @@
 import { getCookie } from "cookies-next";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import { IFilterParams } from "./types";
+import Tips from "./tips.json";
 
 export async function wait() {
   return new Promise((res) => setTimeout(res, Math.random() * 2000));
@@ -102,6 +103,24 @@ export function Base64ToBlob(base64Image: string) {
   return new Blob([uInt8Array], { type: imageType });
 }
 
-export function sanitizeName(name: string) {
-  return name.replaceAll(" ", "-");
+export function sanitizeRandomizeName(name: string) {
+  const randomInt = Math.floor(1000 + Math.random() * 9000);
+  return randomInt + "-" + name.replaceAll(" ", "-");
+}
+
+export function getTips(currentPath: string) {
+  switch (currentPath) {
+    case "":
+      return Tips.home;
+    case "profile":
+      return Tips.profile;
+    case "post-a-desire":
+      return Tips.postingDesire;
+    case "make-an-offer":
+      return Tips.makingOffer;
+    case "search":
+      return Tips.home;
+    default:
+      return Tips.singleDesire;
+  }
 }
