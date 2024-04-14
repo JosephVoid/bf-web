@@ -57,12 +57,12 @@ export default function Banner({
             </div>
           </DialogTrigger>
           <DialogContent
-            className="sm:max-w-[825px] flex h-fit w-1/2"
+            className="md:max-w-[825px] flex h-fit md:w-1/2 w-5/6"
             onInteractOutside={(e) => {
               e.preventDefault();
             }}
           >
-            <div className="w-1/2 relative">
+            <div className="w-1/2 relative md:block hidden">
               <Image
                 src="/black_box.png"
                 alt="login"
@@ -71,7 +71,7 @@ export default function Banner({
                 className="rounded-md"
               />
             </div>
-            <div className="w-1/2 flex flex-col justify-between p-2">
+            <div className="md:w-1/2 w-full flex flex-col justify-between p-2">
               {viewState === "SIGNIN" && (
                 <LoginForm
                   onSignUpSwitch={() => setViewState("SIGNUP")}

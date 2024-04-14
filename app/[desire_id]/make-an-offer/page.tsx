@@ -15,7 +15,7 @@ export default function MakeAnOffer() {
       <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
         {getTitle(current_path.split("/")[1])}
       </h2>
-      <div className="mt-8 border-l-4 pl-8">
+      <div className="mt-8 md:border-l-4 md:pl-8">
         <MakeAnOfferForm />
       </div>
     </>

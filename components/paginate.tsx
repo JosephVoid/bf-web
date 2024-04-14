@@ -35,7 +35,7 @@ export default function Paginate({
   }
 
   return (
-    <Pagination className="mb-10">
+    <Pagination className="md:mb-10 mb-4">
       <PaginationContent>
         <PaginationItem className="cursor-pointer">
           <PaginationPrevious onClick={() => setPage(currentPage - 1)} />

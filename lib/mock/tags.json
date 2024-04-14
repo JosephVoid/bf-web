@@ -1,26 +1,26 @@
 [
   {
     "id": "949ed985-64f0-42b6-aceb-a74fd4dea2f5",
-    "tag": "Electronics"
+    "name": "Electronics"
   },
   {
     "id": "949ed985-64f0-42fd4deb6-aceb-a74a2f5",
-    "tag": "Accessories"
+    "name": "Accessories"
   },
   {
     "id": "3",
-    "tag": "Service"
+    "name": "Service"
   },
   {
     "id": "9485-64f0-42fd9ed94deb6-aceb-a74a2f5",
-    "tag": "Mobile"
+    "name": "Mobile"
   },
   {
     "id": "949edf0-42b6-aceb-a74985-64fd4dea2f5",
-    "tag": "Shoe"
+    "name": "Shoe"
   },
   {
     "id": "94d985-649ef0-42b6-aceb-a74fd4dea2f5",
-    "tag": "Other"
+    "name": "Other"
   }
 ]

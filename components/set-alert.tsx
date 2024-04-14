@@ -88,9 +88,9 @@ export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
     <>
       <h2 className="text-2xl font-medium mb-3"> Set Alerts</h2>
       <div className="rounded-md p-4 border-[1px] mb-8 flex flex-col">
-        <div className="flex space-x-5 items-center mb-4">
+        <div className="flex space-x-5 md:items-center mb-4 md:flex-row flex-col items-start">
           <TagSelect onSelectProp={(tag) => handleAddtag(tag)} />
-          <div className="flex flex-wrap justify-start">
+          <div className="flex flex-wrap justify-start mt-3 md:mt-0">
             {selectedtags.map((tag, index) => (
               <Badge
                 className="text-sm h-fit mr-3 mb-3"

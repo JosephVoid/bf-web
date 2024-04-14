@@ -10,6 +10,7 @@ import Paginate from "./paginate";
 import React from "react";
 import { ArchiveIcon } from "@radix-ui/react-icons";
 import Loader from "./loader";
+import Search from "./search";
 
 export function Desire({ prop }: { prop: IDesire }) {
   return (
@@ -127,6 +128,7 @@ export default function DesireList({ params }: { params: IFilterParams }) {
           itemCount={desireFetched?.meta.total ?? 0}
           perPage={desireFetched?.meta.perPage ?? 1}
         />
+        <Search />
       </div>
     </>
   ) : (

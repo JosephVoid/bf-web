@@ -38,6 +38,7 @@ export default function RootLayout({
           </div>
           {children}
           <Toaster />
+          <Tips mobile />
         </div>
         <div className="md:w-1/6 md:relative">
           <div className="md:w-1/6 md:fixed md:h-5/6 md:flex md:flex-col md:justify-between hidden">

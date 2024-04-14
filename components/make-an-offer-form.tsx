@@ -154,8 +154,8 @@ export default function MakeAnOfferForm() {
                   )}
                 />
               </div>
-              <div className="mb-4 flex">
-                <div className="w-1/2">
+              <div className="mb-4 flex md:flex-row flex-col">
+                <div className="md:w-1/2 w-full md:mb-0 mb-3">
                   <FormField
                     control={form.control}
                     name="picture"
@@ -195,7 +195,7 @@ export default function MakeAnOfferForm() {
                   )}
                 </div>
               </div>
-              <Button className="w-1/3" type="submit">
+              <Button className="md:w-1/3 w-1/2" type="submit">
                 {isLoading ? <Loader /> : "Submit Offer"}
               </Button>
             </div>

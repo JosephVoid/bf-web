@@ -166,7 +166,7 @@ export default function PostDesireForm() {
                       <FormLabel>Description</FormLabel>
                       <FormControl>
                         <textarea
-                          placeholder="Tell us about you"
+                          placeholder="Describe what you want"
                           {...field}
                           rows={6}
                           className="p-2 text-sm border-[1px] rounded-md focus-visible:outline-none focus:outline-2 focus:outline"
@@ -196,14 +196,14 @@ export default function PostDesireForm() {
                   )}
                 />
               </div>
-              <div className="mb-4 flex">
-                <div className="w-1/2">
+              <div className="mb-4 flex md:flex-row flex-col">
+                <div className="md:w-1/2 w-full md:mb-0 mb-3">
                   <FormField
                     control={form.control}
                     name="picture"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Profile Picture</FormLabel>
+                        <FormLabel>Supporting Picture (Optional)</FormLabel>
                         <FormControl>
                           <Input
                             type="file"

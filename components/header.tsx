@@ -2,11 +2,20 @@
 
 import { ArrowLeftIcon, AvatarIcon } from "@radix-ui/react-icons";
 import { usePathname, useRouter } from "next/navigation";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Logo from "./logo";
+import Image from "next/image";
+import React from "react";
+import { hasCookie } from "cookies-next";
+import { LoginForm, MobileProfile, SignUpForm } from "./profile";
 
 export default function Header() {
   const current_path = usePathname();
   const router = useRouter();
+  const [modalState, setModalState] = React.useState<boolean>(false);
+  const [viewState, setViewState] = React.useState<"SIGNIN" | "SIGNUP">(
+    "SIGNIN"
+  );
 
   function getHeader() {
     if (current_path.split("/")[1] === "profile") return "Profile";
@@ -26,6 +35,10 @@ export default function Header() {
       backPath.pop();
       router.replace(`/${backPath.join("")}`);
     }
+  }
+
+  function handleOnClick() {
+    if (hasCookie("auth")) router.push(`/profile`);
   }
 
   return (
@@ -62,7 +75,7 @@ export default function Header() {
               {getHeader()}
             </h1>
           </div>
-          <AvatarIcon height={30} width={30} className="opacity-50" />
+          <MobileProfile />
         </div>
       </div>
     </>

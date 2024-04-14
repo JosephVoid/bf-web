@@ -160,7 +160,12 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
 
   return (
     <>
-      <h2 className="text-2xl font-medium mb-3"> Edit Profile</h2>
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-2xl font-medium"> Edit Profile</h2>
+        <Button variant={"ghost"} className="opacity-90 text-red-500">
+          Sign Out
+        </Button>
+      </div>
       <div className="rounded-md border-[1px] p-4 mb-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -296,8 +301,8 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
                   )}
                 />
               </div>
-              <div className="mb-4 flex">
-                <div className="w-1/2">
+              <div className="mb-4 flex md:flex-row flex-col">
+                <div className="md:w-1/2 w-full mb-3 md:mb-0">
                   <FormField
                     control={form.control}
                     name="picture"
@@ -325,7 +330,7 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
                     )}
                   />
                 </div>
-                <div className="flex justify-center items-center w-1/2">
+                <div className="flex justify-center items-center md:w-1/2 w-full">
                   {picturePreview ? (
                     <Image
                       src={URL.createObjectURL(picturePreview)}
