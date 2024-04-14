@@ -32,7 +32,7 @@ import {
   TooltipContent,
 } from "@/components/ui/tooltip";
 import { fileUpload } from "@/lib/actions/act/file.act";
-import { editProfile } from "@/lib/actions/act/user.act";
+import { editProfile, signOut } from "@/lib/actions/act/user.act";
 import { useToast } from "@/components/ui/use-toast";
 import Loader from "./loader";
 
@@ -158,11 +158,19 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
     return requestObject;
   }
 
+  async function handleSignOut() {
+    await signOut();
+  }
+
   return (
     <>
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-2xl font-medium"> Edit Profile</h2>
-        <Button variant={"ghost"} className="opacity-90 text-red-500">
+        <Button
+          variant={"ghost"}
+          className="opacity-90 text-red-500 md:hidden"
+          onClick={handleSignOut}
+        >
           Sign Out
         </Button>
       </div>
