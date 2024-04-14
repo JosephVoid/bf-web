@@ -1,52 +1,52 @@
 {
   "home": [
     {
-      "title": "Home 1",
-      "tip": "home1"
+      "title": "Sorting & Filtering",
+      "tip": "Using the panel at the top you can order desires by date, price, or most wanted. In addition you can only view desires that only contain a certain tag and ofcourse sort them in ascending or descending direction"
     },
     {
-      "title": "Home 2",
-      "tip": "home1"
+      "title": "Searching",
+      "tip": "Use the search bar on the left to look for desires by their title. After that you can use the panels at the top to adjust your search results further"
     }
   ],
   "postingDesire": [
     {
-      "title": "Post Desire",
-      "tip": "postdesre"
+      "title": "Posting a Desire",
+      "tip": "Enter the details of the item you want, a title, a description, a price you would like to get it for, a picture if you have something in mind and finally tags to classify what kind of desire it is."
     },
     {
-      "title": "Post Desire 2",
-      "tip": "postdesre"
+      "title": "Selecting Tags",
+      "tip": "Selecting a tag is very important to classify what kind of desire you posted, it also helos us notify user who can provide with an item"
     }
   ],
   "makingOffer": [
     {
-      "title": "Make Offer",
-      "tip": "make offer"
-    },
-    {
-      "title": "Make Offer 2",
-      "tip": "make offer"
+      "title": "Making an Offer",
+      "tip": "If have the item you can provide, enter a description of the item, enter the price you are willing to offer it to, and include a picture if you want to"
     }
   ],
   "profile": [
     {
-      "title": "Profile",
-      "tip": "profile"
+      "title": "Editing Information",
+      "tip": "Change any information you want about you, you can enter a description and a photo that will be seen by buyers when they accept your offer"
     },
     {
-      "title": "Profile 2",
-      "tip": "profile"
+      "title": "Setting Alerts",
+      "tip": "You can be informed through text when a desire gets posted that has a tag you want to be alerted about. Select at max 3 here and be the first to here about posted desires"
+    },
+    {
+      "title": "Viewing Past Posts",
+      "tip": "Below the alerts you can see all the desires you posted and the offers you made in the past"
     }
   ],
   "singleDesire": [
     {
-      "title": "Single Desire",
-      "tip": "single desire"
+      "title": "Desire Information",
+      "tip": "This page tells you information about the desire, including how many times it got viewed, and how many people want this desire and are waiting for offers to come in. "
     },
     {
-      "title": "Single Desire 2",
-      "tip": "single desire"
+      "title": "Actions on Desires & Offers",
+      "tip": "On this desire you can be alerted to offers that are made to this desire, or make an offer your self for the desire posted"
     }
   ]
 }
