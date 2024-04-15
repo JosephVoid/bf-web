@@ -5,9 +5,10 @@ import Image from "next/image";
 import { fetchDesires } from "@/lib/actions/fetch/desire.fetch";
 import { IDesire, IDesireMeta, IFilterParams } from "@/lib/types";
 import Paginate from "./paginate";
-import React from "react";
+import React, { Suspense } from "react";
 import { ArchiveIcon } from "@radix-ui/react-icons";
 import Search from "./search";
+import Loader from "./loader";
 
 export function Desire({ prop }: { prop: IDesire }) {
   return (
@@ -116,7 +117,9 @@ export default async function DesireList({
           perPage={desireFetched?.meta.perPage ?? 1}
         />
         <div className="md:hidden">
-          <Search />
+          <Suspense fallback={<Loader dark />}>
+            <Search />
+          </Suspense>
         </div>
       </div>
     </>

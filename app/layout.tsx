@@ -8,6 +8,8 @@ import Search from "@/components/search";
 import Header from "@/components/header";
 import { Toaster } from "@/components/ui/toaster";
 import Banner from "../components/post-desire";
+import { Suspense } from "react";
+import Loader from "@/components/loader";
 
 export const metadata: Metadata = {
   title: "Buyers First",
@@ -27,7 +29,9 @@ export default function RootLayout({
         <div className="md:w-1/6 md:mr-3 md:flex md:flex-col md:justify-start hidden">
           <div className="md:w-1/6 md:fixed md:pr-3">
             <Logo />
-            <Search />
+            <Suspense fallback={<Loader dark />}>
+              <Search />
+            </Suspense>
             <Banner text="Post a Desire" href="post-a-desire" />
             <Banner text="Setup Alerts" href="profile" />
           </div>

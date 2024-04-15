@@ -28,14 +28,16 @@ export default function Home({
   return (
     <main className="flex flex-col h-f-v-h">
       <div className="m-3 rounded-lg p-3 border-[1px]">
-        <DisplayParams />
+        <Suspense fallback={<Loader dark />}>
+          <DisplayParams />
+        </Suspense>
       </div>
       <div className="md:hidden px-3 flex justify-between">
         <Banner text="Post a Desire" href="post-a-desire" />
         <Banner text="Setup Alerts" href="profile" variant="secondary" />
       </div>
       <div className="m-3">
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<Loader dark />}>
           <DesireList params={desireListParams} />
         </Suspense>
       </div>
