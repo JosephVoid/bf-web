@@ -40,6 +40,13 @@ export default function Paginate({
         <PaginationItem className="cursor-pointer">
           <PaginationPrevious onClick={() => setPage(currentPage - 1)} />
         </PaginationItem>
+        {currentPage === pageCount && (
+          <PaginationItem className="cursor-pointer">
+            <PaginationLink onClick={() => setPage(currentPage - 1)}>
+              {currentPage - 2}
+            </PaginationLink>
+          </PaginationItem>
+        )}
         {currentPage - 1 > 0 && (
           <PaginationItem className="cursor-pointer">
             <PaginationLink onClick={() => setPage(currentPage - 1)}>
@@ -51,11 +58,13 @@ export default function Paginate({
           <PaginationLink isActive={true}>{currentPage}</PaginationLink>
         </PaginationItem>
         <PaginationItem className="cursor-pointer">
-          <PaginationLink onClick={() => setPage(currentPage + 1)}>
-            {currentPage + 1}
-          </PaginationLink>
+          {pageCount > 1 && currentPage + 1 <= pageCount && (
+            <PaginationLink onClick={() => setPage(currentPage + 1)}>
+              {currentPage + 1}
+            </PaginationLink>
+          )}
         </PaginationItem>
-        {currentPage + 1 <= pageCount && (
+        {currentPage + 1 < pageCount && (
           <PaginationItem className="cursor-pointer">
             <PaginationLink onClick={() => setPage(currentPage + 2)}>
               {currentPage + 2}
