@@ -94,7 +94,7 @@ export default function SingleOffer() {
               src={offer.picture ?? ""}
               alt="Desire"
               fill={true}
-              objectFit="cover"
+              style={{ objectFit: "cover" }}
               className="rounded-md w-full !relative"
             />
           </div>
@@ -141,7 +141,7 @@ export default function SingleOffer() {
               src="/stock-min.jpg"
               alt="login"
               fill={true}
-              objectFit="cover"
+              style={{ objectFit: "cover" }}
               className="rounded-md"
             />
           </div>

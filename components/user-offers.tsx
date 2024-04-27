@@ -1,7 +1,7 @@
 "use server";
 
 import { fetchOffers, fetchUserOffers } from "@/lib/actions/fetch/offer.fetch";
-import { Offer } from "./offer-list";
+import { Offer } from "./offer";
 import { IOffer } from "@/lib/types";
 import { getUserFromTokenId } from "@/lib/helpers";
 import { cookies } from "next/headers";

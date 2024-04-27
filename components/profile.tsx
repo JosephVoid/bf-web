@@ -161,7 +161,7 @@ function UnSignedProfile() {
                 src="/stock-min.jpg"
                 alt="login"
                 fill={true}
-                objectFit="cover"
+                style={{ objectFit: "cover" }}
                 className="rounded-md"
               />
             </div>
@@ -585,7 +585,7 @@ function UnSignedMobileProfile() {
                 src="/stock-min.jpg"
                 alt="login"
                 fill={true}
-                objectFit="cover"
+                style={{ objectFit: "cover" }}
                 className="rounded-md"
               />
             </div>

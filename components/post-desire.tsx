@@ -67,7 +67,7 @@ export default function Banner({
                 src="/stock-min.jpg"
                 alt="login"
                 fill={true}
-                objectFit="cover"
+                style={{ objectFit: "cover" }}
                 className="rounded-md"
               />
             </div>
