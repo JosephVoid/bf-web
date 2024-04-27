@@ -1,9 +1,7 @@
 import DesireList from "@/components/desire-list";
 import DisplayParams from "@/components/display-params";
 import Loader from "@/components/loader";
-import Paginate from "@/components/paginate";
 import { IFilterParams } from "@/lib/types";
-import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 export default function Search({
