@@ -15,9 +15,10 @@ export default async function SingleOffer({
   const userId = getUserId();
 
   const offer = await fetchSingleOffer(current_path.split("/")[2]);
-  const accepted = (await fetchUserActivity(userId ?? "", "accepted")).includes(
-    offer?.id ?? ""
-  );
+  const accepted =
+    userId && offer
+      ? (await fetchUserActivity(userId, "accepted")).includes(offer.id)
+      : false;
 
   return !offer ? (
     <Loader dark />

@@ -21,12 +21,14 @@ export default async function SingleDesire({
   const current_path = params.desire_id;
   const userId = getUserId();
   const desire = await fetchSingleDesire(getUUID(current_path));
-  const offerAct = await fetchUserActivity(userId ?? "", "offered");
-  const desirePosted = await fetchUserActivity(userId ?? "", "posted-desire");
-  const wantAct = await fetchUserActivity(userId ?? "", "wanted");
+  const offerAct = userId ? await fetchUserActivity(userId, "offered") : [];
+  const desirePosted = userId
+    ? await fetchUserActivity(userId, "posted-desire")
+    : [];
+  const wantAct = userId ? await fetchUserActivity(userId ?? "", "wanted") : [];
   const offers = await fetchOffers(desire?.id ?? "");
 
-  viewItem(desire?.id ?? "", userId ?? "");
+  if (userId && desire) viewItem(desire.id, userId);
 
   if (current_path.length === 36 && desire) {
     redirect(`/${desire?.id}-${encodeURIComponent(desire?.title ?? "")}`);
