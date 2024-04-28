@@ -40,7 +40,7 @@ export default function Paginate({
         <PaginationItem className="cursor-pointer">
           <PaginationPrevious onClick={() => setPage(currentPage - 1)} />
         </PaginationItem>
-        {currentPage === pageCount && (
+        {currentPage === pageCount && currentPage > 2 && (
           <PaginationItem className="cursor-pointer">
             <PaginationLink onClick={() => setPage(currentPage - 1)}>
               {currentPage - 2}
