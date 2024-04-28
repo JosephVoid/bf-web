@@ -46,7 +46,7 @@ import { usePathname } from "next/navigation";
 import { redirect, useRouter } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import BFAlert from "./custom-alert";
-import { getUserId } from "@/lib/helpers";
+import { getUserId } from "@/lib/server-helpers";
 import { useToast } from "@/components/ui/use-toast";
 
 export default function Profile() {
@@ -187,9 +187,11 @@ function SignedInProfile() {
   }
 
   React.useEffect(() => {
-    fetchUserProfile(getUserId()!).then((result) => {
-      console.log(result);
-      if (result) setUser(result);
+    getUserId().then((userId) => {
+      fetchUserProfile(userId!).then((result) => {
+        console.log(result);
+        if (result) setUser(result);
+      });
     });
   }, []);
 
@@ -612,14 +614,13 @@ function UnSignedMobileProfile() {
 
 function MobileSignedInProfile() {
   const [user, setUser] = React.useState<IUser>();
-  async function handleSignOut() {
-    await signOut();
-  }
 
   React.useEffect(() => {
-    fetchUserProfile(getUserId()!).then((result) => {
-      console.log(result);
-      if (result) setUser(result);
+    getUserId().then((userId) => {
+      fetchUserProfile(userId!).then((result) => {
+        console.log(result);
+        if (result) setUser(result);
+      });
     });
   }, []);
 

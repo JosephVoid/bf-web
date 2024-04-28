@@ -5,13 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Suspense } from "react";
-import { getUUID, getUserId } from "@/lib/helpers";
+import { getUUID } from "@/lib/helpers";
 import { fetchUserActivity } from "@/lib/actions/fetch/user.fetch";
 import { viewItem } from "@/lib/actions/act/user.act";
 import AcceptAlertComp from "@/components/accept-alert-comp";
 import { redirect } from "next/navigation";
 import { fetchOffers } from "@/lib/actions/fetch/offer.fetch";
 import Loader from "@/components/loader";
+import { getUserId } from "@/lib/server-helpers";
 
 export default async function SingleDesire({
   params,
@@ -19,7 +20,7 @@ export default async function SingleDesire({
   params: { desire_id: string };
 }) {
   const current_path = params.desire_id;
-  const userId = getUserId();
+  const userId = await getUserId();
   const desire = await fetchSingleDesire(getUUID(current_path));
   const offerAct = userId ? await fetchUserActivity(userId, "offered") : [];
   const desirePosted = userId

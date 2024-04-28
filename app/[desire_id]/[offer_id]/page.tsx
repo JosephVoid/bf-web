@@ -1,6 +1,7 @@
 import Loader from "@/components/loader";
 import { fetchSingleOffer } from "@/lib/actions/fetch/offer.fetch";
-import { getTitle, getUserId } from "@/lib/helpers";
+import { getTitle } from "@/lib/helpers";
+import { getUserId } from "@/lib/server-helpers";
 import Image from "next/image";
 import React from "react";
 import { fetchUserActivity } from "@/lib/actions/fetch/user.fetch";
@@ -12,7 +13,7 @@ export default async function SingleOffer({
   params: { desire_id: string; offer_id: string };
 }) {
   const current_path = `/${params.desire_id}/${params.offer_id}`;
-  const userId = getUserId();
+  const userId = await getUserId();
 
   const offer = await fetchSingleOffer(current_path.split("/")[2]);
   const accepted =
