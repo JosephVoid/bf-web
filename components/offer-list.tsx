@@ -6,9 +6,13 @@ import { Offer } from "./offer";
 function OfferList({ offerList }: { offerList: IOffer[] }) {
   return offerList.length > 0 ? (
     <div>
-      {offerList.map((offer: IOffer, index: number) => (
-        <Offer key={index} prop={offer} />
-      ))}
+      {offerList
+        .sort(
+          (a, b) => new Date(a.bidOn).getTime() - new Date(b.bidOn).getTime()
+        )
+        .map((offer: IOffer, index: number) => (
+          <Offer key={index} prop={offer} />
+        ))}
     </div>
   ) : (
     <div className="flex justify-center">
