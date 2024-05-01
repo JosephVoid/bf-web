@@ -20,7 +20,7 @@ export default function Search({
     sortBy: searchParams.sortby ?? "",
     sortDir: searchParams.sortdir ?? "",
     search: searchParams.query ?? "",
-    page: searchParams.query ?? "",
+    page: searchParams.page ?? "1",
   };
 
   return (

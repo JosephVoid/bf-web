@@ -8,6 +8,7 @@ import {
   ISearchParams,
 } from "@/lib/types";
 import mockDesires from "../../mock/desires.json";
+import mockTags from "../../mock/tags.json";
 import { transformParams, wait } from "@/lib/helpers";
 import { CoreAPI } from "@/lib/api";
 
@@ -19,15 +20,28 @@ export async function fetchDesires(
     await wait();
     const desires = mockDesires as unknown;
     const resultDesires = desires as IDesire[];
-    const filtereDesires = resultDesires.slice(0, 3);
+    const searchedDesires = resultDesires.filter((d) =>
+      d.title.toLowerCase().includes(filterParams.search.toLowerCase())
+    );
+
+    const tag = mockTags.find((t) => t.id === filterParams.filterBy);
+
+    const filteredDesires = tag
+      ? searchedDesires.filter((d) => d.tags.includes(tag?.name))
+      : searchedDesires;
+
+    const pagedDesires = filteredDesires.slice(
+      (Number(filterParams?.page) - 1) * 3,
+      Number(filterParams?.page) * 3
+    );
 
     const desiresWMeta = {
       meta: {
-        total: 9,
+        total: filteredDesires.length,
         page: Number(filterParams?.page) ?? 1,
         perPage: 3,
       },
-      result: filtereDesires,
+      result: pagedDesires,
     } as IDesireMeta;
     return desiresWMeta;
   }
