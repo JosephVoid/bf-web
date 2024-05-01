@@ -93,7 +93,7 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
       last_name: prop.last_name,
       email: prop.email,
       phone: prop.phone,
-      description: prop.description,
+      description: prop.description ?? "",
     },
   });
 
