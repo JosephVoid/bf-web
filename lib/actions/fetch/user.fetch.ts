@@ -4,7 +4,7 @@ import { IUser } from "@/lib/types";
 import mockUser from "@/lib/mock/users.json";
 import mockTags from "@/lib/mock/tags.json";
 import { ITag } from "@/lib/types";
-import { getUserId, wait } from "@/lib/helpers";
+import { wait } from "@/lib/helpers";
 import { CoreAPI } from "@/lib/api";
 import { cookies } from "next/headers";
 

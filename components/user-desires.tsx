@@ -3,7 +3,7 @@
 import { fetchUserPostedDesires } from "@/lib/actions/fetch/desire.fetch";
 import { Desire } from "./desire-list";
 import { IDesire } from "@/lib/types";
-import { getUserFromTokenId, getUserId } from "@/lib/helpers";
+import { getUserFromTokenId } from "@/lib/helpers";
 import { cookies } from "next/headers";
 import { ArchiveIcon } from "@radix-ui/react-icons";
 

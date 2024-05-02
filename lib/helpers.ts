@@ -41,14 +41,17 @@ export function transformParams(FP: IFilterParams): IFilterParams {
     case "Date":
       FP.sortBy = "created";
       FP.sortDir = FP.sortDir.toUpperCase();
+      FP.filterBy = FP.filterBy;
       return FP;
     case "Price":
       FP.sortBy = "desired_price";
       FP.sortDir = FP.sortDir.toUpperCase();
+      FP.filterBy = FP.filterBy;
       return FP;
     case "Wanted":
       FP.sortBy = "wants";
       FP.sortDir = FP.sortDir.toUpperCase();
+      FP.filterBy = FP.filterBy;
       return FP;
     default:
       return FP;

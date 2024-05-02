@@ -34,12 +34,12 @@ export default function AcceptAlertComp({
   );
   const [modalState, setModalState] = React.useState<boolean>(false);
   const { toast } = useToast();
-  const [wanted, setWanted] = React.useState(false);
+  const [wanted, setWanted] = React.useState(wantAct.includes(desire?.id!));
   const router = useRouter();
   const current_path = usePathname();
 
   async function handleWantOnClick() {
-    if (wantAct.includes(desire?.id!)) return null;
+    if (desirePosted.includes(desire?.id!)) return null;
     if (hasCookie("auth") && !wanted) {
       const result = await wantDesire(desire?.id ?? "");
       if (result) setWanted(true);
