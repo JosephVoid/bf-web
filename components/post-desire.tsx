@@ -61,6 +61,7 @@ export default function Banner({
             onInteractOutside={(e) => {
               e.preventDefault();
             }}
+            onOpenAutoFocus={(e) => e.preventDefault()}
           >
             <div className="w-1/2 relative md:block hidden">
               <Image

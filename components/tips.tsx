@@ -30,6 +30,7 @@ export default function Tips({ mobile }: { mobile?: boolean }) {
         onInteractOutside={(e) => {
           e.preventDefault();
         }}
+        onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <Carousel
           className="w-full max-w-xs"

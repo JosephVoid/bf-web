@@ -243,6 +243,7 @@ export function LoginForm({
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isError, setIsError] = React.useState(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   async function handleLogin(data: z.infer<typeof signInFormSchema>) {
     setIsLoading(true);
@@ -250,6 +251,20 @@ export function LoginForm({
 
     if (response) {
       router.replace(current_path ?? "/");
+      toast({
+        title: (
+          <div className="flex items-center">
+            {
+              <>
+                <CheckIcon className="mr-2" />
+                <span className="first-letter:capitalize">
+                  Successfully Signed In!
+                </span>
+              </>
+            }
+          </div>
+        ),
+      });
       onComplete?.();
     } else {
       setIsError(true);
@@ -581,6 +596,7 @@ function UnSignedMobileProfile() {
             onInteractOutside={(e) => {
               e.preventDefault();
             }}
+            onOpenAutoFocus={(e) => e.preventDefault()}
           >
             <div className="w-1/2 relative md:block hidden">
               <Image

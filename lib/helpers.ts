@@ -115,3 +115,9 @@ export function getTips(currentPath: string) {
       return Tips.singleDesire;
   }
 }
+
+export function formatPrice(price: number): string {
+  if (price > 999999) return `${(price / 1000000).toString().slice(0, 4)}M`;
+  else if (price > 999) return price.toLocaleString();
+  else return `${price}`;
+}

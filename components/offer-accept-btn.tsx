@@ -82,12 +82,13 @@ export default function OfferAcceptUserDetail({
           </DialogTrigger>
         </div>
         <DialogContent
-          className="sm:max-w-[825px] flex h-fit w-1/2"
+          className="md:max-w-[825px] flex h-fit md:w-1/2 w-5/6"
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
+          onOpenAutoFocus={(e) => e.preventDefault()}
         >
-          <div className="w-1/2 relative">
+          <div className="w-1/2 relative md:block hidden">
             <Image
               src="/stock-min.jpg"
               alt="login"
@@ -96,7 +97,7 @@ export default function OfferAcceptUserDetail({
               className="rounded-md"
             />
           </div>
-          <div className="w-1/2 flex flex-col justify-between p-2">
+          <div className="md:w-1/2 w-full flex flex-col justify-between p-2">
             {viewState === "SIGNIN" && (
               <LoginForm
                 onSignUpSwitch={() => setViewState("SIGNUP")}

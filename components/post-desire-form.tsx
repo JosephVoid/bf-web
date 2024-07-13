@@ -43,7 +43,7 @@ const formSchema = z.object({
   description: z.string().max(800, "Description too long"),
   price: z.coerce
     .number()
-    .lte(999999, "Price too much")
+    .lte(999999999, "Price too much")
     .min(1, "Price can't be zero"),
   picture: z
     .custom<File>()

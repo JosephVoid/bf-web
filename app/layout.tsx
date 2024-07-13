@@ -12,8 +12,28 @@ import { Suspense } from "react";
 import Loader from "@/components/loader";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://buyersfirst.et"),
   title: "Buyers First",
-  description: "Buyers First Homepage",
+  description:
+    "An Ethiopian ecommerce site which makes buying niche things and rare items easier. It prioritizes the buyers, allowing them to post what they desire and get a list offers from sellers",
+  keywords: [
+    "Buyers",
+    "Sellers",
+    "Ethiopia",
+    "Addis Ababa",
+    "Ecommerce",
+    "Shopping",
+    "Offers",
+    "Deals",
+  ],
+  openGraph: {
+    title: "Buyers First",
+    description:
+      "An Ethiopian ecommerce site which makes buying niche things and rare items easier. It prioritizes the buyers, allowing them to post what they desire and get a list offers from sellers",
+    images: "/favicon.ico",
+    url: "https://buyersfirst.et",
+    siteName: "Buyers First",
+  },
 };
 
 export default function RootLayout({
@@ -48,6 +68,11 @@ export default function RootLayout({
           <div className="md:w-1/6 md:fixed md:h-5/6 md:flex md:flex-col md:justify-between hidden">
             <Profile />
             <Tips />
+            <div className="flex justify-center rounded-md bg-slate-100 p-3 flex-col">
+              <p>For any questions</p>
+              <b>contact@buyersfirst.et</b>
+              <b>+251967067652</b>
+            </div>
           </div>
         </div>
       </body>

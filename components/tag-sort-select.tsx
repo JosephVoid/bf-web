@@ -32,6 +32,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import { fetchTags } from "@/lib/actions/fetch/tags.fetch";
 import { useSearchParams } from "next/navigation";
+import { ScrollArea } from "./ui/scroll-area";
 
 export function TagSelect({
   onSelectProp,
@@ -66,7 +67,9 @@ export function TagSelect({
             className="md:w-[200px] justify-between"
           >
             {value
-              ? tags.find((tag) => tag.name.toLowerCase() === value)?.name
+              ? tags.find(
+                  (tag) => tag.name.toLowerCase() === value.toLowerCase()
+                )?.name
               : "Select tags"}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -74,33 +77,37 @@ export function TagSelect({
         <PopoverContent className="w-[200px] p-0">
           <Command
             filter={(value, search) => {
-              if (value.includes(search)) return 1;
+              if (value.includes(search.toLowerCase())) return 1;
               return 0;
             }}
           >
             <CommandInput placeholder="Search tag..." className="h-9" />
-            <CommandEmpty>No tag found.</CommandEmpty>
-            <CommandGroup>
-              {tags.map((tag) => (
-                <CommandItem
-                  key={tag.id}
-                  value={tag.name}
-                  onSelect={(currentValue) => {
-                    onSelectProp ? onSelectProp(tag) : null;
-                    setValue(currentValue === value ? value : currentValue);
-                    setOpen(false);
-                  }}
-                >
-                  {tag.name}
-                  <CheckIcon
-                    className={cn(
-                      "ml-auto h-4 w-4",
-                      value === tag.name ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                </CommandItem>
-              ))}
-            </CommandGroup>
+            <ScrollArea className="h-32">
+              <CommandEmpty>No tag found.</CommandEmpty>
+              <CommandGroup>
+                {tags
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((tag) => (
+                    <CommandItem
+                      key={tag.id}
+                      value={tag.name}
+                      onSelect={(currentValue) => {
+                        onSelectProp ? onSelectProp(tag) : null;
+                        setValue(currentValue === value ? value : currentValue);
+                        setOpen(false);
+                      }}
+                    >
+                      {tag.name}
+                      <CheckIcon
+                        className={cn(
+                          "ml-auto h-4 w-4",
+                          value === tag.name ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+              </CommandGroup>
+            </ScrollArea>
           </Command>
         </PopoverContent>
       </Popover>
@@ -118,7 +125,7 @@ export function SortBySelect({
   let sortDirURL = searchParams.get("sortdir");
 
   const [sortBy, setSortBy] = React.useState(sortByURL ?? "Date");
-  const [sortDir, setSortDir] = React.useState(sortDirURL ?? "Asc");
+  const [sortDir, setSortDir] = React.useState(sortDirURL ?? "Desc");
 
   React.useEffect(() => {
     onSelectProp([sortBy, sortDir]);

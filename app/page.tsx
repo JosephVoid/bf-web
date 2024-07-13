@@ -40,6 +40,11 @@ export default function Home({
         <Suspense fallback={<Loader dark />}>
           <DesireList params={desireListParams} />
         </Suspense>
+        <div className="flex justify-center rounded-md bg-slate-100 p-3 flex-col mb-3 md:hidden">
+          <p>For any questions</p>
+          <b>contact@buyersfirst.et</b>
+          <b>+251967067652</b>
+        </div>
       </div>
     </main>
   );

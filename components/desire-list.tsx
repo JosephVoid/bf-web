@@ -9,6 +9,7 @@ import React, { Suspense } from "react";
 import { ArchiveIcon } from "@radix-ui/react-icons";
 import Search from "./search";
 import Loader from "./loader";
+import { formatPrice } from "@/lib/helpers";
 
 export function Desire({ prop }: { prop: IDesire }) {
   return (
@@ -43,10 +44,10 @@ export function Desire({ prop }: { prop: IDesire }) {
         <div className="flex justify-between mt-3 items-baseline">
           <p className="text-sm">
             Looking for
-            <b> {prop.price} Br</b>
+            <b> {formatPrice(prop.price)} Br</b>
           </p>
           <p className="text-sm">
-            <b>{prop.wants}</b> want this
+            <b>{prop.wants + 1}</b> want this
           </p>
           <p className="text-sm">
             <b>{prop.views}</b> views
@@ -58,8 +59,8 @@ export function Desire({ prop }: { prop: IDesire }) {
         <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight line-clamp-2 leading-6 mb-3">
           {prop.title}
         </h3>
-        <div className="flex justify-start relative w-full h-[250px] mb-3">
-          {prop.picture && (
+        {prop.picture && (
+          <div className="flex justify-start relative w-full h-[250px] mb-3">
             <Image
               src={prop.picture}
               alt="desire"
@@ -67,8 +68,8 @@ export function Desire({ prop }: { prop: IDesire }) {
               style={{ objectFit: "cover" }}
               className="rounded-md mr-5"
             />
-          )}
-        </div>
+          </div>
+        )}
         <div className="flex flex-col justify-between mb-3">
           <div className="mt-2">
             {prop.tags.map((tag: string, index: number) => (
@@ -83,8 +84,8 @@ export function Desire({ prop }: { prop: IDesire }) {
         </small>
         <div className="flex justify-between mt-3 items-baseline">
           <p className="text-sm">
-            Looking for
-            <b> {prop.price} Br</b>
+            For
+            <b> {formatPrice(prop.price)} Br</b>
           </p>
           <p className="text-sm">
             <b>{prop.wants}</b> wants

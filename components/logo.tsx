@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Logo() {
   return (
-    <Link href={"/?sortby=Date&sortdir=Asc"}>
+    <Link href={"/?sortby=Date&sortdir=Desc"}>
       <div className="h-fit rounded-md md:mr-3 md:mb-8 w-full flex md:justify-center justify-start">
         <Image
           src="/bf-logo.svg"

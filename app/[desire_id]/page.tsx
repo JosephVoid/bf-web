@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Suspense } from "react";
-import { getUUID } from "@/lib/helpers";
+import { formatPrice, getUUID } from "@/lib/helpers";
 import { fetchUserActivity } from "@/lib/actions/fetch/user.fetch";
 import { viewItem } from "@/lib/actions/act/user.act";
 import AcceptAlertComp from "@/components/accept-alert-comp";
@@ -52,7 +52,7 @@ export default async function SingleDesire({
               {new Date(desire?.postedOn ?? "").toLocaleDateString()}
             </p>
             <p className="text-sm flex items-center">
-              <PersonIcon className="mr-1" /> {desire?.wants} want this
+              <PersonIcon className="mr-1" /> {desire?.wants + 1} want this
             </p>
             <p className="text-sm flex items-center">
               <EyeOpenIcon className="mr-1" /> {desire?.views} viewed this
@@ -74,7 +74,7 @@ export default async function SingleDesire({
             <div className="flex items-baseline mb-6">
               Looking for
               <h3 className="scroll-m-20 text-2xl font-medium tracking-tight first:mt-0 ml-2">
-                {desire?.price} Br
+                {formatPrice(desire?.price)} Br
               </h3>
             </div>
 
