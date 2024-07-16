@@ -66,6 +66,10 @@ class CoreStub extends APIStub {
     return this.axios.get(`/tags`);
   }
 
+  async getMetrics(): Promise<AxiosResponse> {
+    return this.axios.get(`/metrics`);
+  }
+
   async getAlertTags(userId: string): Promise<AxiosResponse> {
     return this.axios.get(`/user-tags/${userId}`);
   }

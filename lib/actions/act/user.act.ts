@@ -87,8 +87,7 @@ export async function signUp(
     const response = await AuthAPI.signUp(paramsWOTP);
     if (response.status === 200) {
       cookies().set("auth", response.data, { secure: true });
-      revalidatePath(currentpath ?? "/");
-      redirect(currentpath ?? "/");
+      return true;
     } else return false;
   } catch (error) {
     console.log(error);

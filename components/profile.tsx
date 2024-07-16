@@ -196,7 +196,7 @@ function SignedInProfile() {
   }, []);
 
   return (
-    <div className="p-4 mb-3 flex flex-col relative justify-center items-center border-[1px] rounded-lg">
+    <div className="p-4 mb-1 flex flex-col relative justify-center items-center border-[1px] rounded-lg">
       {user?.picture && (
         <Image
           height={70}
@@ -357,7 +357,7 @@ export function SignUpForm({
 
   async function handleDetails(data: signUpFormSchematype) {
     setIsLoading(true);
-    const result = await sendOTP(data);
+    const result = await sendOTP({ ...data, ForReset: false });
     !result
       ? toast({
           title: (
@@ -511,6 +511,7 @@ function OTPInput({
   const current_path = usePathname();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   async function handleOTP() {
     setIsLoading(true);
@@ -541,6 +542,7 @@ function OTPInput({
     });
     setIsLoading(false);
     onComplete?.();
+    router.replace("/");
   }
 
   return (

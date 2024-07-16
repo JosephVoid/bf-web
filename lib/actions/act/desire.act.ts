@@ -8,24 +8,26 @@ import { cookies } from "next/headers";
 export async function postDesire(
   title: string,
   description: string,
-  price: number,
+  minPrice: number,
+  maxPrice: number,
+  metric: string,
   picture: string | null,
   tags_id: string[]
 ): Promise<string | boolean> {
   /* While Mocking */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
-    console.log({ title, description, price, picture, tags_id });
+    console.log({ title, description, minPrice, maxPrice, picture, tags_id });
     return true;
   }
 
   try {
     const response = picture
       ? await CoreAPI.createDesires(
-          { title, description, price, tags_id, picture },
+          { title, description, minPrice, maxPrice, metric, tags_id, picture },
           cookies().get("auth")?.value ?? ""
         )
       : await CoreAPI.createDesires(
-          { title, description, price, tags_id },
+          { title, description, minPrice, maxPrice, metric, tags_id },
           cookies().get("auth")?.value ?? ""
         );
     if (response.status === 200) return response.data.id;

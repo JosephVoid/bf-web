@@ -62,7 +62,7 @@ export default function Tips({ mobile }: { mobile?: boolean }) {
     </Dialog>
   ) : (
     <Carousel
-      className="w-full max-w-xs"
+      className="w-full max-w-xs my-12"
       orientation="vertical"
       opts={{
         align: "start",
@@ -84,8 +84,8 @@ export default function Tips({ mobile }: { mobile?: boolean }) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious className="translate-y-3" />
+      <CarouselNext className="-translate-y-3" />
     </Carousel>
   );
 }

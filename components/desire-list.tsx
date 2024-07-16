@@ -43,8 +43,14 @@ export function Desire({ prop }: { prop: IDesire }) {
         </div>
         <div className="flex justify-between mt-3 items-baseline">
           <p className="text-sm">
-            Looking for
-            <b> {formatPrice(prop.price)} Br</b>
+            For{" "}
+            <b>
+              {prop.minPrice === prop.maxPrice
+                ? formatPrice(prop.minPrice)
+                : `${formatPrice(prop.minPrice)} - ${formatPrice(
+                    prop.maxPrice
+                  )} Br${prop.metric}`}
+            </b>
           </p>
           <p className="text-sm">
             <b>{prop.wants + 1}</b> want this
@@ -83,9 +89,15 @@ export function Desire({ prop }: { prop: IDesire }) {
           {prop.description}
         </small>
         <div className="flex justify-between mt-3 items-baseline">
-          <p className="text-sm">
-            For
-            <b> {formatPrice(prop.price)} Br</b>
+          <p className="text-sm flex flex-col">
+            <b>
+              {prop.minPrice === prop.maxPrice
+                ? formatPrice(prop.minPrice)
+                : `${formatPrice(prop.minPrice)} - ${formatPrice(
+                    prop.maxPrice
+                  )}`}
+            </b>
+            <b>Br{prop.metric}</b>
           </p>
           <p className="text-sm">
             <b>{prop.wants}</b> wants

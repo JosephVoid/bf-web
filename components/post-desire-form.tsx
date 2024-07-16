@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { Label } from "./ui/label";
 import {
   AvatarIcon,
+  CaretSortIcon,
   CheckIcon,
   Cross1Icon,
   ExclamationTriangleIcon,
@@ -24,7 +25,7 @@ import {
 import { TagSelect } from "./tag-sort-select";
 import { Badge } from "./ui/badge";
 import React from "react";
-import { ITag } from "@/lib/types";
+import { IMetric, ITag } from "@/lib/types";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
@@ -35,13 +36,26 @@ import { fileUpload } from "@/lib/actions/act/file.act";
 import { fileToBase64 } from "@/lib/helpers";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { fetchMetrics } from "@/lib/actions/fetch/metric.fetch";
 
 const MAX_PIC_SIZE = 5000000;
 
 const formSchema = z.object({
   title: z.string().max(50, "Title too long"),
   description: z.string().max(800, "Description too long"),
-  price: z.coerce
+  metric: z.string(),
+  minPrice: z.coerce
+    .number()
+    .lte(999999999, "Price too much")
+    .min(1, "Price can't be zero"),
+  maxPrice: z.coerce
     .number()
     .lte(999999999, "Price too much")
     .min(1, "Price can't be zero"),
@@ -65,16 +79,28 @@ export default function PostDesireForm() {
     defaultValues: {
       title: "",
       description: "",
-      price: 0,
+      minPrice: 0,
+      maxPrice: 0,
+      metric: "",
       tags: [],
     },
   });
 
   const [selectedtags, setSelectedTags] = React.useState<ITag[]>([]);
+  const [metrics, setMetrics] = React.useState<IMetric[]>([]);
+  const [selectedMetric, setSelectedMetric] = React.useState<IMetric>(
+    metrics.filter((m) => m.metric === "None")[0]
+  );
   const [picturePreview, setPicturePreview] = React.useState<File | null>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const { toast } = useToast();
   const router = useRouter();
+
+  React.useEffect(() => {
+    fetchMetrics().then((result) => {
+      setMetrics(result);
+    });
+  }, []);
 
   function handleRemoveAlert(id: string) {
     setSelectedTags(selectedtags.filter((tag) => tag.id !== id));
@@ -105,7 +131,9 @@ export default function PostDesireForm() {
     const result = await postDesire(
       data.title,
       data.description,
-      data.price,
+      data.minPrice,
+      data.maxPrice,
+      selectedMetric?.id,
       picFile,
       data.tags
     );
@@ -177,24 +205,75 @@ export default function PostDesireForm() {
                   )}
                 />
               </div>
-              <div className="mb-4 flex space-x-5">
-                <FormField
-                  control={form.control}
-                  name="price"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Desired Price</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Ideal Price in Birr"
-                          {...field}
-                          type="number"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <div className="flex">
+                <div className="mb-4 flex space-x-5">
+                  <FormField
+                    control={form.control}
+                    name="minPrice"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Minimum Price</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Lowest Price you accept"
+                            {...field}
+                            type="number"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="maxPrice"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Maximum Price</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Highest Price you accept"
+                            {...field}
+                            type="number"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="metric"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Units</FormLabel>
+                        <FormControl>
+                          <DropdownMenu modal={false}>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                variant="outline"
+                                className="md:w-36 flex justify-between"
+                              >
+                                {selectedMetric?.metric ?? "None"}
+                                <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="md:w-24">
+                              {metrics.map((m) => (
+                                <DropdownMenuItem
+                                  onSelect={() => setSelectedMetric(m)}
+                                >
+                                  {m.metric}
+                                </DropdownMenuItem>
+                              ))}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
               <div className="mb-4 flex md:flex-row flex-col">
                 <div className="md:w-1/2 w-full md:mb-0 mb-3">

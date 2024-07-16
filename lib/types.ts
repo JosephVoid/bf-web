@@ -41,6 +41,9 @@ export interface IDesire {
   description: string;
   tags: string[];
   price: number;
+  minPrice: number;
+  maxPrice: number;
+  metric: string;
   views: number;
   wants: number;
   picture?: string;
@@ -77,6 +80,12 @@ export interface ITag {
   name: string;
 }
 
+export interface IMetric {
+  id: string;
+  metric: string;
+  display: string;
+}
+
 export interface IUser {
   id: string;
   first_name: string;
@@ -88,6 +97,7 @@ export interface IUser {
 }
 
 export interface IOTP {
+  ForReset: boolean;
   email: string;
   phone: string;
 }

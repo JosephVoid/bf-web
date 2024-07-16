@@ -68,7 +68,7 @@ export default function RootLayout({
           <div className="md:w-1/6 md:fixed md:h-5/6 md:flex md:flex-col md:justify-between hidden">
             <Profile />
             <Tips />
-            <div className="flex justify-center rounded-md bg-slate-100 p-3 flex-col">
+            <div className="flex justify-center rounded-md bg-slate-100 p-3 flex-col text-xs">
               <p>For any questions</p>
               <b>contact@buyersfirst.et</b>
               <b>+251967067652</b>
