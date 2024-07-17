@@ -7,7 +7,7 @@ import Tips from "../components/tips";
 import Search from "@/components/search";
 import Header from "@/components/header";
 import { Toaster } from "@/components/ui/toaster";
-import Banner from "../components/post-desire";
+import Banner from "../components/banner";
 import { Suspense } from "react";
 import Loader from "@/components/loader";
 

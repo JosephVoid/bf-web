@@ -2,7 +2,7 @@ import DesireList from "@/components/desire-list";
 import DisplayParams from "@/components/display-params";
 import Loader from "@/components/loader";
 import Paginate from "@/components/paginate";
-import Banner from "@/components/post-desire";
+import Banner from "@/components/banner";
 import { IFilterParams } from "@/lib/types";
 import { Suspense } from "react";
 

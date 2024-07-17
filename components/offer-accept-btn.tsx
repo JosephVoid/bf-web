@@ -10,6 +10,7 @@ import { LoginForm, SignUpForm } from "./profile";
 import { useToast } from "@/components/ui/use-toast";
 import { acceptOffer } from "@/lib/actions/act/offer.act";
 import { IOffer } from "@/lib/types";
+import AuthDialogBtn from "./AuthDialogBtn";
 
 export default function OfferAcceptUserDetail({
   offer,
@@ -57,62 +58,24 @@ export default function OfferAcceptUserDetail({
   }
   return (
     <>
-      <Dialog open={modalState} onOpenChange={setModalState}>
+      <AuthDialogBtn>
         <div className="flex justify-between mb-4">
-          <DialogTrigger
-            asChild
-            onClick={(e) =>
-              hasCookie("auth") ? e.preventDefault() : setModalState(true)
-            }
+          <Button
+            onClick={handleAcceptOnClick}
+            variant={accepted ? "secondary" : "default"}
+            disabled={accepted}
           >
-            <Button
-              onClick={handleAcceptOnClick}
-              variant={accepted ? "secondary" : "default"}
-              disabled={accepted}
-            >
-              {accepted ? (
-                <>
-                  <CheckIcon className="mr-1" />
-                  Accepted
-                </>
-              ) : (
-                <>Accept the Offer</>
-              )}
-            </Button>
-          </DialogTrigger>
+            {accepted ? (
+              <>
+                <CheckIcon className="mr-1" />
+                Accepted
+              </>
+            ) : (
+              <>Accept the Offer</>
+            )}
+          </Button>
         </div>
-        <DialogContent
-          className="md:max-w-[825px] flex h-fit md:w-1/2 w-5/6"
-          onInteractOutside={(e) => {
-            e.preventDefault();
-          }}
-          onOpenAutoFocus={(e) => e.preventDefault()}
-        >
-          <div className="w-1/2 relative md:block hidden">
-            <Image
-              src="/stock-min.jpg"
-              alt="login"
-              fill={true}
-              style={{ objectFit: "cover" }}
-              className="rounded-md"
-            />
-          </div>
-          <div className="md:w-1/2 w-full flex flex-col justify-between p-2">
-            {viewState === "SIGNIN" && (
-              <LoginForm
-                onSignUpSwitch={() => setViewState("SIGNUP")}
-                onComplete={() => setModalState(false)}
-              />
-            )}
-            {viewState === "SIGNUP" && (
-              <SignUpForm
-                onSignInSwitch={() => setViewState("SIGNIN")}
-                onComplete={() => setModalState(false)}
-              />
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
+      </AuthDialogBtn>
       {accepted && (
         <>
           <p className="mb-2 opacity-70 italic">

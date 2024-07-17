@@ -48,6 +48,7 @@ import { revalidatePath } from "next/cache";
 import BFAlert from "./custom-alert";
 import { getUserId } from "@/lib/server-helpers";
 import { useToast } from "@/components/ui/use-toast";
+import AuthDialogBtn from "./AuthDialogBtn";
 
 export default function Profile() {
   /* These methods ensure that this component is rendered on the client 
@@ -138,43 +139,13 @@ export type signUpFormSchematype = z.infer<typeof signUpFormSchema>;
 export type signInFormSchematype = z.infer<typeof signInFormSchema>;
 
 function UnSignedProfile() {
-  const [viewState, setViewState] = React.useState<"SIGNIN" | "SIGNUP">(
-    "SIGNIN"
-  );
-
   return (
     <div className="p-4 mb-3 flex flex-col relative justify-center items-center border-[1px] rounded-lg">
       <AvatarIcon height={50} width={50} className="m-4 opacity-50" />
       <div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>Sign In</Button>
-          </DialogTrigger>
-          <DialogContent
-            className="sm:max-w-[825px] flex h-fit w-1/2"
-            onInteractOutside={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <div className="w-1/2 relative">
-              <Image
-                src="/stock-min.jpg"
-                alt="login"
-                fill={true}
-                style={{ objectFit: "cover" }}
-                className="rounded-md"
-              />
-            </div>
-            <div className="w-1/2 flex flex-col justify-between p-2">
-              {viewState === "SIGNIN" && (
-                <LoginForm onSignUpSwitch={() => setViewState("SIGNUP")} />
-              )}
-              {viewState === "SIGNUP" && (
-                <SignUpForm onSignInSwitch={() => setViewState("SIGNIN")} />
-              )}
-            </div>
-          </DialogContent>
-        </Dialog>
+        <AuthDialogBtn>
+          <Button>Sign In</Button>
+        </AuthDialogBtn>
       </div>
     </div>
   );
@@ -542,7 +513,6 @@ function OTPInput({
     });
     setIsLoading(false);
     onComplete?.();
-    router.replace("/");
   }
 
   return (
@@ -581,50 +551,12 @@ function OTPInput({
 }
 
 function UnSignedMobileProfile() {
-  const [viewState, setViewState] = React.useState<"SIGNIN" | "SIGNUP">(
-    "SIGNIN"
-  );
-  const [modalState, setModalState] = React.useState<boolean>(false);
-
   return (
     <div className="">
       <div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <AvatarIcon width={30} height={30} className="opacity-50" />
-          </DialogTrigger>
-          <DialogContent
-            className="md:max-w-[825px] flex h-fit md:w-1/2 w-5/6"
-            onInteractOutside={(e) => {
-              e.preventDefault();
-            }}
-            onOpenAutoFocus={(e) => e.preventDefault()}
-          >
-            <div className="w-1/2 relative md:block hidden">
-              <Image
-                src="/stock-min.jpg"
-                alt="login"
-                fill={true}
-                style={{ objectFit: "cover" }}
-                className="rounded-md"
-              />
-            </div>
-            <div className="md:w-1/2 w-full flex flex-col justify-between p-2">
-              {viewState === "SIGNIN" && (
-                <LoginForm
-                  onSignUpSwitch={() => setViewState("SIGNUP")}
-                  onComplete={() => setModalState(false)}
-                />
-              )}
-              {viewState === "SIGNUP" && (
-                <SignUpForm
-                  onSignInSwitch={() => setViewState("SIGNIN")}
-                  onComplete={() => setModalState(false)}
-                />
-              )}
-            </div>
-          </DialogContent>
-        </Dialog>
+        <AuthDialogBtn afterAuthGoTo="/profile">
+          <AvatarIcon width={30} height={30} className="opacity-50" />
+        </AuthDialogBtn>
       </div>
     </div>
   );
