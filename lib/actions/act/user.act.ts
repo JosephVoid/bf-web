@@ -80,6 +80,7 @@ export async function signUp(
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     await wait();
     cookies().set("auth", "12345678", { secure: true });
+    return true;
   }
 
   try {
