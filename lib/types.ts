@@ -99,5 +99,5 @@ export interface IUser {
 export interface IOTP {
   ForReset: boolean;
   email: string;
-  phone: string;
+  phone?: string;
 }

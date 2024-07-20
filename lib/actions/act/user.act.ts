@@ -47,8 +47,8 @@ export async function setAlerts(tags: string[]): Promise<boolean> {
 
 export async function signOut(): Promise<void> {
   cookies().delete("auth");
-  revalidatePath("/");
-  redirect("/");
+  revalidatePath("/?sortby=Date&sortdir=Desc");
+  redirect("/?sortby=Date&sortdir=Desc");
 }
 
 export async function signIn(
@@ -127,5 +127,32 @@ export async function viewItem(id: string, userId: string): Promise<void> {
     await CoreAPI.viewItem(id, cookies().get("auth")?.value ?? "");
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function resetPassword(
+  newPassword: string,
+  otp: string,
+  email: string
+) {
+  /* ---When Mocking---- */
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    await wait();
+    return true;
+  }
+  try {
+    const response = await AuthAPI.resetPassword({
+      newPassword,
+      otp,
+      email,
+    });
+    if (response.status === 200) return true;
+    else {
+      console.log(response.data);
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
   }
 }

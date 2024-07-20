@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   RocketIcon,
@@ -37,7 +37,13 @@ import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { sendOTP, signIn, signOut, signUp } from "@/lib/actions/act/user.act";
+import {
+  resetPassword,
+  sendOTP,
+  signIn,
+  signOut,
+  signUp,
+} from "@/lib/actions/act/user.act";
 import { getCookie, hasCookie } from "cookies-next";
 import Loader from "./loader";
 import { fetchUserProfile } from "@/lib/actions/fetch/user.fetch";
@@ -122,7 +128,7 @@ const signUpFormSchema = z.object({
     ),
   password: z
     .string()
-    .max(30, "Password too long")
+    .max(60, "Password too long")
     .min(8, "Password too short"),
 });
 
@@ -198,9 +204,11 @@ function SignedInProfile() {
 export function LoginForm({
   onSignUpSwitch,
   onComplete,
+  onForgot,
 }: {
   onSignUpSwitch: () => void;
   onComplete?: () => void;
+  onForgot: () => void;
 }) {
   const form = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
@@ -285,6 +293,9 @@ export function LoginForm({
                   </FormItem>
                 )}
               />
+              <p className="cursor-pointer text-xs my-2" onClick={onForgot}>
+                Forgot Password?
+              </p>
             </div>
             <BFAlert
               variant={"destructive"}
@@ -591,5 +602,208 @@ function MobileSignedInProfile() {
         )}
       </Link>
     </div>
+  );
+}
+
+export function ForgotPasswordForm({ onComplete }: { onComplete: () => void }) {
+  const emailSchema = z.object({
+    email: z.string().email(),
+  });
+
+  const otpSchema = z.object({
+    otp: z.coerce
+      .number()
+      .int()
+      .refine((num) => {
+        return num.toString().length === 6;
+      }, "Wrong OTP format"),
+  });
+
+  const newPassSchema = z.object({
+    newPass: z
+      .string()
+      .max(60, "Password too long")
+      .min(8, "Password too short"),
+  });
+
+  const emailForm = useForm<z.infer<typeof emailSchema>>({
+    resolver: zodResolver(emailSchema),
+  });
+  const otpForm = useForm<z.infer<typeof otpSchema>>({
+    resolver: zodResolver(otpSchema),
+  });
+  const newPassForm = useForm<z.infer<typeof newPassSchema>>({
+    resolver: zodResolver(newPassSchema),
+  });
+
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [stage, setStage] = React.useState<"EMAIL" | "OTP" | "NEW">("EMAIL");
+  const [resetData, setResetData] = React.useState<{
+    newPassword: string;
+    otp: string;
+    email: string;
+  }>({ newPassword: "", otp: "", email: "" });
+  const [isError, setIsError] = React.useState(false);
+  const router = useRouter();
+  const { toast } = useToast();
+
+  async function handleEmail(data: z.infer<typeof emailSchema>) {
+    setIsLoading(true);
+    const result = await sendOTP({ email: data.email, ForReset: true });
+    if (result) {
+      setResetData({ ...resetData, email: data.email });
+      setIsLoading(false);
+      setStage("OTP");
+    } else {
+      setIsError(true);
+      setIsLoading(false);
+    }
+  }
+
+  function handleOTP(data: z.infer<typeof otpSchema>) {
+    setResetData({ ...resetData, otp: data.otp.toString() });
+    setStage("NEW");
+  }
+
+  async function handleNewPass(data: z.infer<typeof newPassSchema>) {
+    setIsLoading(true);
+    const result = await resetPassword(
+      data.newPass,
+      resetData.otp,
+      resetData.email
+    );
+    setIsLoading(false);
+    if (result) {
+      toast({
+        title: (
+          <div className="flex items-center">
+            {
+              <>
+                <CheckIcon className="mr-2" />
+                <span className="first-letter:capitalize">
+                  Password Reset! Login with you new password.
+                </span>
+              </>
+            }
+          </div>
+        ),
+      });
+      router.replace("/?sortby=Date&sortdir=Desc");
+      onComplete();
+    } else {
+      setIsError(true);
+    }
+  }
+
+  return (
+    <>
+      <div className="flex flex-col justify-center py-6">
+        <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-start mb-5">
+          Forgot your password? Lets reset it.
+        </h1>
+        {stage === "EMAIL" && (
+          <Form {...emailForm}>
+            <form onSubmit={emailForm.handleSubmit(handleEmail)}>
+              <FormField
+                control={emailForm.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="mb-4">
+                    <FormLabel>Your Email Address</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                    <BFAlert
+                      variant={"destructive"}
+                      text="OTP Error"
+                      show={isError}
+                    />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">
+                {isLoading ? <Loader /> : "Get Code"}
+              </Button>
+            </form>
+          </Form>
+        )}
+        {stage === "OTP" && (
+          <>
+            <Alert className="mb-4">
+              <RocketIcon className="h-4 w-4" />
+              <AlertTitle>We've sent a 6-digit code</AlertTitle>
+              <AlertDescription>Check your email</AlertDescription>
+            </Alert>
+            <Form {...otpForm}>
+              <form onSubmit={otpForm.handleSubmit(handleOTP)}>
+                <FormField
+                  control={otpForm.control}
+                  name="otp"
+                  render={({ field }) => (
+                    <FormItem className="mb-4">
+                      <FormLabel>Enter the 6-digit code</FormLabel>
+                      <FormControl>
+                        <Input placeholder="* * * * * *" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit">
+                  {isLoading ? <Loader /> : "Confirm"}
+                </Button>
+              </form>
+            </Form>
+          </>
+        )}
+        {stage === "NEW" && (
+          <>
+            <Form {...newPassForm}>
+              <form onSubmit={newPassForm.handleSubmit(handleNewPass)}>
+                <FormField
+                  control={newPassForm.control}
+                  name="newPass"
+                  render={({ field }) => (
+                    <FormItem className="mb-4">
+                      <FormLabel>Enter New Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Password"
+                          {...field}
+                          type="password"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                      <BFAlert
+                        variant={"destructive"}
+                        text="Something is wrong, Try again"
+                        show={isError}
+                      />
+                    </FormItem>
+                  )}
+                />
+                {isError && (
+                  <Button
+                    variant={"secondary"}
+                    onClick={() => {
+                      setIsError(false);
+                      setStage("EMAIL");
+                    }}
+                  >
+                    Try Again
+                  </Button>
+                )}
+                {!isError && (
+                  <Button type="submit">
+                    {isLoading ? <Loader /> : "Save"}
+                  </Button>
+                )}
+              </form>
+            </Form>
+          </>
+        )}
+      </div>
+    </>
   );
 }

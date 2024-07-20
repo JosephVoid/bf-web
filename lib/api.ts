@@ -31,6 +31,10 @@ class AuthStub extends APIStub {
   async sendOTP(body: any): Promise<AxiosResponse> {
     return this.axios.post("/auth/send-otp", body);
   }
+
+  async resetPassword(body: any): Promise<AxiosResponse> {
+    return this.axios.post("/auth/reset-password", body);
+  }
 }
 
 class CoreStub extends APIStub {
