@@ -262,6 +262,7 @@ export default function PostDesireForm() {
                               {metrics.map((m) => (
                                 <DropdownMenuItem
                                   onSelect={() => setSelectedMetric(m)}
+                                  key={m.id}
                                 >
                                   {m.metric}
                                 </DropdownMenuItem>
