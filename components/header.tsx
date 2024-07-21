@@ -7,7 +7,8 @@ import Logo from "./logo";
 import Image from "next/image";
 import React from "react";
 import { hasCookie } from "cookies-next";
-import { LoginForm, MobileProfile, SignUpForm } from "./profile";
+import { LoginForm, SignUpForm } from "./profile-forms";
+import { MobileProfile } from "./profile-displays";
 
 export default function Header() {
   const current_path = usePathname();

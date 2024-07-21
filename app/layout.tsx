@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import Logo from "../components/logo";
-import Profile from "../components/profile";
+import Profile from "../components/profile-displays";
 import Tips from "../components/tips";
 import Search from "@/components/search";
 import Header from "@/components/header";

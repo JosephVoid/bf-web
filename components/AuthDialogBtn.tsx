@@ -4,7 +4,7 @@ import React from "react";
 import { ReactNode } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { ForgotPasswordForm, LoginForm, SignUpForm } from "./profile";
+import { ForgotPasswordForm, LoginForm, SignUpForm } from "./profile-forms";
 import Image from "next/image";
 import { hasCookie } from "cookies-next";
 import { useRouter } from "next/navigation";

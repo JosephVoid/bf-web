@@ -6,7 +6,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { CheckIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import { LoginForm, SignUpForm } from "./profile";
+import { LoginForm, SignUpForm } from "./profile-forms";
 import { useToast } from "@/components/ui/use-toast";
 import { acceptOffer } from "@/lib/actions/act/offer.act";
 import { IOffer } from "@/lib/types";

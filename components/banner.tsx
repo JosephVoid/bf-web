@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import React from "react";
 import Image from "next/image";
-import { LoginForm, SignUpForm } from "./profile";
+import { LoginForm, SignUpForm } from "./profile-forms";
 import { Button } from "./ui/button";
 import AuthDialogBtn from "./AuthDialogBtn";
 
