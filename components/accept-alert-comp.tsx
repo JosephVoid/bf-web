@@ -5,7 +5,7 @@ import { hasCookie } from "cookies-next";
 import React from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
-import { LoginForm, SignUpForm } from "./profile";
+import { LoginForm, SignUpForm } from "./profile-forms";
 import { useToast } from "@/components/ui/use-toast";
 import {
   BellIcon,

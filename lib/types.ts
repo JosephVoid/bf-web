@@ -3,7 +3,7 @@ import { postDesireFromSchematype } from "@/components/post-desire-form";
 import {
   signInFormSchematype,
   signUpFormSchematype,
-} from "@/components/profile";
+} from "@/components/profile-forms";
 
 export interface ISearchParams {}
 
