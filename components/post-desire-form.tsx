@@ -88,9 +88,7 @@ export default function PostDesireForm() {
 
   const [selectedtags, setSelectedTags] = React.useState<ITag[]>([]);
   const [metrics, setMetrics] = React.useState<IMetric[]>([]);
-  const [selectedMetric, setSelectedMetric] = React.useState<IMetric>(
-    metrics.filter((m) => m.metric === "None")[0]
-  );
+  const [selectedMetric, setSelectedMetric] = React.useState<IMetric>();
   const [picturePreview, setPicturePreview] = React.useState<File | null>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const { toast } = useToast();
@@ -133,7 +131,7 @@ export default function PostDesireForm() {
       data.description,
       data.minPrice,
       data.maxPrice,
-      selectedMetric?.id,
+      selectedMetric?.id ?? "69e45ebb-ffae-46a1-a1e5-4fc838138374",
       picFile,
       data.tags
     );

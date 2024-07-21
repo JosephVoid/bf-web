@@ -109,7 +109,7 @@ export function LoginForm({
     const response = await signIn(data, current_path);
 
     if (response) {
-      router.replace(current_path ?? "/");
+      router.replace(current_path ?? "/?sortby=Date&sortdir=Desc");
       toast({
         title: (
           <div className="flex items-center">

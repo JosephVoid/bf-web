@@ -18,7 +18,7 @@ export default function Search() {
     params.set("query", searchQ);
     params.delete("page");
     params.set("sortby", "Date");
-    params.set("sortdir", "Asc");
+    params.set("sortdir", "Desc");
     params.delete("tag");
     router.push(`/search?${params.toString()}`);
   }

@@ -59,7 +59,7 @@ export function UnSignedProfile() {
     <div className="p-4 mb-3 flex flex-col relative justify-center items-center border-[1px] rounded-lg">
       <AvatarIcon height={50} width={50} className="m-4 opacity-50" />
       <div>
-        <AuthDialogBtn>
+        <AuthDialogBtn afterAuthGoTo="/?sortby=Date&sortdir=Desc">
           <Button>Sign In</Button>
         </AuthDialogBtn>
       </div>
@@ -132,7 +132,7 @@ function UnSignedMobileProfile() {
   return (
     <div className="">
       <div>
-        <AuthDialogBtn afterAuthGoTo="/profile">
+        <AuthDialogBtn afterAuthGoTo="/?sortby=Date&sortdir=Desc">
           <AvatarIcon width={30} height={30} className="opacity-50" />
         </AuthDialogBtn>
       </div>

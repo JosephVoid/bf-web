@@ -68,7 +68,7 @@ export default function Tips({ mobile }: { mobile?: boolean }) {
         align: "start",
       }}
     >
-      <CarouselContent className="-mt-1 h-[250px]">
+      <CarouselContent className="-mt-1 h-[230px]">
         {tips.map((tip, index) => (
           <CarouselItem key={index} className="pt-1 md:basis-1/2">
             <div className="py-1">
