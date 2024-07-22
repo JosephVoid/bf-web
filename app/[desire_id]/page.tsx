@@ -111,7 +111,7 @@ export default async function SingleDesire({
                   ? formatPrice(desire.minPrice)
                   : `${formatPrice(desire.minPrice)} - ${formatPrice(
                       desire.maxPrice
-                    )} Br${desire.metric}`}
+                    )} Br ${desire.metric === "None" ? "" : desire.metric}`}
               </h3>
             </div>
 
