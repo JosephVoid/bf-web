@@ -13,6 +13,39 @@ import { redirect } from "next/navigation";
 import { fetchOffers } from "@/lib/actions/fetch/offer.fetch";
 import Loader from "@/components/loader";
 import { getUserId } from "@/lib/server-helpers";
+import type { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { desire_id: string };
+}): Promise<Metadata> {
+  const current_path = params.desire_id;
+  const desire = await fetchSingleDesire(getUUID(current_path));
+
+  return {
+    metadataBase: new URL("https://buyersfirst.et"),
+    title: desire?.title,
+    description: desire?.title,
+    keywords: [
+      "Buyers",
+      "Sellers",
+      "Ethiopia",
+      "Addis Ababa",
+      "Ecommerce",
+      "Shopping",
+      "Offers",
+      "Deals",
+    ],
+    openGraph: {
+      title: desire?.title,
+      description: desire?.title,
+      images: desire?.picture,
+      url: "https://buyersfirst.et",
+      siteName: "Buyers First",
+    },
+  };
+}
 
 export default async function SingleDesire({
   params,
@@ -74,7 +107,11 @@ export default async function SingleDesire({
             <div className="flex items-baseline mb-6">
               Looking for
               <h3 className="scroll-m-20 text-2xl font-medium tracking-tight first:mt-0 ml-2">
-                {formatPrice(desire?.price)} Br
+                {desire.minPrice === desire.maxPrice
+                  ? formatPrice(desire.minPrice)
+                  : `${formatPrice(desire.minPrice)} - ${formatPrice(
+                      desire.maxPrice
+                    )} Br${desire.metric}`}
               </h3>
             </div>
 

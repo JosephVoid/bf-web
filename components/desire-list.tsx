@@ -100,7 +100,7 @@ export function Desire({ prop }: { prop: IDesire }) {
             <b>Br{prop.metric}</b>
           </p>
           <p className="text-sm">
-            <b>{prop.wants}</b> wants
+            <b>{prop.wants + 1}</b> wants
           </p>
           <p className="text-sm">
             <b>{prop.views}</b> views

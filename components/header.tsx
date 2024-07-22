@@ -6,17 +6,11 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Logo from "./logo";
 import Image from "next/image";
 import React from "react";
-import { hasCookie } from "cookies-next";
-import { LoginForm, SignUpForm } from "./profile-forms";
 import { MobileProfile } from "./profile-displays";
 
 export default function Header() {
   const current_path = usePathname();
   const router = useRouter();
-  const [modalState, setModalState] = React.useState<boolean>(false);
-  const [viewState, setViewState] = React.useState<"SIGNIN" | "SIGNUP">(
-    "SIGNIN"
-  );
 
   function getHeader() {
     if (current_path.split("/")[1] === "profile") return "Profile";
@@ -36,10 +30,6 @@ export default function Header() {
       backPath.pop();
       router.replace(`/${backPath.join("")}`);
     }
-  }
-
-  function handleOnClick() {
-    if (hasCookie("auth")) router.push(`/profile`);
   }
 
   return (

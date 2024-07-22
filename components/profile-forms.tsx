@@ -207,7 +207,7 @@ export function SignUpForm({
       first_name: "",
       last_name: "",
       email: "",
-      phone: "",
+      phone: "+251",
       password: "",
     },
   });
@@ -283,7 +283,14 @@ export function SignUpForm({
                     <FormItem>
                       <FormLabel>Phone</FormLabel>
                       <FormControl>
-                        <Input placeholder="+251" {...field} />
+                        <Input
+                          placeholder="+251"
+                          {...field}
+                          onChange={(e) => {
+                            const value = e.target.value.replace(/\s+/g, "");
+                            field.onChange(value);
+                          }}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

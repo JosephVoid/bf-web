@@ -20,10 +20,6 @@ export default function Banner({
   variant?: string;
 }) {
   const router = useRouter();
-  const [viewState, setViewState] = React.useState<"SIGNIN" | "SIGNUP">(
-    "SIGNIN"
-  );
-  const [modalState, setModalState] = React.useState<boolean>(false);
   function handleOnClick() {
     if (hasCookie("auth")) router.push(`/${href}`);
   }

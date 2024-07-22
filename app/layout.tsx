@@ -11,31 +11,6 @@ import Banner from "../components/banner";
 import { Suspense } from "react";
 import Loader from "@/components/loader";
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://buyersfirst.et"),
-  title: "Buyers First",
-  description:
-    "An Ethiopian ecommerce site which makes buying niche things and rare items easier. It prioritizes the buyers, allowing them to post what they desire and get a list offers from sellers",
-  keywords: [
-    "Buyers",
-    "Sellers",
-    "Ethiopia",
-    "Addis Ababa",
-    "Ecommerce",
-    "Shopping",
-    "Offers",
-    "Deals",
-  ],
-  openGraph: {
-    title: "Buyers First",
-    description:
-      "An Ethiopian ecommerce site which makes buying niche things and rare items easier. It prioritizes the buyers, allowing them to post what they desire and get a list offers from sellers",
-    images: "/favicon.ico",
-    url: "https://buyersfirst.et",
-    siteName: "Buyers First",
-  },
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
