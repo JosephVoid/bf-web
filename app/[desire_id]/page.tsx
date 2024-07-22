@@ -26,7 +26,7 @@ export async function generateMetadata({
   return {
     metadataBase: new URL("https://buyersfirst.et"),
     title: desire?.title,
-    description: desire?.title,
+    description: desire?.description,
     keywords: [
       "Buyers",
       "Sellers",
@@ -39,7 +39,7 @@ export async function generateMetadata({
     ],
     openGraph: {
       title: desire?.title,
-      description: desire?.title,
+      description: desire?.description,
       images: desire?.picture,
       url: "https://buyersfirst.et",
       siteName: "Buyers First",
