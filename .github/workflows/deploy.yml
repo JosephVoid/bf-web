@@ -25,5 +25,5 @@ jobs:
             git pull
             npm install
             npm run build
-            systemctl restart bfweb
+            sudo systemctl restart bfweb
           EOF
