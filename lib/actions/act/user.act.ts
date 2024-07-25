@@ -74,7 +74,7 @@ export async function signIn(
 export async function signUp(
   params: ISignUp,
   otp: string,
-  currentpath?: string
+  affCode?: string
 ): Promise<boolean> {
   /* ---When Mocking---- */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
@@ -84,7 +84,11 @@ export async function signUp(
   }
 
   try {
-    const paramsWOTP: ISignUp & { otp: string } = { ...params, otp };
+    const paramsWOTP: ISignUp & { otp: string; affiliateCode?: string } = {
+      ...params,
+      otp,
+      affiliateCode: affCode,
+    };
     const response = await AuthAPI.signUp(paramsWOTP);
     if (response.status === 200) {
       cookies().set("auth", response.data, { secure: true });

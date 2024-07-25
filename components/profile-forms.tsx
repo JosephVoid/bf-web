@@ -32,6 +32,7 @@ import { useRouter } from "next/navigation";
 import BFAlert from "./custom-alert";
 import { useToast } from "@/components/ui/use-toast";
 import { SupportLink } from "./profile-displays";
+import { Checkbox } from "./ui/checkbox";
 
 const signInFormSchema = z.object({
   email: z.string().email(),
@@ -76,6 +77,7 @@ const OTPForm = z.object({
     .refine((num) => {
       return num.toString().length === 6;
     }, "Wrong OTP format"),
+  affiliateCode: z.string().min(6, "Must be six characters").optional(),
 });
 
 export type signUpFormSchematype = z.infer<typeof signUpFormSchema>;
@@ -564,13 +566,14 @@ function OTPInput({
 
   const current_path = usePathname();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isAffilate, setIsAffilate] = React.useState<boolean>(false);
   const { toast } = useToast();
-  const router = useRouter();
 
   async function handleOTP() {
     setIsLoading(true);
     let otp = form.getValues("otp");
-    const result = await signUp(data, otp.toString(), current_path);
+    let affCode = form.getValues("affiliateCode");
+    const result = await signUp(data, otp.toString(), affCode);
 
     toast({
       title: (
@@ -598,9 +601,17 @@ function OTPInput({
     onComplete?.();
   }
 
+  function onAffiliateChange() {
+    form.setValue(
+      "affiliateCode",
+      isAffilate ? undefined : form.getValues("affiliateCode")
+    );
+    setIsAffilate(!isAffilate);
+  }
+
   return (
     <>
-      <div className="flex flex-col justify-center h-3/4 py-6">
+      <div className="flex flex-col justify-center h-4/5 py-6">
         <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-start mb-5">
           One-Time Password
         </h1>
@@ -624,6 +635,31 @@ function OTPInput({
                 </FormItem>
               )}
             />
+            <div>
+              <Checkbox
+                id="affiliate"
+                onCheckedChange={onAffiliateChange}
+                checked={isAffilate}
+              />
+              <label htmlFor="affiliate" className="text-sm font-medium ml-2">
+                Affiliate
+              </label>
+              <div className={`${isAffilate ? "visible" : "invisible"}`}>
+                <FormField
+                  control={form.control}
+                  name="affiliateCode"
+                  render={({ field }) => (
+                    <FormItem className="mb-4">
+                      <FormLabel>Enter the affiliate code</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Code" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
             <Button type="submit">{isLoading ? <Loader /> : "Confirm"}</Button>
           </form>
         </Form>
