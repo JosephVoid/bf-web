@@ -101,3 +101,9 @@ export interface IOTP {
   email: string;
   phone?: string;
 }
+
+export interface APIResponse {
+  result: boolean;
+  message?: string;
+  data?: string;
+}

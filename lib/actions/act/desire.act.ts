@@ -2,7 +2,7 @@
 
 import { CoreAPI } from "@/lib/api";
 import { wait } from "@/lib/helpers";
-import { getCookie } from "cookies-next";
+import { APIResponse } from "@/lib/types";
 import { cookies } from "next/headers";
 
 export async function postDesire(
@@ -13,11 +13,11 @@ export async function postDesire(
   metric: string,
   picture: string | null,
   tags_id: string[]
-): Promise<string | boolean> {
+): Promise<APIResponse> {
   /* While Mocking */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     console.log({ title, description, minPrice, maxPrice, picture, tags_id });
-    return true;
+    return { result: true };
   }
 
   try {
@@ -30,19 +30,20 @@ export async function postDesire(
           { title, description, minPrice, maxPrice, metric, tags_id },
           cookies().get("auth")?.value ?? ""
         );
-    if (response.status === 200) return response.data.id;
-    else return false;
-  } catch (error) {
-    console.log(error);
-    return false;
+    if (response.status === 200)
+      return { result: true, data: response.data.id };
+    else return { result: false, message: response.data.message };
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
   }
 }
 
-export async function wantDesire(desireId: string): Promise<boolean> {
+export async function wantDesire(desireId: string): Promise<APIResponse> {
   /* While Mocking */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     await wait();
-    return true;
+    return { result: true };
   }
 
   try {
@@ -50,21 +51,22 @@ export async function wantDesire(desireId: string): Promise<boolean> {
       desireId,
       cookies().get("auth")?.value ?? ""
     );
-    if (response.status === 200) return true;
-    else {
+    if (response.status === 200) {
+      return { result: true };
+    } else {
       console.log(response.data);
-      return false;
+      return { result: false, message: response.data.message };
     }
   } catch (error) {
-    return false;
+    return { result: false };
   }
 }
 
-export async function unWantDesire(desireId: string): Promise<boolean> {
+export async function unWantDesire(desireId: string): Promise<APIResponse> {
   /* While Mocking */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     await wait();
-    return true;
+    return { result: true };
   }
 
   try {
@@ -72,13 +74,14 @@ export async function unWantDesire(desireId: string): Promise<boolean> {
       desireId,
       cookies().get("auth")?.value ?? ""
     );
-    if (response.status === 200) return true;
-    else {
+    if (response.status === 200) {
+      return { result: true };
+    } else {
       console.log(response.data);
-      return false;
+      return { result: false, message: response.data.message };
     }
   } catch (error) {
-    return false;
+    return { result: false };
   }
 }
 

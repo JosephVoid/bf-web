@@ -9,32 +9,30 @@ import { CheckIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { LoginForm, SignUpForm } from "./profile-forms";
 import { useToast } from "@/components/ui/use-toast";
 import { acceptOffer } from "@/lib/actions/act/offer.act";
-import { IOffer } from "@/lib/types";
+import { APIResponse, IOffer } from "@/lib/types";
 import AuthDialogBtn from "./AuthDialogBtn";
 
 export default function OfferAcceptUserDetail({
   offer,
   acceptedProp,
+  offeredProp,
 }: {
   offer?: IOffer;
   acceptedProp: boolean;
+  offeredProp: boolean;
 }) {
-  const [modalState, setModalState] = React.useState<boolean>(false);
-  const [viewState, setViewState] = React.useState<"SIGNIN" | "SIGNUP">(
-    "SIGNIN"
-  );
   const [accepted, setAccepted] = React.useState(acceptedProp);
   const { toast } = useToast();
 
   function handleAcceptOnClick() {
     if (hasCookie("auth") && offer?.id && !accepted) {
-      acceptOffer(offer?.id).then((result: boolean) => {
-        if (result) setAccepted(true);
-
+      acceptOffer(offer?.id).then((response: APIResponse) => {
+        if (response.result) setAccepted(true);
+        console.log(response);
         toast({
           title: (
             <div className="flex items-center">
-              {result && (
+              {response.result && (
                 <>
                   <CheckIcon className="mr-2" />
                   <span className="first-letter:capitalize">
@@ -42,11 +40,11 @@ export default function OfferAcceptUserDetail({
                   </span>
                 </>
               )}
-              {!result && (
+              {!response.result && (
                 <>
                   <ExclamationTriangleIcon className="mr-2" />
                   <span className="first-letter:capitalize">
-                    Error Encounterd
+                    {response.message}
                   </span>
                 </>
               )}
@@ -62,8 +60,8 @@ export default function OfferAcceptUserDetail({
         <div className="flex justify-between mb-4">
           <Button
             onClick={handleAcceptOnClick}
-            variant={accepted ? "secondary" : "default"}
-            disabled={accepted}
+            variant={accepted || offeredProp ? "secondary" : "default"}
+            disabled={accepted || offeredProp}
           >
             {accepted ? (
               <>

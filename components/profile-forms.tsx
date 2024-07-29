@@ -110,7 +110,7 @@ export function LoginForm({
     setIsLoading(true);
     const response = await signIn(data, current_path);
 
-    if (response) {
+    if (response.result) {
       router.replace(current_path ?? "/?sortby=Date&sortdir=Desc");
       toast({
         title: (
@@ -221,13 +221,15 @@ export function SignUpForm({
 
   async function handleDetails(data: signUpFormSchematype) {
     setIsLoading(true);
-    const result = await sendOTP({ ...data, ForReset: false });
-    !result
+    const response = await sendOTP({ ...data, ForReset: false });
+    !response.result
       ? toast({
           title: (
             <div className="flex items-center">
               <ExclamationTriangleIcon className="mr-2" />
-              <span className="first-letter:capitalize">OTP Error</span>
+              <span className="first-letter:capitalize">
+                {response.message}
+              </span>
             </div>
           ),
         })
@@ -413,13 +415,13 @@ export function ForgotPasswordForm({ onComplete }: { onComplete: () => void }) {
 
   async function handleNewPass(data: z.infer<typeof newPassSchema>) {
     setIsLoading(true);
-    const result = await resetPassword(
+    const response = await resetPassword(
       data.newPass,
       resetData.otp,
       resetData.email
     );
     setIsLoading(false);
-    if (result) {
+    if (response.result) {
       toast({
         title: (
           <div className="flex items-center">
@@ -573,12 +575,12 @@ function OTPInput({
     setIsLoading(true);
     let otp = form.getValues("otp");
     let affCode = form.getValues("affiliateCode");
-    const result = await signUp(data, otp.toString(), affCode);
+    const response = await signUp(data, otp.toString(), affCode);
 
     toast({
       title: (
         <div className="flex items-center">
-          {result && (
+          {response.result && (
             <>
               {" "}
               <CheckIcon className="mr-2" />
@@ -587,11 +589,11 @@ function OTPInput({
               </span>
             </>
           )}
-          {!result && (
+          {!response.result && (
             <>
               {" "}
               <ExclamationTriangleIcon className="mr-2" />
-              <span className="first-letter:capitalize">Error Encounterd</span>
+              <span className="first-letter:capitalize">{response.result}</span>
             </>
           )}
         </div>

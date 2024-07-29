@@ -20,6 +20,10 @@ export default async function SingleOffer({
     userId && offer
       ? (await fetchUserActivity(userId, "accepted")).includes(offer.id)
       : false;
+  const offered =
+    userId && offer
+      ? (await fetchUserActivity(userId, "bid-offered")).includes(offer.id)
+      : false;
 
   return !offer ? (
     <Loader dark />
@@ -48,7 +52,11 @@ export default async function SingleOffer({
       <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight first:mt-0 mb-4">
         For {offer?.price} Br
       </h2>
-      <OfferAcceptUserDetail offer={offer} acceptedProp={accepted} />
+      <OfferAcceptUserDetail
+        offer={offer}
+        acceptedProp={accepted}
+        offeredProp={offered}
+      />
     </div>
   );
 }

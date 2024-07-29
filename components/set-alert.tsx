@@ -58,22 +58,24 @@ export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
     setIsLoading(true);
     const alerts: string[] = [];
     selectedtags.forEach((tag) => alerts.push(tag.id));
-    const result = await setAlerts(alerts);
+    const response = await setAlerts(alerts);
 
     toast({
       title: (
         <div className="flex items-center">
-          {result && (
+          {response.result && (
             <>
               {" "}
               <CheckIcon className="mr-2" />
               <span className="first-letter:capitalize">Alerts Updated</span>
             </>
           )}
-          {!result && (
+          {!response.result && (
             <>
               <ExclamationTriangleIcon className="mr-2" />
-              <span className="first-letter:capitalize">Error Encounterd</span>
+              <span className="first-letter:capitalize">
+                {response.message}
+              </span>
             </>
           )}
         </div>

@@ -126,7 +126,7 @@ export default function PostDesireForm() {
       data.picture?.name ?? null
     );
 
-    const result = await postDesire(
+    const response = await postDesire(
       data.title,
       data.description,
       data.minPrice,
@@ -139,25 +139,28 @@ export default function PostDesireForm() {
     toast({
       title: (
         <div className="flex items-center">
-          {result && (
+          {response.result && (
             <>
               {" "}
               <CheckIcon className="mr-2" />
               <span className="first-letter:capitalize">Desire Posted</span>
             </>
           )}
-          {!result && (
+          {!response.result && (
             <>
               {" "}
               <ExclamationTriangleIcon className="mr-2" />
-              <span className="first-letter:capitalize">Error Encounterd</span>
+              <span className="first-letter:capitalize">
+                {response.message}
+              </span>
             </>
           )}
         </div>
       ),
     });
 
-    if (result) setTimeout(() => router.replace(`/${result}`), 1000);
+    if (response.result)
+      setTimeout(() => router.replace(`/${response.data}`), 1000);
     setIsLoading(false);
   }
 

@@ -45,7 +45,8 @@ export async function fetchUserAlerts(userId: string): Promise<ITag[]> {
 export async function fetchUserActivity(
   userId: string,
   activityType:
-    | "offered"
+    | "offered-to-desire"
+    | "bid-offered"
     | "wanted"
     | "accepted"
     | "viewed-desire"

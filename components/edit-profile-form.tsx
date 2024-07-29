@@ -121,29 +121,31 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
 
     if (updateData.picture) updateData.picture = picFile;
 
-    const result = await editProfile(updateData);
+    const response = await editProfile(updateData);
 
     toast({
       title: (
         <div className="flex items-center">
-          {result && (
+          {response.result && (
             <>
               {" "}
               <CheckIcon className="mr-2" />
               <span className="first-letter:capitalize">Profile Updated</span>
             </>
           )}
-          {!result && (
+          {!response.result && (
             <>
               <ExclamationTriangleIcon className="mr-2" />
-              <span className="first-letter:capitalize">Error Encounterd</span>
+              <span className="first-letter:capitalize">
+                {response.message}
+              </span>
             </>
           )}
         </div>
       ),
     });
 
-    if (result) setEnableEdit(false);
+    if (response.result) setEnableEdit(false);
     setIsLoading(false);
     setTimeout(() => window.location.reload(), 1000);
   }

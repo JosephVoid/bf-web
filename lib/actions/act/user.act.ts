@@ -1,16 +1,18 @@
 "use server";
 import { cookies } from "next/headers";
-import { IEditProfile, IOTP, ISignIn, ISignUp } from "@/lib/types";
+import { APIResponse, IEditProfile, IOTP, ISignIn, ISignUp } from "@/lib/types";
 import { wait } from "@/lib/helpers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { AuthAPI, CoreAPI } from "@/lib/api";
 
-export async function editProfile(params: any): Promise<boolean> {
+export async function editProfile(params: any): Promise<APIResponse> {
   /* ---When Mocking---- */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     console.log(params);
-    return true;
+    return {
+      result: true,
+    };
   }
 
   try {
@@ -18,30 +20,34 @@ export async function editProfile(params: any): Promise<boolean> {
       params,
       cookies().get("auth")?.value ?? ""
     );
-    if (response.status === 200) return true;
-    else return false;
-  } catch (error) {
-    console.log(error);
-    return false;
+    if (response.status === 200) {
+      return { result: true };
+    } else return { result: false, message: response.data.message };
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
   }
 }
 
-export async function setAlerts(tags: string[]): Promise<boolean> {
+export async function setAlerts(tags: string[]): Promise<APIResponse> {
   /* ---When Mocking---- */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     console.log(tags);
-    return true;
+    return {
+      result: true,
+    };
   }
   try {
     const response = await CoreAPI.setAlert(
       { tag_ids: tags },
       cookies().get("auth")?.value ?? ""
     );
-    if (response.status === 200) return true;
-    else return false;
-  } catch (error) {
-    console.log(error);
-    return false;
+    if (response.status === 200) {
+      return { result: true };
+    } else return { result: false, message: response.data.message };
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
   }
 }
 
@@ -54,20 +60,24 @@ export async function signOut(): Promise<void> {
 export async function signIn(
   params: ISignIn,
   currentpath?: string
-): Promise<boolean> {
+): Promise<APIResponse> {
   /* ---When Mocking---- */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     await wait();
     cookies().set("auth", "12345678", { secure: true });
-    return true;
+    return {
+      result: true,
+    };
   }
 
   try {
     const response = await AuthAPI.signIn(params);
     cookies().set("auth", response.data, { secure: true });
-    return true;
+    return {
+      result: true,
+    };
   } catch (error) {
-    return false;
+    return { result: false };
   }
 }
 
@@ -75,12 +85,14 @@ export async function signUp(
   params: ISignUp,
   otp: string,
   affCode?: string
-): Promise<boolean> {
+): Promise<APIResponse> {
   /* ---When Mocking---- */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     await wait();
     cookies().set("auth", "12345678", { secure: true });
-    return true;
+    return {
+      result: true,
+    };
   }
 
   try {
@@ -92,19 +104,23 @@ export async function signUp(
     const response = await AuthAPI.signUp(paramsWOTP);
     if (response.status === 200) {
       cookies().set("auth", response.data, { secure: true });
-      return true;
-    } else return false;
-  } catch (error) {
-    console.log(error);
-    return false;
+      return {
+        result: true,
+      };
+    } else return { result: false, message: response.data.message };
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
   }
 }
 
-export async function sendOTP(params: IOTP): Promise<boolean> {
+export async function sendOTP(params: IOTP): Promise<APIResponse> {
   /* ---When Mocking---- */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     await wait();
-    return true;
+    return {
+      result: true,
+    };
   }
 
   try {
@@ -113,11 +129,12 @@ export async function sendOTP(params: IOTP): Promise<boolean> {
       email: params.email,
       phone: params.phone,
     });
-    if (response.status === 200) return true;
-    else return false;
-  } catch (error) {
-    console.log(error);
-    return false;
+    if (response.status === 200) {
+      return { result: true };
+    } else return { result: false, message: response.data.message };
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
   }
 }
 
@@ -139,11 +156,13 @@ export async function resetPassword(
   newPassword: string,
   otp: string,
   email: string
-) {
+): Promise<APIResponse> {
   /* ---When Mocking---- */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     await wait();
-    return true;
+    return {
+      result: true,
+    };
   }
   try {
     const response = await AuthAPI.resetPassword({
@@ -151,13 +170,14 @@ export async function resetPassword(
       otp,
       email,
     });
-    if (response.status === 200) return true;
-    else {
+    if (response.status === 200) {
+      return { result: true };
+    } else {
       console.log(response.data);
-      return false;
+      return { result: false, message: response.data.message };
     }
-  } catch (error) {
-    console.log(error);
-    return false;
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
   }
 }

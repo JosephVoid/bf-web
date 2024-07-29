@@ -2,7 +2,7 @@
 
 import { CoreAPI } from "@/lib/api";
 import { wait } from "@/lib/helpers";
-import { IOfferMakeParams } from "@/lib/types";
+import { APIResponse, IOfferMakeParams } from "@/lib/types";
 import { cookies } from "next/headers";
 
 export async function makeOffer(
@@ -10,10 +10,10 @@ export async function makeOffer(
     picture?: string | null;
     desireId: string;
   }
-): Promise<string | boolean> {
+): Promise<APIResponse> {
   /* While Mocking */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
-    return true;
+    return { result: true };
   }
 
   try {
@@ -33,17 +33,17 @@ export async function makeOffer(
           cookies().get("auth")?.value ?? ""
         );
     if (response.status === 200) return response.data.id;
-    else return false;
-  } catch (error) {
-    console.log(error);
-    return false;
+    else return { result: false, message: response.data.message };
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
   }
 }
 
-export async function acceptOffer(offerId: string): Promise<boolean> {
+export async function acceptOffer(offerId: string): Promise<APIResponse> {
   /* While Mocking */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
-    return true;
+    return { result: true };
   }
 
   try {
@@ -51,10 +51,11 @@ export async function acceptOffer(offerId: string): Promise<boolean> {
       offerId,
       cookies().get("auth")?.value ?? ""
     );
-    if (response.status === 200) return true;
-    else return false;
-  } catch (error) {
-    console.log(error);
-    return false;
+    if (response.status === 200) {
+      return { result: true };
+    } else return { result: false, message: response.data.message };
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
   }
 }

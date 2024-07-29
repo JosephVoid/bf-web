@@ -75,7 +75,7 @@ export default function MakeAnOfferForm() {
       data.picture?.name ?? null
     );
 
-    const result = await makeOffer({
+    const response = await makeOffer({
       description: data.description,
       price: data.price,
       picture: picFile,
@@ -85,23 +85,25 @@ export default function MakeAnOfferForm() {
     toast({
       title: (
         <div className="flex items-center">
-          {result && (
+          {response.result && (
             <>
               <CheckIcon className="mr-2" />
               <span className="first-letter:capitalize">Offer Posted</span>
             </>
           )}
-          {!result && (
+          {!response.result && (
             <>
               <ExclamationTriangleIcon className="mr-2" />
-              <span className="first-letter:capitalize">Error Encounterd</span>
+              <span className="first-letter:capitalize">
+                {response.message}
+              </span>
             </>
           )}
         </div>
       ),
     });
 
-    if (result)
+    if (response.result)
       setTimeout(() => router.replace(`/${current_path.split("/")[1]}`), 1000);
 
     setIsLoading(false);

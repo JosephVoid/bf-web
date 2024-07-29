@@ -55,7 +55,9 @@ export default async function SingleDesire({
   const current_path = params.desire_id;
   const userId = await getUserId();
   const desire = await fetchSingleDesire(getUUID(current_path));
-  const offerAct = userId ? await fetchUserActivity(userId, "offered") : [];
+  const offerAct = userId
+    ? await fetchUserActivity(userId, "offered-to-desire")
+    : [];
   const desirePosted = userId
     ? await fetchUserActivity(userId, "posted-desire")
     : [];

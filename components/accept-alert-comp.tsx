@@ -38,13 +38,13 @@ export default function AcceptAlertComp({
   async function handleWantOnClick() {
     if (desirePosted.includes(desire?.id!)) return null;
     if (hasCookie("auth") && !wanted) {
-      const result = await wantDesire(desire?.id ?? "");
-      if (result) setWanted(true);
+      const response = await wantDesire(desire?.id ?? "");
+      if (response.result) setWanted(true);
 
       toast({
         title: (
           <div className="flex items-center">
-            {result && (
+            {response.result && (
               <>
                 <CheckIcon className="mr-2" />
                 <span className="first-letter:capitalize">
@@ -52,11 +52,11 @@ export default function AcceptAlertComp({
                 </span>
               </>
             )}
-            {!result && (
+            {!response.result && (
               <>
                 <ExclamationTriangleIcon className="mr-2" />
                 <span className="first-letter:capitalize">
-                  Error Encounterd
+                  {response.message}
                 </span>
               </>
             )}
@@ -64,13 +64,13 @@ export default function AcceptAlertComp({
         ),
       });
     } else if (hasCookie("auth") && wanted) {
-      const result = await unWantDesire(desire?.id ?? "");
-      if (result) setWanted(false);
+      const response = await unWantDesire(desire?.id ?? "");
+      if (response.result) setWanted(false);
 
       toast({
         title: (
           <div className="flex items-center">
-            {result && (
+            {response.result && (
               <>
                 <CheckIcon className="mr-2" />
                 <span className="first-letter:capitalize">
@@ -78,11 +78,11 @@ export default function AcceptAlertComp({
                 </span>
               </>
             )}
-            {!result && (
+            {!response.result && (
               <>
                 <ExclamationTriangleIcon className="mr-2" />
                 <span className="first-letter:capitalize">
-                  Error Encounterd
+                  {response.message}
                 </span>
               </>
             )}
