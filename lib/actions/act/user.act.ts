@@ -109,6 +109,7 @@ export async function sendOTP(params: IOTP): Promise<boolean> {
 
   try {
     const response = await AuthAPI.sendOTP({
+      ForReset: params.ForReset,
       email: params.email,
       phone: params.phone,
     });
