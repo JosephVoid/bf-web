@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -12,15 +11,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { Label } from "./ui/label";
 import {
-  AvatarIcon,
   CaretSortIcon,
   CheckIcon,
   Cross1Icon,
   ExclamationTriangleIcon,
   ImageIcon,
-  Pencil2Icon,
 } from "@radix-ui/react-icons";
 import { TagSelect } from "./tag-sort-select";
 import { Badge } from "./ui/badge";
@@ -30,7 +26,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { editDesire, postDesire } from "@/lib/actions/act/desire.act";
-import { redirect } from "next/navigation";
 import Loader from "./loader";
 import { fileUpload } from "@/lib/actions/act/file.act";
 import { fileToBase64, urlToFile } from "@/lib/helpers";
@@ -40,7 +35,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import useFetchMetrics from "@/lib/hooks/useFetchMetrics";
@@ -103,21 +97,25 @@ export default function PostDesireForm({
   const { data: metrics } = useFetchMetrics();
   const { getTagObjectFromString } = useObtainTags();
 
+  React.useMemo(() => {
+    setSelectedMetric(metrics?.find((m) => m.metric === desire?.metric));
+  }, [metrics]);
+
   React.useEffect(() => {
+    console.log(metrics);
     if (edit) {
       // Set picture preview
       urlToFile(desire?.picture).then((result: File | null) => {
         if (result) setPicturePreview(result);
       });
       // Form the tags from string response
-      let userTags = getTagObjectFromString(desire?.tags);
-      setSelectedTags(userTags);
-      form.setValue(
-        "tags",
-        userTags.map((ut) => ut.id)
-      );
-      // Set selected metric
-      setSelectedMetric(metrics?.find((m) => m.id === desire?.metric));
+      getTagObjectFromString(desire?.tags).then((result) => {
+        setSelectedTags(result);
+        form.setValue(
+          "tags",
+          result.map((ut) => ut.id)
+        );
+      });
     }
   }, []);
 
@@ -182,7 +180,10 @@ export default function PostDesireForm({
     });
 
     if (response.result)
-      setTimeout(() => router.replace(`/${response.data}`), 1000);
+      setTimeout(() => {
+        router.replace(`/${response.data}`);
+        router.refresh();
+      }, 1000);
     setIsLoading(false);
   }
 

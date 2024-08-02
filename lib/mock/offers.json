@@ -2,11 +2,13 @@
   {
     "id": "162b3b99-f4474a3637-41539c6-b851-080",
     "for_desire": 1,
-    "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati illo consequatur magni quo asperiores accusamus dicta ullam sint iste porro, rem eligendi ex ipsum delectus maiores veritatis adipisci similique eaque.",
+    "description": "1 .Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati illo consequatur magni quo asperiores accusamus dicta ullam sint iste porro, rem eligendi ex ipsum delectus maiores veritatis adipisci similique eaque.",
     "price": 600,
     "user": "Gonzal Juidad",
     "picture": "/black_box.png",
-    "bidOn": "2024-02-01"
+    "bidOn": "2024-02-01",
+    "bidder_id": "e03291f5-e54e-11ee-8430-704d7bc2ec86",
+    "isClosed": false
   },
   {
     "id": "162b3b99-f447c637-4153-4a369b851-080",
@@ -15,7 +17,9 @@
     "price": 800,
     "user": "Jos Hector",
     "picture": "/sample.jpg",
-    "bidOn": "2024-02-05"
+    "bidOn": "2024-02-05",
+    "bidder_id": "2",
+    "isClosed": false
   },
   {
     "id": "162b3b9c637-499-f4474a36153-b851-080",

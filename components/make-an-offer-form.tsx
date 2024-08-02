@@ -24,12 +24,14 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import React from "react";
-import { makeOffer } from "@/lib/actions/act/offer.act";
+import { editOffer, makeOffer } from "@/lib/actions/act/offer.act";
 import { usePathname, useRouter } from "next/navigation";
-import { fileToBase64, getUUID } from "@/lib/helpers";
+import { fileToBase64, getUUID, urlToFile } from "@/lib/helpers";
 import { fileUpload } from "@/lib/actions/act/file.act";
 import { useToast } from "@/components/ui/use-toast";
 import Loader from "./loader";
+import { IOffer } from "@/lib/types";
+import { revalidatePath } from "next/cache";
 
 const MAX_PIC_SIZE = 5000000;
 
@@ -53,12 +55,18 @@ const formSchema = z.object({
 
 export type MakeAnOfferSchemaType = z.infer<typeof formSchema>;
 
-export default function MakeAnOfferForm() {
+export default function MakeAnOfferForm({
+  edit = false,
+  offer,
+}: {
+  edit?: boolean;
+  offer?: IOffer;
+}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      description: "",
-      price: 0,
+      description: edit ? offer?.description : "",
+      price: edit ? offer?.price : 0,
     },
   });
 
@@ -67,6 +75,15 @@ export default function MakeAnOfferForm() {
   const router = useRouter();
   const current_path = usePathname();
   const { toast } = useToast();
+
+  React.useEffect(() => {
+    if (edit) {
+      // Set picture preview
+      urlToFile(offer?.picture).then((result: File | null) => {
+        if (result) setPicturePreview(result);
+      });
+    }
+  }, []);
 
   async function handleOffer(data: MakeAnOfferSchemaType) {
     setIsLoading(true);
@@ -109,12 +126,60 @@ export default function MakeAnOfferForm() {
     setIsLoading(false);
   }
 
+  async function handleOfferUpdate(data: MakeAnOfferSchemaType) {
+    setIsLoading(true);
+    const picFile = await fileUpload(
+      await fileToBase64(data.picture),
+      data.picture?.name ?? null
+    );
+
+    const response = await editOffer({
+      description: data.description,
+      price: data.price,
+      picture: picFile,
+      id: offer?.id ?? "",
+    });
+
+    toast({
+      title: (
+        <div className="flex items-center">
+          {response.result && (
+            <>
+              <CheckIcon className="mr-2" />
+              <span className="first-letter:capitalize">Changes Saved!</span>
+            </>
+          )}
+          {!response.result && (
+            <>
+              <ExclamationTriangleIcon className="mr-2" />
+              <span className="first-letter:capitalize">
+                {response.message}
+              </span>
+            </>
+          )}
+        </div>
+      ),
+    });
+
+    if (response.result)
+      setTimeout(() => {
+        router.replace(`/${current_path.split("/")[1]}`);
+        router.refresh();
+      }, 1000);
+
+    setIsLoading(false);
+  }
+
   return (
     <>
-      <h2 className="text-2xl font-medium mb-3"> Make an Offer</h2>
+      <h2 className="text-2xl font-medium mb-3">
+        {edit ? "Edit Offer" : "Make an Offer"}
+      </h2>
       <div className="rounded-md border-[1px] p-4 mb-8">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleOffer)}>
+          <form
+            onSubmit={form.handleSubmit(edit ? handleOfferUpdate : handleOffer)}
+          >
             <div className="flex flex-col relative">
               <div className="mb-4 flex">
                 <FormField
@@ -198,7 +263,11 @@ export default function MakeAnOfferForm() {
                 </div>
               </div>
               <Button className="md:w-1/3 w-1/2" type="submit">
-                {isLoading ? <Loader /> : "Submit Offer"}
+                {isLoading ? (
+                  <Loader />
+                ) : (
+                  <p>{edit ? "Save Changes" : "Submit Offer"}</p>
+                )}
               </Button>
             </div>
           </form>

@@ -115,6 +115,12 @@ class CoreStub extends APIStub {
     });
   }
 
+  async editBid(id: string, body: any, token: string): Promise<AxiosResponse> {
+    return this.axios.patch(`/bids/${id}`, body, {
+      headers: { Authorization: token },
+    });
+  }
+
   async acceptBid(bidId: string, token: string): Promise<AxiosResponse> {
     return this.axios.post(`/bids/accept/${bidId}`, null, {
       headers: { Authorization: token },

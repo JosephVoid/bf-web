@@ -8,13 +8,17 @@ const useFetchTags = () => {
 
 export const useObtainTags = () => {
   const queryClient = useQueryClient();
-  const getTagsFromCache = () => {
-    const tags = queryClient.getQueryData(["tags"]) as ITag[];
-    return tags;
+  const getTagsFromCache = async () => {
+    const tags = queryClient.getQueryData(["tags"]);
+    if (!tags) {
+      const fetchedTags = await fetchTags();
+      return fetchedTags;
+    }
+    return (tags as ITag[]) ?? [];
   };
 
-  const getTagObjectFromString = (tags?: string[]) => {
-    const alltags = getTagsFromCache();
+  const getTagObjectFromString = async (tags?: string[]) => {
+    const alltags = await getTagsFromCache();
     return alltags.filter((t) => tags?.includes(t.name));
   };
   return {
