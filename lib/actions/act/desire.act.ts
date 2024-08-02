@@ -39,6 +39,43 @@ export async function postDesire(
   }
 }
 
+export async function editDesire(
+  desireId: string,
+  title: string,
+  description: string,
+  minPrice: number,
+  maxPrice: number,
+  metric: string,
+  picture: string | null,
+  tags_id: string[]
+): Promise<APIResponse> {
+  /* While Mocking */
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    console.log({ title, description, minPrice, maxPrice, picture, tags_id });
+    return { result: true };
+  }
+
+  try {
+    const response = picture
+      ? await CoreAPI.editDesires(
+          { title, description, minPrice, maxPrice, metric, tags_id, picture },
+          desireId,
+          cookies().get("auth")?.value ?? ""
+        )
+      : await CoreAPI.editDesires(
+          { title, description, minPrice, maxPrice, metric, tags_id },
+          desireId,
+          cookies().get("auth")?.value ?? ""
+        );
+    if (response.status === 200)
+      return { result: true, data: response.data.id };
+    else return { result: false, message: response.data.message };
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
+  }
+}
+
 export async function wantDesire(desireId: string): Promise<APIResponse> {
   /* While Mocking */
   if (process.env.NEXT_PUBLIC_API_MOCK) {

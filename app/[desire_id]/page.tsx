@@ -1,6 +1,12 @@
 import OfferList from "@/components/offer-list";
 import { fetchSingleDesire } from "@/lib/actions/fetch/desire.fetch";
-import { ClockIcon, PersonIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import {
+  ClockIcon,
+  PersonIcon,
+  EyeOpenIcon,
+  Pencil1Icon,
+  TrashIcon,
+} from "@radix-ui/react-icons";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -14,6 +20,7 @@ import { fetchOffers } from "@/lib/actions/fetch/offer.fetch";
 import Loader from "@/components/loader";
 import { getUserId } from "@/lib/server-helpers";
 import type { Metadata, ResolvingMetadata } from "next";
+import { Button } from "@/components/ui/button";
 
 export async function generateMetadata({
   params,
@@ -93,6 +100,20 @@ export default async function SingleDesire({
               <EyeOpenIcon className="mr-1" /> {desire?.views} viewed this
             </p>
           </div>
+          {userId === desire.userPostedId && (
+            <div className="my-4 flex justify-between opacity-80">
+              <Link href={`/post-a-desire?mode=edit&id=${desire.id}`}>
+                <Button variant={"ghost"} size={"sm"}>
+                  <Pencil1Icon className="mr-1" />
+                  Edit
+                </Button>
+              </Link>
+              <Button variant={"ghost"} size={"sm"} className="text-red-700">
+                <TrashIcon className="mr-1 text-red-700" />
+                Close Desire
+              </Button>
+            </div>
+          )}
           <div className="flex flex-col">
             {desire?.picture && (
               <div className="w-full h-fit rounded-md mr-4 mb-8">

@@ -48,6 +48,8 @@ export interface IDesire {
   wants: number;
   picture?: string;
   postedOn: Date;
+  userPostedId: string;
+  isClosed: boolean;
 }
 
 export interface IDesireMeta {

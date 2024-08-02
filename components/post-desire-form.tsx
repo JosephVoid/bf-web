@@ -25,15 +25,15 @@ import {
 import { TagSelect } from "./tag-sort-select";
 import { Badge } from "./ui/badge";
 import React from "react";
-import { IMetric, ITag } from "@/lib/types";
+import { IDesire, IMetric, ITag } from "@/lib/types";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { postDesire } from "@/lib/actions/act/desire.act";
+import { editDesire, postDesire } from "@/lib/actions/act/desire.act";
 import { redirect } from "next/navigation";
 import Loader from "./loader";
 import { fileUpload } from "@/lib/actions/act/file.act";
-import { fileToBase64 } from "@/lib/helpers";
+import { fileToBase64, urlToFile } from "@/lib/helpers";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import {
@@ -43,7 +43,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { fetchMetrics } from "@/lib/actions/fetch/metric.fetch";
+import useFetchMetrics from "@/lib/hooks/useFetchMetrics";
+import { useObtainTags } from "@/lib/hooks/useFetchTags";
 
 const MAX_PIC_SIZE = 5000000;
 
@@ -73,31 +74,51 @@ const formSchema = z.object({
 
 export type postDesireFromSchematype = z.infer<typeof formSchema>;
 
-export default function PostDesireForm() {
+export default function PostDesireForm({
+  edit = false,
+  desire,
+}: {
+  edit?: boolean;
+  desire?: IDesire;
+}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      minPrice: 0,
-      maxPrice: 0,
+      title: edit ? desire?.title : "",
+      description: edit ? desire?.description : "",
+      minPrice: edit ? desire?.minPrice : 0,
+      maxPrice: edit ? desire?.maxPrice : 0,
       metric: "",
       tags: [],
     },
   });
 
   const [selectedtags, setSelectedTags] = React.useState<ITag[]>([]);
-  const [metrics, setMetrics] = React.useState<IMetric[]>([]);
   const [selectedMetric, setSelectedMetric] = React.useState<IMetric>();
   const [picturePreview, setPicturePreview] = React.useState<File | null>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const { toast } = useToast();
   const router = useRouter();
 
+  const { data: metrics } = useFetchMetrics();
+  const { getTagObjectFromString } = useObtainTags();
+
   React.useEffect(() => {
-    fetchMetrics().then((result) => {
-      setMetrics(result);
-    });
+    if (edit) {
+      // Set picture preview
+      urlToFile(desire?.picture).then((result: File | null) => {
+        if (result) setPicturePreview(result);
+      });
+      // Form the tags from string response
+      let userTags = getTagObjectFromString(desire?.tags);
+      setSelectedTags(userTags);
+      form.setValue(
+        "tags",
+        userTags.map((ut) => ut.id)
+      );
+      // Set selected metric
+      setSelectedMetric(metrics?.find((m) => m.id === desire?.metric));
+    }
   }, []);
 
   function handleRemoveAlert(id: string) {
@@ -118,7 +139,54 @@ export default function PostDesireForm() {
     form.setValue("tags", [...form.getValues("tags"), tag.id]);
   }
 
-  async function handleSubmit(data: z.infer<typeof formSchema>) {
+  async function handleSubmitEdit(data: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+
+    const picFile = await fileUpload(
+      await fileToBase64(data.picture),
+      data.picture?.name ?? null
+    );
+
+    const response = await editDesire(
+      desire?.id ?? "",
+      data.title,
+      data.description,
+      data.minPrice,
+      data.maxPrice,
+      selectedMetric?.id ?? "69e45ebb-ffae-46a1-a1e5-4fc838138374",
+      picFile,
+      data.tags
+    );
+
+    toast({
+      title: (
+        <div className="flex items-center">
+          {response.result && (
+            <>
+              {" "}
+              <CheckIcon className="mr-2" />
+              <span className="first-letter:capitalize">Changes Saved!</span>
+            </>
+          )}
+          {!response.result && (
+            <>
+              {" "}
+              <ExclamationTriangleIcon className="mr-2" />
+              <span className="first-letter:capitalize">
+                {response.message}
+              </span>
+            </>
+          )}
+        </div>
+      ),
+    });
+
+    if (response.result)
+      setTimeout(() => router.replace(`/${response.data}`), 1000);
+    setIsLoading(false);
+  }
+
+  async function handleSubmitNew(data: z.infer<typeof formSchema>) {
     setIsLoading(true);
 
     const picFile = await fileUpload(
@@ -166,10 +234,16 @@ export default function PostDesireForm() {
 
   return (
     <>
-      <h2 className="text-2xl font-medium mb-3"> Post a Desire</h2>
+      <h2 className="text-2xl font-medium mb-3">
+        {edit ? "Edit Desire" : "Post a Desire"}
+      </h2>
       <div className="rounded-md border-[1px] p-4 mb-8">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit((data) => handleSubmit(data))}>
+          <form
+            onSubmit={form.handleSubmit((data) =>
+              edit ? handleSubmitEdit(data) : handleSubmitNew(data)
+            )}
+          >
             <div className="flex flex-col relative">
               <div className="mb-4 flex">
                 <FormField
@@ -260,7 +334,7 @@ export default function PostDesireForm() {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="md:w-24">
-                              {metrics.map((m) => (
+                              {metrics?.map((m) => (
                                 <DropdownMenuItem
                                   onSelect={() => setSelectedMetric(m)}
                                   key={m.id}
@@ -353,7 +427,7 @@ export default function PostDesireForm() {
                 </div>
               </div>
               <Button type="submit" className="w-1/4">
-                {isLoading ? <Loader /> : "Post"}
+                {isLoading ? <Loader /> : <p>{edit ? "Save" : "Post"}</p>}
               </Button>
             </div>
           </form>
