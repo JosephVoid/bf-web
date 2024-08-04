@@ -1,6 +1,14 @@
 import OfferList from "@/components/offer-list";
 import { fetchSingleDesire } from "@/lib/actions/fetch/desire.fetch";
-import { ClockIcon, PersonIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import {
+  ClockIcon,
+  PersonIcon,
+  EyeOpenIcon,
+  Pencil1Icon,
+  TrashIcon,
+  CheckIcon,
+  ExclamationTriangleIcon,
+} from "@radix-ui/react-icons";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -14,6 +22,10 @@ import { fetchOffers } from "@/lib/actions/fetch/offer.fetch";
 import Loader from "@/components/loader";
 import { getUserId } from "@/lib/server-helpers";
 import type { Metadata, ResolvingMetadata } from "next";
+import { Button } from "@/components/ui/button";
+import ConfDialogBtn from "@/components/ConfirmDialogBtn";
+import { closeDesire } from "@/lib/actions/act/desire.act";
+import { APIResponse } from "@/lib/types";
 
 export async function generateMetadata({
   params,
@@ -64,10 +76,15 @@ export default async function SingleDesire({
   const wantAct = userId ? await fetchUserActivity(userId ?? "", "wanted") : [];
   const offers = await fetchOffers(desire?.id ?? "");
 
-  if (userId && desire) viewItem(desire.id, userId);
+  if (userId && desire) viewItem(desire.id);
 
   if (current_path.length === 36 && desire) {
     redirect(`/${desire?.id}-${encodeURIComponent(desire?.title ?? "")}`);
+  }
+
+  async function onClose() {
+    "use server";
+    return await closeDesire(desire?.id!);
   }
 
   return (
@@ -81,6 +98,11 @@ export default async function SingleDesire({
           <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
             {desire?.title}
           </h2>
+          {desire.isClosed && (
+            <p className="w-min bg-red-700 font-bold text-white p-2 my-2">
+              CLOSED
+            </p>
+          )}
           <div className="my-4 flex justify-between opacity-80">
             <p className="text-sm flex items-center">
               <ClockIcon className="mr-1" /> Posted on{" "}
@@ -93,6 +115,28 @@ export default async function SingleDesire({
               <EyeOpenIcon className="mr-1" /> {desire?.views} viewed this
             </p>
           </div>
+          {userId === desire.userPostedId && !desire.isClosed && (
+            <div className="mb-4 flex justify-between opacity-80">
+              <Link href={`/post-a-desire?mode=edit&id=${desire.id}`}>
+                <Button variant={"ghost"} size={"sm"}>
+                  <Pencil1Icon className="mr-1" />
+                  Edit
+                </Button>
+              </Link>
+              <ConfDialogBtn
+                context="Desire"
+                afterOk={onClose}
+                title="Are you sure you want to close this desire?"
+                subheading="You will not receive offers and they can not be reopened once they have been closed"
+                type="danger"
+              >
+                <Button variant={"ghost"} size={"sm"} className="text-red-700">
+                  <TrashIcon className="mr-1 text-red-700" />
+                  Close Desire
+                </Button>
+              </ConfDialogBtn>
+            </div>
+          )}
           <div className="flex flex-col">
             {desire?.picture && (
               <div className="w-full h-fit rounded-md mr-4 mb-8">
@@ -116,14 +160,14 @@ export default async function SingleDesire({
                     )} Br ${desire.metric === "None" ? "" : desire.metric}`}
               </h3>
             </div>
-
-            <AcceptAlertComp
-              desire={desire}
-              desirePosted={desirePosted}
-              offerAct={offerAct}
-              wantAct={wantAct}
-            />
-
+            {!desire.isClosed && (
+              <AcceptAlertComp
+                desire={desire}
+                desirePosted={desirePosted}
+                offerAct={offerAct}
+                wantAct={wantAct}
+              />
+            )}
             <div className="mt-4">
               <h3 className="scroll-m-20 text-2xl font-medium tracking-tight first:mt-0 mb-4">
                 Offers

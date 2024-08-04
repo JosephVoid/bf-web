@@ -48,6 +48,16 @@ class CoreStub extends APIStub {
     });
   }
 
+  async editDesires(
+    body: any,
+    id: string,
+    token: string
+  ): Promise<AxiosResponse> {
+    return this.axios.patch(`/desires/${id}`, body, {
+      headers: { Authorization: token },
+    });
+  }
+
   async wantDesires(id: string, token: string): Promise<AxiosResponse> {
     return this.axios.post(`/desires/want/${id}`, null, {
       headers: { Authorization: token },
@@ -56,6 +66,12 @@ class CoreStub extends APIStub {
 
   async unWantDesires(id: string, token: string): Promise<AxiosResponse> {
     return this.axios.post(`/desires/not-want/${id}`, null, {
+      headers: { Authorization: token },
+    });
+  }
+
+  async closeDesires(id: string, token: string): Promise<AxiosResponse> {
+    return this.axios.post(`/desires/${id}/close`, null, {
       headers: { Authorization: token },
     });
   }
@@ -105,8 +121,20 @@ class CoreStub extends APIStub {
     });
   }
 
+  async editBid(id: string, body: any, token: string): Promise<AxiosResponse> {
+    return this.axios.patch(`/bids/${id}`, body, {
+      headers: { Authorization: token },
+    });
+  }
+
   async acceptBid(bidId: string, token: string): Promise<AxiosResponse> {
     return this.axios.post(`/bids/accept/${bidId}`, null, {
+      headers: { Authorization: token },
+    });
+  }
+
+  async closeBid(bidId: string, token: string): Promise<AxiosResponse> {
+    return this.axios.post(`/bids/close/${bidId}`, null, {
       headers: { Authorization: token },
     });
   }

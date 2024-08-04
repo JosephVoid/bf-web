@@ -33,6 +33,7 @@ import { Button } from "./ui/button";
 import { fetchTags } from "@/lib/actions/fetch/tags.fetch";
 import { useSearchParams } from "next/navigation";
 import { ScrollArea } from "./ui/scroll-area";
+import useFetchTags from "@/lib/hooks/useFetchTags";
 
 export function TagSelect({
   onSelectProp,
@@ -41,19 +42,23 @@ export function TagSelect({
 }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-  const [tags, setTags] = React.useState<ITag[]>([]);
   const searchParams = useSearchParams();
+  // Fetch and cache
+  const { data: tags, isSuccess } = useFetchTags();
+  // Memoize the tags to not repeat without need
+  const tag = React.useMemo(() => {
+    if (isSuccess) {
+      const tagId = searchParams.get("tag");
+      return tags?.find((tag) => tag.id === tagId);
+    }
+    return null;
+  }, [tags, isSuccess, searchParams]);
 
   React.useEffect(() => {
-    fetchTags().then((result: ITag[]) => {
-      let tagId = searchParams.get("tag");
-      setTags(result);
-      if (tagId) {
-        let tag = result.find((tag) => tag.id === tagId);
-        setValue(tag?.name.toLowerCase() ?? "");
-      }
-    });
-  }, []);
+    if (tag) {
+      setValue(tag.name.toLowerCase());
+    }
+  }, [tag]);
 
   return (
     <div className="flex flex-col mr-3">
@@ -67,7 +72,7 @@ export function TagSelect({
             className="md:w-[200px] justify-between"
           >
             {value
-              ? tags.find(
+              ? tags?.find(
                   (tag) => tag.name.toLowerCase() === value.toLowerCase()
                 )?.name
               : "Select tags"}
@@ -86,7 +91,7 @@ export function TagSelect({
               <CommandEmpty>No tag found.</CommandEmpty>
               <CommandGroup>
                 {tags
-                  .sort((a, b) => a.name.localeCompare(b.name))
+                  ?.sort((a, b) => a.name.localeCompare(b.name))
                   .map((tag) => (
                     <CommandItem
                       key={tag.id}

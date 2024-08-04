@@ -138,7 +138,7 @@ export async function sendOTP(params: IOTP): Promise<APIResponse> {
   }
 }
 
-export async function viewItem(id: string, userId: string): Promise<void> {
+export async function viewItem(id: string): Promise<void> {
   /* ---When Mocking---- */
   if (process.env.NEXT_PUBLIC_API_MOCK) {
     await wait();

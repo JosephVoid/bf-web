@@ -8,7 +8,12 @@
     "views": 8,
     "wants": 4,
     "picture": "/sample.jpg",
-    "postedOn": "02/02/24"
+    "postedOn": "02/02/24",
+    "userPostedId": "e03291f5-e54e-11ee-8430-704d7bc2ec86",
+    "metric": "1692b3b9-f447-4153-b851-08463a369c70",
+    "isClosed": false,
+    "minPrice": 50,
+    "maxPrice": 100
   },
   {
     "id": "162bf447-413b99-53-b851-084a369c6370",
@@ -19,7 +24,9 @@
     "views": 2,
     "wants": 0,
     "picture": "/sample.jpg",
-    "postedOn": "02/02/24"
+    "postedOn": "02/02/24",
+    "userPostedId": "e03291f5-e54e-11ee-8430-704d7bc2ec86",
+    "isClosed": false
   },
   {
     "id": "162b3b99-f4-084a36947-4153-b851c6370",
@@ -30,7 +37,9 @@
     "views": 10,
     "wants": 0,
     "picture": "",
-    "postedOn": "02/02/24"
+    "postedOn": "02/02/24",
+    "userPostedId": "e03291f5-e54e-11ee-8430-704d7bc2ec86",
+    "isClosed": false
   },
   {
     "id": "16-4b851-08a3692b3b99-f447-4153c6370",
@@ -41,7 +50,9 @@
     "views": 8,
     "wants": 4,
     "picture": "/sample.jpg",
-    "postedOn": "02/02/24"
+    "postedOn": "02/02/24",
+    "userPostedId": "e03291f5-e54e-11ee-8430-704d7bc2ec86",
+    "isClosed": false
   },
   {
     "id": "199-f447-4153-b851-084a369c662b3b370",
@@ -52,7 +63,8 @@
     "views": 2,
     "wants": 0,
     "picture": "/sample.jpg",
-    "postedOn": "02/02/24"
+    "postedOn": "02/02/24",
+    "isClosed": false
   },
   {
     "id": "9-f447-4153-b85162b3b91-084a369c6370",
@@ -63,7 +75,8 @@
     "views": 10,
     "wants": 0,
     "picture": "",
-    "postedOn": "02/02/24"
+    "postedOn": "02/02/24",
+    "isClosed": false
   },
   {
     "id": "16251-084a369b3b99-f447-4153-b8c6370",
@@ -74,7 +87,8 @@
     "views": 8,
     "wants": 4,
     "picture": "/sample.jpg",
-    "postedOn": "02/02/24"
+    "postedOn": "02/02/24",
+    "isClosed": false
   },
   {
     "id": "14762b3b99-f4-4153-b851-084a369c6370",
@@ -85,7 +99,8 @@
     "views": 2,
     "wants": 0,
     "picture": "/sample.jpg",
-    "postedOn": "02/02/24"
+    "postedOn": "02/02/24",
+    "isClosed": false
   },
   {
     "id": "162b3b99-f4474a369c637-4153-b851-080",
@@ -96,6 +111,7 @@
     "views": 10,
     "wants": 0,
     "picture": "",
-    "postedOn": "02/02/24"
+    "postedOn": "02/02/24",
+    "isClosed": false
   }
 ]

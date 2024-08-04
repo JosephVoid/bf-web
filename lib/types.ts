@@ -48,6 +48,8 @@ export interface IDesire {
   wants: number;
   picture?: string;
   postedOn: Date;
+  userPostedId: string;
+  isClosed: boolean;
 }
 
 export interface IDesireMeta {
@@ -66,6 +68,7 @@ export interface IOffer {
   description: string;
   for_desire: string;
   bidder: string;
+  bidder_id?: string;
   bidder_phone?: string;
   bidder_email?: string;
   bidder_description?: string;
@@ -73,6 +76,7 @@ export interface IOffer {
   price: number;
   picture?: string;
   bidOn: Date;
+  isClosed: boolean;
 }
 
 export interface ITag {
