@@ -104,3 +104,23 @@ export async function acceptOffer(offerId: string): Promise<APIResponse> {
     return { result: false, message: error.response.data.message };
   }
 }
+
+export async function closeOffer(offerId: string): Promise<APIResponse> {
+  /* While Mocking */
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    return { result: true };
+  }
+
+  try {
+    const response = await CoreAPI.closeBid(
+      offerId,
+      cookies().get("auth")?.value ?? ""
+    );
+    if (response.status === 200) {
+      return { result: true };
+    } else return { result: false, message: response.data.message };
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
+  }
+}

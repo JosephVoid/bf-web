@@ -5,17 +5,19 @@ import { Card } from "./ui/card";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { fetchOffers } from "@/lib/actions/fetch/offer.fetch";
 import React from "react";
-import { getUUID } from "@/lib/helpers";
-import { ArchiveIcon } from "@radix-ui/react-icons";
+import closedSVG from "@/public/closed.svg";
 
 export function Offer({ prop }: { prop: IOffer }) {
   const current_path = usePathname();
   return (
     <Link href={`${current_path}/${prop.id}`}>
-      <Card className="p-4 mb-5 flex flex-col">
-        <div className="flex justify-start">
+      <Card className="p-4 mb-5 flex flex-col relative">
+        <div
+          className={`flex justify-start ${
+            prop.isClosed ? "opacity-60" : "opacity-100"
+          }`}
+        >
           {prop.picture && (
             <Image
               src={prop.picture ?? ""}
@@ -37,6 +39,11 @@ export function Offer({ prop }: { prop: IOffer }) {
             </p>
           </div>
         </div>
+        {prop.isClosed && (
+          <div className="absolute right-2 top-2">
+            <Image src={closedSVG} height={60} width={80} alt="closed" />
+          </div>
+        )}
       </Card>
     </Link>
   );

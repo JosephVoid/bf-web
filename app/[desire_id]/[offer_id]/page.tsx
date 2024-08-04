@@ -9,6 +9,8 @@ import OfferAcceptUserDetail from "@/components/offer-accept-btn";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
+import ConfDialogBtn from "@/components/ConfirmDialogBtn";
+import { closeOffer } from "@/lib/actions/act/offer.act";
 
 export default async function SingleOffer({
   params,
@@ -27,7 +29,10 @@ export default async function SingleOffer({
     userId && offer
       ? (await fetchUserActivity(userId, "bid-offered")).includes(offer.id)
       : false;
-
+  async function onClose() {
+    "use server";
+    return await closeOffer(offer?.id!);
+  }
   return !offer ? (
     <Loader dark />
   ) : (
@@ -35,8 +40,11 @@ export default async function SingleOffer({
       <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
         {getTitle(current_path.split("/")[1])}
       </h2>
+      {offer.isClosed && (
+        <p className="w-min bg-red-700 font-bold text-white p-2 my-2">CLOSED</p>
+      )}
       <p className="mt-4 opacity-85">{offer?.bidder} offered:</p>
-      {userId === offer.bidder_id && (
+      {userId === offer.bidder_id && !offer.isClosed && (
         <div className="my-4 flex justify-between opacity-80">
           <Link
             href={`/${params.desire_id}/make-an-offer?mode=edit&offer_id=${offer.id}&desire_id=${desire_id_only}`}
@@ -46,10 +54,18 @@ export default async function SingleOffer({
               Edit
             </Button>
           </Link>
-          <Button variant={"ghost"} size={"sm"} className="text-red-700">
-            <TrashIcon className="mr-1 text-red-700" />
-            Close Desire
-          </Button>
+          <ConfDialogBtn
+            context="Offer"
+            afterOk={onClose}
+            title="Are you sure you want to close this offer?"
+            subheading="Your offer will not be accepted by anyone and they can not be reopened once they have been closed"
+            type="danger"
+          >
+            <Button variant={"ghost"} size={"sm"} className="text-red-700">
+              <TrashIcon className="mr-1 text-red-700" />
+              Close Offer
+            </Button>
+          </ConfDialogBtn>
         </div>
       )}
       <div className="flex mt-4">
@@ -71,11 +87,13 @@ export default async function SingleOffer({
       <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight first:mt-0 mb-4">
         For {offer?.price} Br
       </h2>
-      <OfferAcceptUserDetail
-        offer={offer}
-        acceptedProp={accepted}
-        offeredProp={offered}
-      />
+      {!offer.isClosed && (
+        <OfferAcceptUserDetail
+          offer={offer}
+          acceptedProp={accepted}
+          offeredProp={offered}
+        />
+      )}
     </div>
   );
 }

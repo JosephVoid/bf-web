@@ -94,8 +94,9 @@ export async function wantDesire(desireId: string): Promise<APIResponse> {
       console.log(response.data);
       return { result: false, message: response.data.message };
     }
-  } catch (error) {
-    return { result: false };
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
   }
 }
 
@@ -117,11 +118,36 @@ export async function unWantDesire(desireId: string): Promise<APIResponse> {
       console.log(response.data);
       return { result: false, message: response.data.message };
     }
-  } catch (error) {
-    return { result: false };
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
   }
 }
 
 export async function viewDesire(userId: string, desireId: string) {
   await wait();
+}
+
+export async function closeDesire(desireId: string): Promise<APIResponse> {
+  /* While Mocking */
+  if (process.env.NEXT_PUBLIC_API_MOCK) {
+    await wait();
+    return { result: true };
+  }
+
+  try {
+    const response = await CoreAPI.closeDesires(
+      desireId,
+      cookies().get("auth")?.value ?? ""
+    );
+    if (response.status === 200) {
+      return { result: true };
+    } else {
+      console.log(response.data);
+      return { result: false, message: response.data.message };
+    }
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    return { result: false, message: error.response.data.message };
+  }
 }

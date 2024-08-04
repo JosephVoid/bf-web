@@ -70,6 +70,12 @@ class CoreStub extends APIStub {
     });
   }
 
+  async closeDesires(id: string, token: string): Promise<AxiosResponse> {
+    return this.axios.post(`/desires/${id}/close`, null, {
+      headers: { Authorization: token },
+    });
+  }
+
   async viewItem(id: string, token: string): Promise<AxiosResponse> {
     return this.axios.post(`/view/desire/${id}`, null, {
       headers: { Authorization: token },
@@ -123,6 +129,12 @@ class CoreStub extends APIStub {
 
   async acceptBid(bidId: string, token: string): Promise<AxiosResponse> {
     return this.axios.post(`/bids/accept/${bidId}`, null, {
+      headers: { Authorization: token },
+    });
+  }
+
+  async closeBid(bidId: string, token: string): Promise<AxiosResponse> {
+    return this.axios.post(`/bids/close/${bidId}`, null, {
       headers: { Authorization: token },
     });
   }
