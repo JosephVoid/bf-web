@@ -72,7 +72,7 @@ export async function signIn(
 
   try {
     const response = await AuthAPI.signIn(params);
-    cookies().set("auth", response.data, { secure: true });
+    cookies().set("auth", response.data, { secure: true, maxAge: 7257600 });
     return {
       result: true,
     };
@@ -103,7 +103,7 @@ export async function signUp(
     };
     const response = await AuthAPI.signUp(paramsWOTP);
     if (response.status === 200) {
-      cookies().set("auth", response.data, { secure: true });
+      cookies().set("auth", response.data, { secure: true, maxAge: 7257600 });
       return {
         result: true,
       };
