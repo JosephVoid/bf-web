@@ -1,3 +1,4 @@
+"use server";
 import { CoreAPI } from "@/lib/api";
 import { wait } from "@/lib/helpers";
 import { IMetric } from "@/lib/types";

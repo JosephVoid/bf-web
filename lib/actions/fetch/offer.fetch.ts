@@ -1,3 +1,4 @@
+"use server";
 import { IOffer } from "@/lib/types";
 import mockOffers from "../../mock/offers.json";
 import { wait } from "@/lib/helpers";
