@@ -133,7 +133,7 @@ function UnSignedMobileProfile() {
     <div className="">
       <div>
         <AuthDialogBtn afterAuthGoTo="/?sortby=Date&sortdir=Desc">
-          <AvatarIcon width={30} height={30} className="opacity-50" />
+          <Button variant={"outline"}>Sign In</Button>
         </AuthDialogBtn>
       </div>
     </div>
