@@ -1,0 +1,129 @@
+{
+  "Headers": {
+    "desires": "ፍላጎቶች",
+    "search-res": "ፍለጋ ውጤት",
+    "profile": "መለያ",
+    "offer": "ለሽያጭ አቅርብ",
+    "offers": "ለሽያጭ የቀረቡ"
+  },
+  "LeftSide": {
+    "search-place-holder": "Search Desires",
+    "post-a-desire": "Post a Desire",
+    "setup-alerts": "Setup Alerts"
+  },
+  "RightSide": {
+    "sign-in": "Sign In",
+    "sign-out": "Sign Out",
+    "profile": "Profile",
+    "any-questions": "For any questions"
+  },
+  "Tips": {},
+  "Forms": {
+    "auth": {
+      "email": "Email",
+      "pass": "Password",
+      "forgot": "Forgot Password?",
+      "signin": "Sign In",
+      "dont-hv-account": "Don't have an account? Create one now",
+      "hv-account": "You have an account? Sign In Instead",
+      "first-name": "First Name",
+      "last-name": "Last Name",
+      "phone": "Phone",
+      "create-account": "Create Account",
+      "otp-inform-head": "We've sent a 6-digit code",
+      "otp-inform-sub": "Check your SMS or email",
+      "enter-otp": "Enter the 6-digit code",
+      "affilate": "Affiliate",
+      "enter-affilate": "Enter the affiliate code",
+      "confirm-otp": "Confirm",
+      "forgot-pass-ok": "Forgot your password? Lets reset it.",
+      "your-email": "Your Email Address",
+      "get-code": "Get Code",
+      "reset-otp-inform-sub": "Check your email"
+    },
+    "post-desire": {
+      "form-title-new": "Post a Desire",
+      "form-title-edit": "Edit Desire",
+      "title": "Title",
+      "title-ph": "Desire title",
+      "desc": "Description",
+      "desc-ph": "Describe what you want",
+      "min-price": "Minimum Price",
+      "max-price": "Maximum Price",
+      "units": "Units",
+      "picture": "Supporting Picture (Optional)",
+      "select-tags": "Select Tags",
+      "post": "Post"
+    },
+    "profile": {
+      "email": "Email",
+      "o-pass": "Old Password",
+      "n-pass": "New Password",
+      "first-name": "First Name",
+      "last-name": "Last Name",
+      "desc": "Description",
+      "pro-pic": "Profile Picture",
+      "update": "Update",
+      "set-alert": "Set Alerts",
+      "your-posted-desire": "Your Posted Desires",
+      "your-offerd-desire": "You Offered"
+    },
+    "offer": {
+      "form-title": "Make an Offer",
+      "desc": "Description",
+      "desc-ph": "Add a description about your offer",
+      "offer-price": "Offered Price",
+      "picture": "Supporting Picture (Optional)",
+      "submit": "Submit Offer"
+    }
+  },
+  "MainPage": {
+    "select-tags": "Select Tags",
+    "sort-by": "Sort by",
+    "date-filter": "Date",
+    "price-filter": "Price",
+    "wanted-filter": "Wanted",
+    "asc": "Asc",
+    "desc": "Desc",
+    "views": "views",
+    "want-this": "want this",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "SingleItems": {
+    "posted-on": "Posted On",
+    "want-this": "want this",
+    "viewd-this": "viewed this",
+    "looking-for": "Looking for",
+    "alert-me": "Alert Me",
+    "make-an-offer": "Make an Offer",
+    "offers": "Offers",
+    "no-offers": "No Offers",
+    "offer-for": "Offering for",
+    "offered": "offered",
+    "edit": "Edit",
+    "close-offer": "Close Offer",
+    "close-desire": "Close Desires",
+    "for": "For",
+    "accept-offer": "Accept the Offer",
+    "r-u-sure-header": "Are you sure you want to close this desire?",
+    "r-u-sure-sub": "You will not receive offers and they can not be reopened once they have been closed",
+    "continue": "Continue",
+    "cancel": "Cancel"
+  },
+  "Toasts": {
+    "u-will-be-alerted": "You will be Alerted on Offers",
+    "u-wont-be-alerted": "You won't be Alerted on Offers",
+    "desire-closed": "Desire Closed",
+    "offer-closed": "Offer Closed",
+    "prof-updated": "Profile Updated",
+    "offer-posted": "Offer Posted",
+    "changes-saved": "Changes Saved!",
+    "offer-accepted": "Offer Accepted",
+    "desire-posted": "Desire Posted",
+    "signedin": "Successfully Signed In!",
+    "pass-reset": "Password Reset! Login with you new password.",
+    "signedup": "Sucessfully Signed Up, Welcome aboard!",
+    "set-alert": "Alerts Updated"
+  }
+}
