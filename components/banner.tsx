@@ -9,6 +9,7 @@ import Image from "next/image";
 import { LoginForm, SignUpForm } from "./profile-forms";
 import { Button } from "./ui/button";
 import AuthDialogBtn from "./AuthDialogBtn";
+import { useTranslations } from "next-intl";
 
 export default function Banner({
   text,
@@ -20,6 +21,7 @@ export default function Banner({
   variant?: string;
 }) {
   const router = useRouter();
+  const t = useTranslations();
   function handleOnClick() {
     if (hasCookie("auth")) router.push(`/${href}`);
   }
@@ -31,7 +33,7 @@ export default function Banner({
           <div onClick={handleOnClick} className="">
             <div className="p-5 font-bold text-wrap mt-3 cursor-pointer relative md:flex justify-between border-[1px] rounded-lg items-center hidden">
               <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
-                {text}
+                {t(text)}
               </h2>
               <ArrowRightIcon width={35} className="scale-150 translate-x-2" />
             </div>

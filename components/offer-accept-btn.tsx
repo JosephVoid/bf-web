@@ -11,6 +11,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { acceptOffer } from "@/lib/actions/act/offer.act";
 import { APIResponse, IOffer } from "@/lib/types";
 import AuthDialogBtn from "./AuthDialogBtn";
+import { useTranslations } from "next-intl";
 
 export default function OfferAcceptUserDetail({
   offer,
@@ -23,6 +24,7 @@ export default function OfferAcceptUserDetail({
 }) {
   const [accepted, setAccepted] = React.useState(acceptedProp);
   const { toast } = useToast();
+  const t = useTranslations();
 
   function handleAcceptOnClick() {
     if (hasCookie("auth") && offer?.id && !accepted) {
@@ -69,7 +71,7 @@ export default function OfferAcceptUserDetail({
                 Accepted
               </>
             ) : (
-              <>Accept the Offer</>
+              <>{t("SingleItems.accept-offer")}</>
             )}
           </Button>
         </div>

@@ -7,13 +7,14 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
+import { useTranslations } from "next-intl";
 
 export default function Search() {
   const currentQueries = useSearchParams().toString();
   const router = useRouter();
   const [searchQ, setSearchQ] = React.useState("");
   const params = new URLSearchParams(useSearchParams());
-
+  const t = useTranslations();
   function handleSearchClick() {
     params.set("query", searchQ);
     params.delete("page");
@@ -27,7 +28,7 @@ export default function Search() {
     <div className="flex w-full max-w-sm items-center space-x-2 mt-3 md:mb-0 mb-14">
       <Input
         type="text"
-        placeholder="Search Desires"
+        placeholder={t("LeftSide.search-place-holder")}
         onChange={(e) => setSearchQ(e.target.value)}
         defaultValue={useSearchParams().get("query") ?? ""}
       />

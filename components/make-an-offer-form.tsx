@@ -32,6 +32,7 @@ import { useToast } from "@/components/ui/use-toast";
 import Loader from "./loader";
 import { IOffer } from "@/lib/types";
 import { revalidatePath } from "next/cache";
+import { useTranslations } from "next-intl";
 
 const MAX_PIC_SIZE = 5000000;
 
@@ -75,6 +76,7 @@ export default function MakeAnOfferForm({
   const router = useRouter();
   const current_path = usePathname();
   const { toast } = useToast();
+  const t = useTranslations();
 
   React.useEffect(() => {
     if (edit) {
@@ -173,7 +175,7 @@ export default function MakeAnOfferForm({
   return (
     <>
       <h2 className="text-2xl font-medium mb-3">
-        {edit ? "Edit Offer" : "Make an Offer"}
+        {edit ? "Edit Offer" : t("Forms.offer.form-title")}
       </h2>
       <div className="rounded-md border-[1px] p-4 mb-8">
         <Form {...form}>
@@ -187,10 +189,10 @@ export default function MakeAnOfferForm({
                   name="description"
                   render={({ field }) => (
                     <FormItem className="flex flex-col w-full">
-                      <FormLabel>Description</FormLabel>
+                      <FormLabel>{t("Forms.offer.desc")}</FormLabel>
                       <FormControl>
                         <textarea
-                          placeholder="Add a description about your offer"
+                          placeholder={t("Forms.offer.desc-ph")}
                           {...field}
                           rows={6}
                           className="p-2 text-sm border-[1px] rounded-md focus-visible:outline-none focus:outline-2 focus:outline"
@@ -207,7 +209,7 @@ export default function MakeAnOfferForm({
                   name="price"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Offered Price</FormLabel>
+                      <FormLabel>{t("Forms.offer.offer-price")}</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Price"
@@ -228,7 +230,7 @@ export default function MakeAnOfferForm({
                     name="picture"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Supporting Picture</FormLabel>
+                        <FormLabel>{t("Forms.offer.picture")}</FormLabel>
                         <FormControl>
                           <Input
                             type="file"
@@ -266,7 +268,7 @@ export default function MakeAnOfferForm({
                 {isLoading ? (
                   <Loader />
                 ) : (
-                  <p>{edit ? "Save Changes" : "Submit Offer"}</p>
+                  <p>{edit ? "Save Changes" : t("Forms.offer.submit")}</p>
                 )}
               </Button>
             </div>

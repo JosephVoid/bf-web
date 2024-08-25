@@ -79,6 +79,7 @@
   },
   "MainPage": {
     "select-tags": "Select Tags",
+    "choose-tag": "Select tags",
     "sort-by": "Sort by",
     "date-filter": "Date",
     "price-filter": "Price",

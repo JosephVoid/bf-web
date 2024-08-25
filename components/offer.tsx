@@ -7,9 +7,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import closedSVG from "@/public/closed.svg";
+import { useTranslations } from "next-intl";
 
 export function Offer({ prop }: { prop: IOffer }) {
   const current_path = usePathname();
+  const t = useTranslations();
+
   return (
     <Link href={`${current_path}/${prop.id}`}>
       <Card className="p-4 mb-5 flex flex-col relative">
@@ -34,7 +37,7 @@ export function Offer({ prop }: { prop: IOffer }) {
               </small>
             </div>
             <p className="text-sm">
-              Offering for
+              {t("SingleItems.offer-for")}
               <b> {prop.price} Br</b>
             </p>
           </div>

@@ -34,6 +34,7 @@ import { fetchTags } from "@/lib/actions/fetch/tags.fetch";
 import { useSearchParams } from "next/navigation";
 import { ScrollArea } from "./ui/scroll-area";
 import useFetchTags from "@/lib/hooks/useFetchTags";
+import { useTranslations } from "next-intl";
 
 export function TagSelect({
   onSelectProp,
@@ -53,6 +54,7 @@ export function TagSelect({
     }
     return null;
   }, [tags, isSuccess, searchParams]);
+  const t = useTranslations();
 
   React.useEffect(() => {
     if (tag) {
@@ -62,7 +64,7 @@ export function TagSelect({
 
   return (
     <div className="flex flex-col mr-3">
-      <Label className="mb-2">Select Tags</Label>
+      <Label className="mb-2">{t("MainPage.select-tags")}</Label>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -75,7 +77,7 @@ export function TagSelect({
               ? tags?.find(
                   (tag) => tag.name.toLowerCase() === value.toLowerCase()
                 )?.name
-              : "Select tags"}
+              : t("MainPage.choose-tag")}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -131,6 +133,7 @@ export function SortBySelect({
 
   const [sortBy, setSortBy] = React.useState(sortByURL ?? "Date");
   const [sortDir, setSortDir] = React.useState(sortDirURL ?? "Desc");
+  const t = useTranslations();
 
   React.useEffect(() => {
     onSelectProp([sortBy, sortDir]);
@@ -138,25 +141,25 @@ export function SortBySelect({
 
   return (
     <div className="flex flex-col mr-3">
-      <Label className="mb-2">Sort By</Label>
+      <Label className="mb-2">{t("MainPage.sort-by")}</Label>
       <div className="flex">
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="md:w-36 flex justify-between">
-              {sortBy}
+              {t(`MainPage.${sortBy.toLowerCase()}-filter`)}
               <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="md:w-24">
             <DropdownMenuSeparator />
             <DropdownMenuItem onSelect={() => setSortBy("Date")}>
-              Date
+              {t("MainPage.date-filter")}
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={() => setSortBy("Price")}>
-              Price
+              {t("MainPage.price-filter")}
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={() => setSortBy("Wanted")}>
-              Wanted
+              {t("MainPage.wanted-filter")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -165,7 +168,9 @@ export function SortBySelect({
           variant={"link"}
           onClick={() => setSortDir(sortDir === "Asc" ? "Desc" : "Asc")}
         >
-          <div className="md:block hidden"> {sortDir}</div>
+          <div className="md:block hidden">
+            {t(`MainPage.${sortDir.toLowerCase()}`)}
+          </div>
           <div className="md:hidden">
             {sortDir === "Asc" ? <ArrowUpIcon /> : <ArrowDownIcon />}
           </div>

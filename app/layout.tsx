@@ -37,8 +37,8 @@ export default async function RootLayout({
                   <Suspense fallback={<Loader dark />}>
                     <Search />
                   </Suspense>
-                  <Banner text="Post a Desire" href="post-a-desire" />
-                  <Banner text="Setup Alerts" href="profile" />
+                  <Banner text="LeftSide.post-a-desire" href="post-a-desire" />
+                  <Banner text="LeftSide.setup-alerts" href="profile" />
                 </div>
               </div>
               <div className="md:w-3/6 md:mr-3">

@@ -9,7 +9,7 @@
   "LeftSide": {
     "search-place-holder": "ከፍላጎቶች ውስጥ ፈልግ",
     "post-a-desire": "ፍላጎት ለጥፍ",
-    "setup-alerts": "ማሳወቂያዎችን አብራ"
+    "setup-alerts": "SMS መልክቶችን አብራ"
   },
   "RightSide": {
     "sign-in": "ግባ",
@@ -79,6 +79,7 @@
   },
   "MainPage": {
     "select-tags": "በፍላጎት አይንት አጣራ",
+    "choose-tag": "ፍላጎት አይንት",
     "sort-by": "አደራደር",
     "date-filter": "በቀን",
     "price-filter": "በዋጋ",
@@ -98,14 +99,14 @@
     "alert-me": "እኔም እፈልገዋለው",
     "dont-alert-me": "አልፈልገውም",
     "make-an-offer": "ለሽያጭ አቅርብ",
-    "offers": "ለሽያጭ የቅረቡ",
+    "offers": "ለሽያጭ የቅረቡለት",
     "no-offers": "ለሽያጭ የቅረቡ የሉም",
     "offer-for": "በ",
     "offered": "ለሽያጭ አቅርቧል",
     "edit": "አስተካክል",
     "close-offer": "ያቀረብከውን አውርድ",
     "close-desire": "ፍላጎቱን አቁም",
-    "for": "በ",
+    "for": "ከ",
     "accept-offer": "ይሄን ግዛ",
     "r-u-sure-header": "እርግጥኛ ኖት ይሄን መዝጋት ይፈልጋሉ?",
     "r-u-sure-sub": "አንዴ ከተዘጋ ተመልሶ አይከፈትም፣ ክዚህ ጋር የተያያዘ ምንም መልክት አይደርሶትም",

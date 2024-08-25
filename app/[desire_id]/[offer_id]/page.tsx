@@ -11,12 +11,14 @@ import Link from "next/link";
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import ConfDialogBtn from "@/components/ConfirmDialogBtn";
 import { closeOffer } from "@/lib/actions/act/offer.act";
+import { getTranslations } from "next-intl/server";
 
 export default async function SingleOffer({
   params,
 }: {
   params: { desire_id: string; offer_id: string };
 }) {
+  const t = await getTranslations();
   const current_path = `/${params.desire_id}/${params.offer_id}`;
   const userId = await getUserId();
   const desire_id_only = getUUID(params.desire_id);
@@ -43,7 +45,9 @@ export default async function SingleOffer({
       {offer.isClosed && (
         <p className="w-min bg-red-700 font-bold text-white p-2 my-2">CLOSED</p>
       )}
-      <p className="mt-4 opacity-85">{offer?.bidder} offered:</p>
+      <p className="mt-4 opacity-85">
+        {offer?.bidder} {t("SingleItems.offered")}:
+      </p>
       {userId === offer.bidder_id && !offer.isClosed && (
         <div className="my-4 flex justify-between opacity-80">
           <Link
@@ -51,7 +55,7 @@ export default async function SingleOffer({
           >
             <Button variant={"ghost"} size={"sm"}>
               <Pencil1Icon className="mr-1" />
-              Edit
+              {t("SingleItems.edit")}
             </Button>
           </Link>
           <ConfDialogBtn
@@ -63,7 +67,7 @@ export default async function SingleOffer({
           >
             <Button variant={"ghost"} size={"sm"} className="text-red-700">
               <TrashIcon className="mr-1 text-red-700" />
-              Close Offer
+              {t("SingleItems.close-offer")}
             </Button>
           </ConfDialogBtn>
         </div>
@@ -85,7 +89,7 @@ export default async function SingleOffer({
         </p>
       </div>
       <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight first:mt-0 mb-4">
-        For {offer?.price} Br
+        {t("SingleItems.offer-for")} {offer?.price} Br
       </h2>
       {!offer.isClosed && (
         <OfferAcceptUserDetail

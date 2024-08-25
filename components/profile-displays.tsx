@@ -13,6 +13,7 @@ import { fetchUserProfile } from "@/lib/actions/fetch/user.fetch";
 import { IUser } from "@/lib/types";
 import { getUserId } from "@/lib/server-helpers";
 import AuthDialogBtn from "./AuthDialogBtn";
+import { useTranslations } from "next-intl";
 
 export default function Profile() {
   /* These methods ensure that this component is rendered on the client 
@@ -55,12 +56,13 @@ export function MobileProfile() {
 }
 
 export function UnSignedProfile() {
+  const t = useTranslations();
   return (
     <div className="p-4 mb-3 flex flex-col relative justify-center items-center border-[1px] rounded-lg">
       <AvatarIcon height={50} width={50} className="m-4 opacity-50" />
       <div>
         <AuthDialogBtn afterAuthGoTo="/?sortby=Date&sortdir=Desc">
-          <Button>Sign In</Button>
+          <Button>{t("RightSide.sign-in")}</Button>
         </AuthDialogBtn>
       </div>
     </div>
@@ -69,6 +71,7 @@ export function UnSignedProfile() {
 
 export function SignedInProfile() {
   const [user, setUser] = React.useState<IUser>();
+  const t = useTranslations();
   async function handleSignOut() {
     await signOut();
   }
@@ -101,11 +104,11 @@ export function SignedInProfile() {
       } ${user?.last_name ?? ""}`}</h3>
       <Link href={"/profile"}>
         <Button variant={"outline"} className="mb-3">
-          Profile
+          {t("RightSide.profile")}
         </Button>
       </Link>
       <Button variant={"ghost"} onClick={handleSignOut}>
-        <p className="text-sm opacity-70">Sign Out</p>
+        <p className="text-sm opacity-70">{t("RightSide.sign-out")}</p>
       </Button>
     </div>
   );
@@ -129,11 +132,12 @@ export function SupportLink({
 }
 
 function UnSignedMobileProfile() {
+  const t = useTranslations();
   return (
     <div className="">
       <div>
         <AuthDialogBtn afterAuthGoTo="/?sortby=Date&sortdir=Desc">
-          <Button variant={"outline"}>Sign In</Button>
+          <Button variant={"outline"}>{t("sign-in")}</Button>
         </AuthDialogBtn>
       </div>
     </div>

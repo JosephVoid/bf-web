@@ -16,6 +16,7 @@ import { unWantDesire, wantDesire } from "@/lib/actions/act/desire.act";
 import { usePathname, useRouter } from "next/navigation";
 import { IDesire } from "@/lib/types";
 import AuthDialogBtn from "./AuthDialogBtn";
+import { useTranslations } from "next-intl";
 
 interface IProps {
   desire?: IDesire;
@@ -34,6 +35,7 @@ export default function AcceptAlertComp({
   const [wanted, setWanted] = React.useState(wantAct.includes(desire?.id!));
   const router = useRouter();
   const current_path = usePathname();
+  const t = useTranslations();
 
   async function handleWantOnClick() {
     if (desirePosted.includes(desire?.id!)) return null;
@@ -107,11 +109,11 @@ export default function AcceptAlertComp({
           disabled={desirePosted.includes(desire?.id!)}
         >
           {wanted ? (
-            <>Don't Alert Me</>
+            <>{t("SingleItems.dont-alert-me")}</>
           ) : (
             <>
               <BellIcon className="mr-1" />
-              Alert Me
+              {t("SingleItems.alert-me")}
             </>
           )}
         </Button>
@@ -124,7 +126,7 @@ export default function AcceptAlertComp({
               desirePosted.includes(desire?.id!)
             }
           >
-            Make an Offer
+            {t("SingleItems.make-an-offer")}
           </Button>
         </div>
       </AuthDialogBtn>

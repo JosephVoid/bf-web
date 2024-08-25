@@ -6,6 +6,7 @@ import Banner from "@/components/banner";
 import { IFilterParams } from "@/lib/types";
 import { Suspense } from "react";
 import { Metadata } from "next";
+import { useTranslations } from "next-intl";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://buyersfirst.et"),
@@ -50,7 +51,7 @@ export default function Home({
     search: searchParams.query ?? "",
     page: searchParams.page ?? "1",
   };
-
+  const t = useTranslations();
   return (
     <main className="flex flex-col h-f-v-h">
       <div className="m-3 rounded-lg p-3 border-[1px]">
@@ -59,15 +60,19 @@ export default function Home({
         </Suspense>
       </div>
       <div className="md:hidden px-3 flex justify-between">
-        <Banner text="Post a Desire" href="post-a-desire" />
-        <Banner text="Setup Alerts" href="profile" variant="secondary" />
+        <Banner text="LeftSide.post-a-desire" href="post-a-desire" />
+        <Banner
+          text="LeftSide.setup-alerts"
+          href="profile"
+          variant="secondary"
+        />
       </div>
       <div className="m-3">
         <Suspense fallback={<Loader dark />}>
           <DesireList params={desireListParams} />
         </Suspense>
         <div className="flex justify-center rounded-md bg-slate-100 p-3 flex-col mb-3 md:hidden">
-          <p>For any questions</p>
+          <p>{t("RightSide.any-questions")}</p>
           <b>contact@buyersfirst.et</b>
           <b>+251967067652</b>
         </div>

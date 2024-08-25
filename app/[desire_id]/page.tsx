@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button";
 import ConfDialogBtn from "@/components/ConfirmDialogBtn";
 import { closeDesire } from "@/lib/actions/act/desire.act";
 import { APIResponse } from "@/lib/types";
+import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata({
   params,
@@ -64,6 +65,7 @@ export default async function SingleDesire({
 }: {
   params: { desire_id: string };
 }) {
+  const t = await getTranslations();
   const current_path = params.desire_id;
   const userId = await getUserId();
   const desire = await fetchSingleDesire(getUUID(current_path));
@@ -105,14 +107,16 @@ export default async function SingleDesire({
           )}
           <div className="my-4 flex justify-between opacity-80">
             <p className="text-sm flex items-center">
-              <ClockIcon className="mr-1" /> Posted on{" "}
+              <ClockIcon className="mr-1" /> {t("SingleItems.posted-on")}{" "}
               {new Date(desire?.postedOn ?? "").toLocaleDateString()}
             </p>
             <p className="text-sm flex items-center">
-              <PersonIcon className="mr-1" /> {desire?.wants + 1} want this
+              <PersonIcon className="mr-1" /> {desire?.wants + 1}{" "}
+              {t("SingleItems.want-this")}
             </p>
             <p className="text-sm flex items-center">
-              <EyeOpenIcon className="mr-1" /> {desire?.views} viewed this
+              <EyeOpenIcon className="mr-1" /> {desire?.views}{" "}
+              {t("SingleItems.viewd-this")}
             </p>
           </div>
           {userId === desire.userPostedId && !desire.isClosed && (
@@ -120,7 +124,7 @@ export default async function SingleDesire({
               <Link href={`/post-a-desire?mode=edit&id=${desire.id}`}>
                 <Button variant={"ghost"} size={"sm"}>
                   <Pencil1Icon className="mr-1" />
-                  Edit
+                  {t("SingleItems.edit")}
                 </Button>
               </Link>
               <ConfDialogBtn
@@ -132,7 +136,7 @@ export default async function SingleDesire({
               >
                 <Button variant={"ghost"} size={"sm"} className="text-red-700">
                   <TrashIcon className="mr-1 text-red-700" />
-                  Close Desire
+                  {t("SingleItems.close-desire")}
                 </Button>
               </ConfDialogBtn>
             </div>
@@ -151,7 +155,7 @@ export default async function SingleDesire({
             )}
             <p className="mb-4">{desire?.description}</p>
             <div className="flex items-baseline mb-6">
-              Looking for
+              {t("SingleItems.looking-for")}
               <h3 className="scroll-m-20 text-2xl font-medium tracking-tight first:mt-0 ml-2">
                 {desire.minPrice === desire.maxPrice
                   ? formatPrice(desire.minPrice)
@@ -170,7 +174,7 @@ export default async function SingleDesire({
             )}
             <div className="mt-4">
               <h3 className="scroll-m-20 text-2xl font-medium tracking-tight first:mt-0 mb-4">
-                Offers
+                {t("SingleItems.offers")}
               </h3>
               <Suspense fallback={<Loader dark />}>
                 <OfferList offerList={offers} />

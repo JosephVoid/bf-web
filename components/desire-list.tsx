@@ -11,8 +11,10 @@ import Search from "./search";
 import Loader from "./loader";
 import { formatPrice } from "@/lib/helpers";
 import closedSVG from "@/public/closed.svg";
+import { useTranslations } from "next-intl";
 
 export function Desire({ prop }: { prop: IDesire }) {
+  const t = useTranslations();
   return (
     <Link href={`/${prop.id}-${encodeURIComponent(prop.title)}`}>
       <Card className="md:p-4 md:mb-5 md:flex md:flex-col hidden relative">
@@ -52,7 +54,7 @@ export function Desire({ prop }: { prop: IDesire }) {
           }`}
         >
           <p className="text-sm">
-            For{" "}
+            {t("SingleItems.for")}{" "}
             <b>
               {prop.minPrice === prop.maxPrice
                 ? formatPrice(prop.minPrice)
@@ -62,10 +64,10 @@ export function Desire({ prop }: { prop: IDesire }) {
             </b>
           </p>
           <p className="text-sm">
-            <b>{prop.wants + 1}</b> want this
+            <b>{prop.wants + 1}</b> {t("MainPage.want-this")}
           </p>
           <p className="text-sm">
-            <b>{prop.views}</b> views
+            <b>{prop.views}</b> {t("MainPage.views")}
           </p>
         </div>
         {prop.isClosed && (

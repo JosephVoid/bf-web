@@ -35,6 +35,7 @@ import { fileUpload } from "@/lib/actions/act/file.act";
 import { editProfile, signOut } from "@/lib/actions/act/user.act";
 import { useToast } from "@/components/ui/use-toast";
 import Loader from "./loader";
+import { useTranslations } from "next-intl";
 
 const MAX_PIC_SIZE = 5000000;
 
@@ -101,6 +102,7 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
   const [enableEdit, setEnableEdit] = React.useState(false);
   const { toast } = useToast();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const t = useTranslations();
 
   React.useEffect(() => {
     urlToFile(prop.picture).then((result: File | null) => {
@@ -167,13 +169,13 @@ export default function EditProfileForm({ prop }: { prop: IUser }) {
   return (
     <>
       <div className="flex justify-between items-center mb-3">
-        <h2 className="text-2xl font-medium"> Edit Profile</h2>
+        <h2 className="text-2xl font-medium">{t("RightSide.profile")}</h2>
         <Button
           variant={"ghost"}
           className="opacity-90 text-red-500 md:hidden"
           onClick={handleSignOut}
         >
-          Sign Out
+          {t("RightSide.sign-out")}
         </Button>
       </div>
       <div className="rounded-md border-[1px] p-4 mb-8">

@@ -33,6 +33,7 @@ import BFAlert from "./custom-alert";
 import { useToast } from "@/components/ui/use-toast";
 import { SupportLink } from "./profile-displays";
 import { Checkbox } from "./ui/checkbox";
+import { useTranslations } from "next-intl";
 
 const signInFormSchema = z.object({
   email: z.string().email(),
@@ -105,6 +106,7 @@ export function LoginForm({
   const [isError, setIsError] = React.useState(false);
   const router = useRouter();
   const { toast } = useToast();
+  const t = useTranslations();
 
   async function handleLogin(data: z.infer<typeof signInFormSchema>) {
     setIsLoading(true);
@@ -139,7 +141,7 @@ export function LoginForm({
         <form onSubmit={form.handleSubmit(handleLogin)} className="py-5">
           <div className="flex flex-col justify-center h-3/4">
             <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-start mb-5">
-              Sign In
+              {t("Forms.auth.signin")}
             </h1>
             <div className="mb-2">
               <FormField
@@ -147,7 +149,7 @@ export function LoginForm({
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t("Forms.auth.email")}</FormLabel>
                     <FormControl>
                       <Input placeholder="Email" {...field} />
                     </FormControl>
@@ -162,7 +164,7 @@ export function LoginForm({
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("Forms.auth.pass")}</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Password"
@@ -176,7 +178,7 @@ export function LoginForm({
                 )}
               />
               <p className="cursor-pointer text-xs my-2" onClick={onForgot}>
-                Forgot Password?
+                {t("Forms.auth.forgot")}
               </p>
             </div>
             <BFAlert
@@ -184,13 +186,16 @@ export function LoginForm({
               text="Check Email or Password!"
               show={isError}
             />
-            <Button type="submit"> {isLoading ? <Loader /> : "Sign In"}</Button>
+            <Button type="submit">
+              {" "}
+              {isLoading ? <Loader /> : t("Forms.auth.signin")}
+            </Button>
           </div>
         </form>
       </Form>
       <SupportLink
         onclick={onSignUpSwitch}
-        text="Don't have an account? Create one now"
+        text={t("Forms.auth.dont-hv-account")}
       />
     </>
   );
@@ -218,7 +223,7 @@ export function SignUpForm({
     React.useState<signUpFormSchematype>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const { toast } = useToast();
-
+  const t = useTranslations();
   async function handleDetails(data: signUpFormSchematype) {
     setIsLoading(true);
     const response = await sendOTP({ ...data, ForReset: false });
@@ -245,7 +250,7 @@ export function SignUpForm({
           <form onSubmit={form.handleSubmit(handleDetails)} className="mb-8">
             <div className="flex flex-col justify-center">
               <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-start mb-5">
-                Create New
+                {t("Forms.auth.create-account")}
               </h1>
               <div className="flex mb-2">
                 <div className="flex flex-col w-1/2 mr-2">
@@ -254,7 +259,7 @@ export function SignUpForm({
                     name="first_name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>First Name</FormLabel>
+                        <FormLabel>{t("Forms.auth.first-name")}</FormLabel>
                         <FormControl>
                           <Input placeholder="First name" {...field} />
                         </FormControl>
@@ -269,7 +274,7 @@ export function SignUpForm({
                     name="last_name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Last Name</FormLabel>
+                        <FormLabel>{t("Forms.auth.last-name")}</FormLabel>
                         <FormControl>
                           <Input placeholder="Last name" {...field} />
                         </FormControl>
@@ -285,7 +290,7 @@ export function SignUpForm({
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone</FormLabel>
+                      <FormLabel>{t("Forms.auth.phone")}</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="+251"
@@ -307,7 +312,7 @@ export function SignUpForm({
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>{t("Forms.auth.email")}</FormLabel>
                       <FormControl>
                         <Input placeholder="Email" {...field} />
                       </FormControl>
@@ -322,7 +327,7 @@ export function SignUpForm({
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>{t("Forms.auth.pass")}</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Password"
@@ -337,14 +342,14 @@ export function SignUpForm({
                 />
               </div>
               <Button type="submit">
-                {isLoading ? <Loader /> : "Create Account"}
+                {isLoading ? <Loader /> : t("Forms.auth.create-account")}
               </Button>
             </div>
           </form>
         </Form>
         <SupportLink
           onclick={onSignInSwitch}
-          text="You have an account? Sign In instead"
+          text={t("Forms.auth.hv-account")}
         />
       </div>
     </>
@@ -394,6 +399,7 @@ export function ForgotPasswordForm({ onComplete }: { onComplete: () => void }) {
   const [isError, setIsError] = React.useState(false);
   const router = useRouter();
   const { toast } = useToast();
+  const t = useTranslations();
 
   async function handleEmail(data: z.infer<typeof emailSchema>) {
     setIsLoading(true);
@@ -447,7 +453,7 @@ export function ForgotPasswordForm({ onComplete }: { onComplete: () => void }) {
     <>
       <div className="flex flex-col justify-center py-6">
         <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-start mb-5">
-          Forgot your password? Lets reset it.
+          {t("Forms.auth.forgot-pass-ok")}
         </h1>
         {stage === "EMAIL" && (
           <Form {...emailForm}>
@@ -457,7 +463,7 @@ export function ForgotPasswordForm({ onComplete }: { onComplete: () => void }) {
                 name="email"
                 render={({ field }) => (
                   <FormItem className="mb-4">
-                    <FormLabel>Your Email Address</FormLabel>
+                    <FormLabel>{t("Forms.auth.your-email")}</FormLabel>
                     <FormControl>
                       <Input placeholder="Email" {...field} />
                     </FormControl>
@@ -480,8 +486,10 @@ export function ForgotPasswordForm({ onComplete }: { onComplete: () => void }) {
           <>
             <Alert className="mb-4">
               <RocketIcon className="h-4 w-4" />
-              <AlertTitle>We've sent a 6-digit code</AlertTitle>
-              <AlertDescription>Check your email</AlertDescription>
+              <AlertTitle>{t("Forms.auth.otp-inform-head")}</AlertTitle>
+              <AlertDescription>
+                {t("Forms.auth.reset-otp-inform-sub")}
+              </AlertDescription>
             </Alert>
             <Form {...otpForm}>
               <form onSubmit={otpForm.handleSubmit(handleOTP)}>
@@ -490,7 +498,7 @@ export function ForgotPasswordForm({ onComplete }: { onComplete: () => void }) {
                   name="otp"
                   render={({ field }) => (
                     <FormItem className="mb-4">
-                      <FormLabel>Enter the 6-digit code</FormLabel>
+                      <FormLabel>{t("Forms.auth.enter-otp")}</FormLabel>
                       <FormControl>
                         <Input placeholder="* * * * * *" {...field} />
                       </FormControl>
@@ -499,7 +507,7 @@ export function ForgotPasswordForm({ onComplete }: { onComplete: () => void }) {
                   )}
                 />
                 <Button type="submit">
-                  {isLoading ? <Loader /> : "Confirm"}
+                  {isLoading ? <Loader /> : t("Forms.auth.confirm-otp")}
                 </Button>
               </form>
             </Form>
@@ -514,7 +522,7 @@ export function ForgotPasswordForm({ onComplete }: { onComplete: () => void }) {
                   name="newPass"
                   render={({ field }) => (
                     <FormItem className="mb-4">
-                      <FormLabel>Enter New Password</FormLabel>
+                      <FormLabel>{t("Forms.profile.n-pass")}</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Password"
@@ -570,6 +578,7 @@ function OTPInput({
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isAffilate, setIsAffilate] = React.useState<boolean>(false);
   const { toast } = useToast();
+  const t = useTranslations();
 
   async function handleOTP() {
     setIsLoading(true);
@@ -619,8 +628,8 @@ function OTPInput({
         </h1>
         <Alert className="mb-4">
           <RocketIcon className="h-4 w-4" />
-          <AlertTitle>We've sent a 6-digit code</AlertTitle>
-          <AlertDescription>Check your SMS or email</AlertDescription>
+          <AlertTitle>{t("Forms.auth.otp-inform-head")}</AlertTitle>
+          <AlertDescription>{t("Forms.auth.otp-inform-sub")}</AlertDescription>
         </Alert>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleOTP)}>
@@ -629,7 +638,7 @@ function OTPInput({
               name="otp"
               render={({ field }) => (
                 <FormItem className="mb-4">
-                  <FormLabel>Enter the 6-digit code</FormLabel>
+                  <FormLabel>{t("Forms.auth.enter-otp")}</FormLabel>
                   <FormControl>
                     <Input placeholder="* * * * * *" {...field} />
                   </FormControl>
@@ -644,7 +653,7 @@ function OTPInput({
                 checked={isAffilate}
               />
               <label htmlFor="affiliate" className="text-sm font-medium ml-2">
-                Affiliate
+                {t("Forms.auth.affilate")}
               </label>
               <div className={`${isAffilate ? "visible" : "invisible"}`}>
                 <FormField
@@ -652,7 +661,7 @@ function OTPInput({
                   name="affiliateCode"
                   render={({ field }) => (
                     <FormItem className="mb-4">
-                      <FormLabel>Enter the affiliate code</FormLabel>
+                      <FormLabel>{t("Forms.auth.enter-affilate")}</FormLabel>
                       <FormControl>
                         <Input placeholder="Code" {...field} />
                       </FormControl>
