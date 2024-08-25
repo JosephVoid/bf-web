@@ -8,6 +8,7 @@ import { ForgotPasswordForm, LoginForm, SignUpForm } from "./profile-forms";
 import Image from "next/image";
 import { hasCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import { getCookie, setCookie } from "cookies-next";
 
 export default function AuthDialogBtn({
   children,
@@ -16,14 +17,17 @@ export default function AuthDialogBtn({
   children: ReactNode;
   afterAuthGoTo?: string;
 }) {
+  const hasVisitedBefore = getCookie("visit") ?? false;
   const [viewState, setViewState] = React.useState<
     "SIGNIN" | "SIGNUP" | "FORGOT"
-  >("SIGNIN");
+  >(hasVisitedBefore ? "SIGNIN" : "SIGNUP");
+
   const [modalState, setModalState] = React.useState<boolean>(false);
   const router = useRouter();
 
   const afterAuthAction = () => {
     setModalState(false);
+    setCookie("visit", new Date().toISOString());
     afterAuthGoTo ? router.replace(afterAuthGoTo) : null;
   };
 

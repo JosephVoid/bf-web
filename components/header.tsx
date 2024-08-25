@@ -53,7 +53,9 @@ export default function Header() {
             {t(getHeader())}
           </h1>
         </div>
-        <LangOption />
+        <div className="hidden md:flex">
+          <LangOption />
+        </div>
       </div>
       {/* Mobile Version */}
       <div className="flex flex-col items-center md:hidden">
