@@ -42,7 +42,7 @@ export default function Banner({
               onClick={handleOnClick}
               variant={variant as "default" | "secondary"}
             >
-              {text}
+              {t(text)}
             </Button>
           </div>
         </AuthDialogBtn>

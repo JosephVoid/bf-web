@@ -117,10 +117,10 @@ export function Desire({ prop }: { prop: IDesire }) {
               <b>Br{prop.metric}</b>
             </p>
             <p className="text-sm">
-              <b>{prop.wants + 1}</b> wants
+              <b>{prop.wants + 1}</b> {t("MainPage.want-this")}
             </p>
             <p className="text-sm">
-              <b>{prop.views}</b> views
+              <b>{prop.views}</b> {t("MainPage.views")}
             </p>
           </div>
         </div>

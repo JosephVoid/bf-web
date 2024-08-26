@@ -14,6 +14,7 @@ import React from "react";
 import { setAlerts } from "@/lib/actions/act/user.act";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
   /* These methods ensure that this component is rendered on the client
@@ -28,6 +29,7 @@ export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const { toast } = useToast();
   const router = useRouter();
+  const t = useTranslations();
 
   function handleRemoveAlert(id: string) {
     setSelectedTags(selectedtags.filter((tag) => tag.id !== id));
@@ -88,7 +90,9 @@ export default function SetAlert({ alertTags }: { alertTags: ITag[] }) {
 
   return isClient ? (
     <>
-      <h2 className="text-2xl font-medium mb-3"> Set Alerts</h2>
+      <h2 className="text-2xl font-medium mb-3">
+        {t("Forms.profile.set-alert")}
+      </h2>
       <div className="rounded-md p-4 border-[1px] mb-8 flex flex-col">
         <div className="flex space-x-5 md:items-center mb-4 md:flex-row flex-col items-start">
           <TagSelect onSelectProp={(tag) => handleAddtag(tag)} />

@@ -158,7 +158,7 @@ export default async function SingleDesire({
               {t("SingleItems.looking-for")}
               <h3 className="scroll-m-20 text-2xl font-medium tracking-tight first:mt-0 ml-2">
                 {desire.minPrice === desire.maxPrice
-                  ? formatPrice(desire.minPrice)
+                  ? formatPrice(desire.minPrice) + " Br"
                   : `${formatPrice(desire.minPrice)} - ${formatPrice(
                       desire.maxPrice
                     )} Br ${desire.metric === "None" ? "" : desire.metric}`}

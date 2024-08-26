@@ -137,7 +137,7 @@ function UnSignedMobileProfile() {
     <div className="">
       <div>
         <AuthDialogBtn afterAuthGoTo="/?sortby=Date&sortdir=Desc">
-          <Button variant={"outline"}>{t("sign-in")}</Button>
+          <Button variant={"outline"}>{t("RightSide.sign-in")}</Button>
         </AuthDialogBtn>
       </div>
     </div>

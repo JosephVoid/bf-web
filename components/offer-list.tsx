@@ -21,7 +21,7 @@ function OfferList({ offerList }: { offerList: IOffer[] }) {
     <div className="flex justify-center">
       <div className="flex flex-col items-center text-lg my-6 opacity-45">
         <ArchiveIcon width={40} height={40} className="mb-4" />
-        {t("HomePage.no-offers")}
+        {t("SingleItems.no-offers")}
       </div>
     </div>
   );
