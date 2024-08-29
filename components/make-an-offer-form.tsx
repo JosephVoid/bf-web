@@ -39,7 +39,7 @@ const MAX_PIC_SIZE = 5000000;
 const formSchema = z.object({
   description: z
     .string()
-    .max(500, "Description too long")
+    .max(1000, "Description too long")
     .min(50, "Description too short"),
   price: z.coerce
     .number()
