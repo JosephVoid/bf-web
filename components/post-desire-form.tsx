@@ -43,8 +43,11 @@ import { useObtainTags } from "@/lib/hooks/useFetchTags";
 const MAX_PIC_SIZE = 5000000;
 
 const formSchema = z.object({
-  title: z.string().max(50, "Title too long"),
-  description: z.string().max(800, "Description too long"),
+  title: z.string().max(50, "Title too long").min(5, "Title needed"),
+  description: z
+    .string()
+    .max(800, "Description too long")
+    .min(5, "Description needed"),
   metric: z.string(),
   minPrice: z.coerce
     .number()
