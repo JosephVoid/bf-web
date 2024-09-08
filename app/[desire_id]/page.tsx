@@ -13,7 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Suspense } from "react";
-import { formatPrice, getUUID } from "@/lib/helpers";
+import { formatPrice, getPublicUrl, getUUID } from "@/lib/helpers";
 import { fetchUserActivity } from "@/lib/actions/fetch/user.fetch";
 import { viewItem } from "@/lib/actions/act/user.act";
 import AcceptAlertComp from "@/components/accept-alert-comp";
@@ -53,7 +53,7 @@ export async function generateMetadata({
     openGraph: {
       title: desire?.title,
       description: desire?.description,
-      images: desire?.picture,
+      images: getPublicUrl(desire?.picture),
       url: "https://buyersfirst.et",
       siteName: "Buyers First",
     },

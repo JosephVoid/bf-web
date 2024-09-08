@@ -121,3 +121,22 @@ export function formatPrice(price: number): string {
   else if (price > 999) return price.toLocaleString();
   else return `${price}`;
 }
+
+export function getMIME(fileName: string): string {
+  let ext = fileName.split(".")[fileName.split(".").length - 1];
+  console.log(ext);
+  if (ext === "jpg" || ext === "jpeg") return "image/jpeg";
+  else return "image/" + ext;
+}
+
+export function getPublicUrl(initial: string | undefined): string {
+  if (!initial) return "";
+  let parts = initial.split("/"); // Split the string into at most 4 parts
+  let output =
+    "https://bucket.buyersfirst.et" +
+    "/" +
+    parts[parts.length - 2] +
+    "/" +
+    parts[parts.length - 1];
+  return output;
+}

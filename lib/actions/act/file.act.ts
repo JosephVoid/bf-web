@@ -1,5 +1,5 @@
 "use server";
-import { Base64ToBlob, sanitizeRandomizeName } from "@/lib/helpers";
+import { Base64ToBlob, getMIME, sanitizeRandomizeName } from "@/lib/helpers";
 import * as Minio from "minio";
 
 const minioClient = new Minio.Client({
@@ -35,11 +35,18 @@ export async function fileUpload(
 
     let fileName = sanitizeRandomizeName(name);
 
-    minioClient.putObject(bucket, fileName, buffer, function (err, objInfo) {
-      if (err) {
-        return console.log(err); // err should be null
+    minioClient.putObject(
+      bucket,
+      fileName,
+      buffer,
+      buffer.length,
+      { "Content-Type": getMIME(fileName) },
+      function (err, objInfo) {
+        if (err) {
+          return console.log(err); // err should be null
+        }
       }
-    });
+    );
     let URL = `${process.env.NEXT_PUBLIC_MINIO_PROT}://${process.env.NEXT_PUBLIC_MINIO_URL}:${process.env.NEXT_PUBLIC_MINIO_PORT}/${bucket}/${fileName}`;
     return URL;
   }
