@@ -1,6 +1,6 @@
 import MakeAnOfferForm from "@/components/make-an-offer-form";
 import { fetchSingleOffer } from "@/lib/actions/fetch/offer.fetch";
-import { getTitle } from "@/lib/helpers";
+import { getHasPic, getTitle } from "@/lib/helpers";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -27,7 +27,11 @@ export default async function MakeAnOffer({
         {getTitle(current_path)}
       </h2>
       <div className="mt-8 md:border-l-4 md:pl-8">
-        <MakeAnOfferForm edit={searchParams.mode === "edit"} offer={offer} />
+        <MakeAnOfferForm
+          edit={searchParams.mode === "edit"}
+          offer={offer}
+          needsPic={getHasPic(current_path)}
+        />
       </div>
     </>
   );

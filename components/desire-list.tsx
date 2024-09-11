@@ -16,7 +16,11 @@ import { useTranslations } from "next-intl";
 export function Desire({ prop }: { prop: IDesire }) {
   const t = useTranslations();
   return (
-    <Link href={`/${prop.id}-${encodeURIComponent(prop.title)}`}>
+    <Link
+      href={`/${prop.id}-${encodeURIComponent(prop.title)}${
+        prop.picture ? "1" : "0"
+      }`}
+    >
       <Card className="md:p-4 md:mb-5 md:flex md:flex-col hidden relative">
         <div
           className={`flex justify-start ${

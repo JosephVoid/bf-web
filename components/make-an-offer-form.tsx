@@ -36,33 +36,44 @@ import { useTranslations } from "next-intl";
 
 const MAX_PIC_SIZE = 5000000;
 
-const formSchema = z.object({
-  description: z
-    .string()
-    .max(1000, "Description too long")
-    .min(50, "Description too short"),
-  price: z.coerce
-    .number()
-    .lte(99999999, "Price too large")
-    .gt(0, "Price must be more than 1"),
-  picture: z
-    .custom<File>()
-    .refine((file) => {
-      if (!file) return true;
-      return file.size < MAX_PIC_SIZE;
-    }, "Image too big")
-    .optional(),
-});
-
-export type MakeAnOfferSchemaType = z.infer<typeof formSchema>;
+export type MakeAnOfferSchemaType = {
+  description: string;
+  price: number;
+  picture?: File;
+};
 
 export default function MakeAnOfferForm({
   edit = false,
   offer,
+  needsPic,
 }: {
   edit?: boolean;
   offer?: IOffer;
+  needsPic: boolean;
 }) {
+  const formSchema = z.object({
+    description: z
+      .string()
+      .max(1000, "Description too long")
+      .min(50, "Description too short"),
+    price: z.coerce
+      .number()
+      .lte(99999999, "Price too large")
+      .gt(0, "Price must be more than 1"),
+    picture: needsPic
+      ? z.custom<File>().refine((file) => {
+          if (!file) return false;
+          return file.size < MAX_PIC_SIZE;
+        }, "You must upload a photo")
+      : z
+          .custom<File>()
+          .refine((file) => {
+            if (!file) return true;
+            return file.size < MAX_PIC_SIZE;
+          }, "Image too big")
+          .optional(),
+  });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

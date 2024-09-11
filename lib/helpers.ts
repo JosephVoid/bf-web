@@ -21,8 +21,13 @@ export function getUUID(str: string) {
 }
 
 export function getTitle(str: string) {
-  let temp = str.slice(37);
+  let temp = str.slice(37, str.length - 1);
   return decodeURIComponent(temp);
+}
+
+export function getHasPic(str: string) {
+  if (str.charAt(str.length - 1) === "1") return true;
+  else return false;
 }
 
 export function getUserFromTokenId(jwt: string) {

@@ -51,7 +51,7 @@
       "min-price": "Minimum Price",
       "max-price": "Maximum Price",
       "units": "Units",
-      "picture": "Supporting Picture (Optional)",
+      "picture": "Upload Photo (Optional)",
       "select-tags": "Select Tags",
       "post": "Post"
     },
@@ -73,7 +73,7 @@
       "desc": "Description",
       "desc-ph": "Add a description about your offer",
       "offer-price": "Offered Price",
-      "picture": "Supporting Picture (Optional)",
+      "picture": "Upload Photo",
       "submit": "Submit Offer"
     }
   },
