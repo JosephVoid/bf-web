@@ -49,7 +49,7 @@ export default function Header() {
                 onClick={goBack}
               />
             )}
-          <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-center">
+          <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-left">
             {t(getHeader())}
           </h1>
         </div>
