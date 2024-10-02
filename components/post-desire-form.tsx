@@ -392,7 +392,7 @@ export default function PostDesireForm({
                       className="rounded-lg"
                     />
                   ) : (
-                    <ImageIcon width={50} height={50} className="opacity-50" />
+                    <></>
                   )}
                 </div>
               </div>

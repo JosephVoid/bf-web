@@ -24,12 +24,17 @@ export async function makeOffer(
             description: params.description,
             price: params.price,
             picture: params.picture,
+            isNegotiable: params.negotiable,
           },
           cookies().get("auth")?.value ?? ""
         )
       : await CoreAPI.createBid(
           params.desireId,
-          { description: params.description, price: params.price },
+          {
+            description: params.description,
+            price: params.price,
+            isNegotiable: params.negotiable,
+          },
           cookies().get("auth")?.value ?? ""
         );
     if (response.status === 200)
@@ -64,12 +69,17 @@ export async function editOffer(
             description: params.description,
             price: params.price,
             picture: params.picture,
+            isNegotiable: params.negotiable,
           },
           cookies().get("auth")?.value ?? ""
         )
       : await CoreAPI.editBid(
           params.id,
-          { description: params.description, price: params.price },
+          {
+            description: params.description,
+            price: params.price,
+            isNegotiable: params.negotiable,
+          },
           cookies().get("auth")?.value ?? ""
         );
     if (response.status === 200)

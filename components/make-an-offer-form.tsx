@@ -33,6 +33,7 @@ import Loader from "./loader";
 import { IOffer } from "@/lib/types";
 import { revalidatePath } from "next/cache";
 import { useTranslations } from "next-intl";
+import { Checkbox } from "./ui/checkbox";
 
 const MAX_PIC_SIZE = 5000000;
 
@@ -40,6 +41,7 @@ export type MakeAnOfferSchemaType = {
   description: string;
   price: number;
   picture?: File;
+  negotiable: boolean;
 };
 
 export default function MakeAnOfferForm({
@@ -60,6 +62,7 @@ export default function MakeAnOfferForm({
       .number()
       .lte(99999999, "Price too large")
       .gt(0, "Price must be more than 1"),
+    negotiable: z.boolean(),
     picture: needsPic
       ? z.custom<File>().refine((file) => {
           if (!file) return false;
@@ -79,6 +82,7 @@ export default function MakeAnOfferForm({
     defaultValues: {
       description: edit ? offer?.description : "",
       price: edit ? offer?.price : 0,
+      negotiable: false,
     },
   });
 
@@ -100,6 +104,7 @@ export default function MakeAnOfferForm({
 
   async function handleOffer(data: MakeAnOfferSchemaType) {
     setIsLoading(true);
+    console.log("DA", data);
     const picFile = await fileUpload(
       await fileToBase64(data.picture),
       data.picture?.name ?? null
@@ -110,6 +115,7 @@ export default function MakeAnOfferForm({
       price: data.price,
       picture: picFile,
       desireId: getUUID(current_path.split("/")[1]),
+      negotiable: data.negotiable,
     });
 
     toast({
@@ -134,7 +140,10 @@ export default function MakeAnOfferForm({
     });
 
     if (response.result)
-      setTimeout(() => router.replace(`/${current_path.split("/")[1]}`), 1000);
+      setTimeout(() => {
+        router.replace(`/${current_path.split("/")[1]}`);
+        router.refresh();
+      }, 1000);
 
     setIsLoading(false);
   }
@@ -151,6 +160,7 @@ export default function MakeAnOfferForm({
       price: data.price,
       picture: picFile,
       id: offer?.id ?? "",
+      negotiable: data.negotiable,
     });
 
     toast({
@@ -234,6 +244,34 @@ export default function MakeAnOfferForm({
                   )}
                 />
               </div>
+              <div className="mb-4 flex space-x-5">
+                <FormField
+                  control={form.control}
+                  name="negotiable"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="flex items-center">
+                          <Checkbox
+                            id="affiliate"
+                            onCheckedChange={(cs) =>
+                              field.onChange(cs.valueOf() as boolean)
+                            }
+                            checked={field.value}
+                          />
+                          <label
+                            htmlFor="affiliate"
+                            className="text-sm font-medium ml-2"
+                          >
+                            {t("Forms.offer.negotiable")}
+                          </label>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <div className="mb-4 flex md:flex-row flex-col">
                 <div className="md:w-1/2 w-full md:mb-0 mb-3">
                   <FormField
@@ -271,7 +309,7 @@ export default function MakeAnOfferForm({
                       className="rounded-lg"
                     />
                   ) : (
-                    <ImageIcon width={50} height={50} className="opacity-50" />
+                    <></>
                   )}
                 </div>
               </div>

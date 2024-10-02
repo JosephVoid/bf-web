@@ -38,7 +38,8 @@ export function Offer({ prop }: { prop: IOffer }) {
             </div>
             <p className="text-sm">
               {t("SingleItems.offer-for")}
-              <b> {prop.price} Br</b>
+              <b> {prop.price} Br</b>{" "}
+              {prop.isNegotiable && <i>{`(${t("Forms.offer.negotiable")})`}</i>}
             </p>
           </div>
         </div>

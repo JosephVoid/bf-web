@@ -77,6 +77,7 @@ export interface IOffer {
   picture?: string;
   bidOn: Date;
   isClosed: boolean;
+  isNegotiable: boolean;
 }
 
 export interface ITag {
