@@ -15,6 +15,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import ReactQueryProvider from "@/lib/providers/QueryClientProvider";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import HomeModal from "@/components/HomeModal";
 
 export default async function RootLayout({
   children,
@@ -60,6 +61,7 @@ export default async function RootLayout({
                   </div>
                 </div>
               </div>
+              <HomeModal />
             </body>
           </NextIntlClientProvider>
         </ReactQueryProvider>

@@ -11,11 +11,13 @@ export default function DisplayParams() {
   const { replace } = useRouter();
 
   function setURL(tagId?: string, sortBy?: string, sortDir?: string) {
-    const params = new URLSearchParams(searchParams);
-    if (tagId) params.set("tag", tagId);
-    if (sortBy) params.set("sortby", sortBy);
-    if (sortDir) params.set("sortdir", sortDir);
-    replace(`${pathname}?${params.toString()}`);
+    if (!searchParams.get("login") && !searchParams.get("signup")) {
+      const params = new URLSearchParams(searchParams);
+      if (tagId) params.set("tag", tagId);
+      if (sortBy) params.set("sortby", sortBy);
+      if (sortDir) params.set("sortdir", sortDir);
+      replace(`${pathname}?${params.toString()}`);
+    }
   }
 
   return (

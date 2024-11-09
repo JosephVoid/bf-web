@@ -47,7 +47,7 @@ const formSchema = z.object({
   description: z
     .string()
     .max(1000, "Description too long")
-    .min(50, "Description too short"),
+    .min(25, "Description too short"),
   metric: z.string(),
   minPrice: z.coerce
     .number()
