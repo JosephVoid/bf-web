@@ -46,11 +46,22 @@ export default function HomeModal({
     router.replace(`${pathname}?${params.toString()}`);
   };
 
+  const openModal = () => {
+    if (hasCookie("auth")) {
+      closeHomeModal();
+      return false;
+    }
+    return (
+      searchParams.has("login") ||
+      (searchParams.has("signup") && !hasCookie("auth"))
+    );
+  };
+
   return (
     isClient && (
       <div>
         <Dialog
-          open={searchParams.has("login") || searchParams.has("signup")}
+          open={openModal()}
           onOpenChange={(e) => {
             !e ? closeHomeModal() : null;
           }}
