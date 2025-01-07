@@ -102,7 +102,7 @@ const CommentBlock = ({ entity_id }: { entity_id: string }) => {
       ) : (
         <>
           {(data?.data ?? [])?.map((comment) => (
-            <div className="mt-8">
+            <div className="mt-8" key={comment.id}>
               <div className="text-xs flex flex-col gap-1 mb-4">
                 <p className="font-bold">{comment.commentedBy}</p>
                 <p>{comment.comment}</p>
