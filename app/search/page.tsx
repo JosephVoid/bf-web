@@ -26,7 +26,13 @@ export default function Search({
   return (
     <main className="flex flex-col h-f-v-h">
       <div className="m-3 rounded-lg p-3 border-[1px]">
-        <Suspense fallback={<Loader dark />}>
+        <Suspense
+          fallback={
+            <div className="flex justify-center h-screen my-20">
+              <Loader dark large />
+            </div>
+          }
+        >
           <DisplayParams />
         </Suspense>
       </div>

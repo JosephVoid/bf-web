@@ -35,7 +35,13 @@ export default async function RootLayout({
               <div className="md:w-1/6 md:mr-3 md:flex md:flex-col md:justify-start hidden">
                 <div className="md:w-1/6 md:fixed md:pr-3">
                   <Logo />
-                  <Suspense fallback={<Loader dark />}>
+                  <Suspense
+                    fallback={
+                      <div className="flex justify-center h-screen my-20">
+                        <Loader dark large />
+                      </div>
+                    }
+                  >
                     <Search />
                   </Suspense>
                   <Banner text="LeftSide.post-a-desire" href="post-a-desire" />
@@ -61,7 +67,7 @@ export default async function RootLayout({
                   </div>
                 </div>
               </div>
-              <HomeModal />
+              {/* <HomeModal /> */}
             </body>
           </NextIntlClientProvider>
         </ReactQueryProvider>

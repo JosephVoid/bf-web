@@ -7,6 +7,7 @@ import { IFilterParams } from "@/lib/types";
 import { Suspense } from "react";
 import { Metadata } from "next";
 import { useTranslations } from "next-intl";
+import HomeModal from "@/components/HomeModal";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://buyersfirst.et"),
@@ -42,6 +43,8 @@ export default function Home({
     query?: string;
     page?: string;
     tag?: string;
+    login?: boolean;
+    signup?: boolean;
   };
 }) {
   const desireListParams: IFilterParams = {
@@ -52,10 +55,21 @@ export default function Home({
     page: searchParams.page ?? "1",
   };
   const t = useTranslations();
-  return (
+  return searchParams.login || searchParams.signup ? (
+    <div className="flex justify-center h-screen my-20">
+      <Loader dark large />
+      <HomeModal />
+    </div>
+  ) : (
     <main className="flex flex-col h-f-v-h">
       <div className="m-3 rounded-lg p-3 border-[1px]">
-        <Suspense fallback={<Loader dark />}>
+        <Suspense
+          fallback={
+            <div className="flex justify-center h-screen my-20">
+              <Loader dark large />
+            </div>
+          }
+        >
           <DisplayParams />
         </Suspense>
       </div>
@@ -68,7 +82,13 @@ export default function Home({
         />
       </div>
       <div className="m-3">
-        <Suspense fallback={<Loader dark />}>
+        <Suspense
+          fallback={
+            <div className="flex justify-center h-screen my-20">
+              <Loader dark large />
+            </div>
+          }
+        >
           <DesireList params={desireListParams} />
         </Suspense>
         <div className="flex justify-center rounded-md bg-slate-100 p-3 flex-col mb-3 md:hidden">

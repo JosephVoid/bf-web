@@ -36,7 +36,9 @@ export default async function SingleOffer({
     return await closeOffer(offer?.id!);
   }
   return !offer ? (
-    <Loader dark />
+    <div className="flex justify-center h-screen my-20">
+      <Loader dark large />
+    </div>
   ) : (
     <div className="flex flex-col">
       <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">

@@ -176,7 +176,13 @@ export default async function SingleDesire({
               <h3 className="scroll-m-20 text-2xl font-medium tracking-tight first:mt-0 mb-4">
                 {t("SingleItems.offers")}
               </h3>
-              <Suspense fallback={<Loader dark />}>
+              <Suspense
+                fallback={
+                  <div className="flex justify-center h-screen my-20">
+                    <Loader dark large />
+                  </div>
+                }
+              >
                 <OfferList offerList={offers} />
               </Suspense>
             </div>

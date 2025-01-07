@@ -157,7 +157,13 @@ export default async function DesireList({
           perPage={desireFetched?.meta.perPage ?? 1}
         />
         <div className="md:hidden">
-          <Suspense fallback={<Loader dark />}>
+          <Suspense
+            fallback={
+              <div className="flex justify-center h-screen my-20">
+                <Loader dark large />
+              </div>
+            }
+          >
             <Search />
           </Suspense>
         </div>

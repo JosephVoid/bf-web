@@ -20,7 +20,13 @@ export default async function PostADesire({
 
   return (
     <div className="m-3">
-      <Suspense fallback={<Loader dark />}>
+      <Suspense
+        fallback={
+          <div className="flex justify-center h-screen my-20">
+            <Loader dark large />
+          </div>
+        }
+      >
         <PostDesireForm edit={searchParams.mode === "edit"} desire={desire} />
       </Suspense>
     </div>

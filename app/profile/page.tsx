@@ -17,14 +17,32 @@ export default async function ProfilePage() {
   const tagsAlerted = await fetchUserAlerts(userId!);
   return (
     <div className="m-3 p-4">
-      <Suspense fallback={<Loader dark />}>
+      <Suspense
+        fallback={
+          <div className="flex justify-center h-screen my-20">
+            <Loader dark large />
+          </div>
+        }
+      >
         {user && <EditProfileForm prop={user} />}
       </Suspense>
       <SetAlert alertTags={tagsAlerted} />
-      <Suspense fallback={<Loader dark />}>
+      <Suspense
+        fallback={
+          <div className="flex justify-center h-screen my-20">
+            <Loader dark large />
+          </div>
+        }
+      >
         <UserDesireList />
       </Suspense>
-      <Suspense fallback={<Loader dark />}>
+      <Suspense
+        fallback={
+          <div className="flex justify-center h-screen my-20">
+            <Loader dark large />
+          </div>
+        }
+      >
         <UserOfferList />
       </Suspense>
     </div>
