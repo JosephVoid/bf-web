@@ -198,6 +198,29 @@ class CoreStub extends APIStub {
   async getUserBids(userId: string): Promise<AxiosResponse> {
     return this.axios.get(`/users/bids/${userId}`);
   }
+
+  async createComment(
+    id: string,
+    body: any,
+    token: string
+  ): Promise<AxiosResponse> {
+    return this.axios.post(`/comments/${id}/add`, body, {
+      headers: { Authorization: token },
+    });
+  }
+
+  async getComments(
+    entity_id: string,
+    page: number,
+    perPage: number
+  ): Promise<AxiosResponse> {
+    return this.axios.get(`/comments/${entity_id}`, {
+      params: {
+        "per-page": perPage,
+        page: page,
+      },
+    });
+  }
 }
 
 const AuthAPI = new AuthStub();

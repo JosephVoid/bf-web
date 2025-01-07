@@ -128,5 +128,11 @@
     "pass-reset": "Password Reset! Login with you new password.",
     "signedup": "Sucessfully Signed Up, Welcome aboard!",
     "set-alert": "Alerts Updated"
+  },
+  "Comments": {
+    "AllComments": "All Comments",
+    "Comment": "Comment",
+    "PlaceHolder": "Write a comment, ask a question or share your thoughts",
+    "Posted": "Posted"
   }
 }

@@ -112,3 +112,20 @@ export interface APIResponse {
   message?: string;
   data?: string;
 }
+
+export interface IComment {
+  id: string;
+  comment: string;
+  commentedBy: string;
+  commentedOnId: string;
+  commentDate: Date;
+}
+
+export interface ICommentResponse {
+  meta: {
+    total: number;
+    perPage: number;
+    page: number;
+  };
+  data: IComment[];
+}

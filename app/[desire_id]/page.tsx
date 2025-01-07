@@ -27,6 +27,7 @@ import ConfDialogBtn from "@/components/ConfirmDialogBtn";
 import { closeDesire } from "@/lib/actions/act/desire.act";
 import { APIResponse } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
+import CommentBlock from "@/components/comment-block";
 
 export async function generateMetadata({
   params,
@@ -172,6 +173,7 @@ export default async function SingleDesire({
                 wantAct={wantAct}
               />
             )}
+            <CommentBlock entity_id={desire.id} />
             <div className="mt-4">
               <h3 className="scroll-m-20 text-2xl font-medium tracking-tight first:mt-0 mb-4">
                 {t("SingleItems.offers")}

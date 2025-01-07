@@ -12,6 +12,7 @@ import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import ConfDialogBtn from "@/components/ConfirmDialogBtn";
 import { closeOffer } from "@/lib/actions/act/offer.act";
 import { getTranslations } from "next-intl/server";
+import CommentBlock from "@/components/comment-block";
 
 export default async function SingleOffer({
   params,
@@ -74,9 +75,9 @@ export default async function SingleOffer({
           </ConfDialogBtn>
         </div>
       )}
-      <div className="flex mt-4">
+      <div className="flex flex-col mt-4 w-full">
         {offer?.picture && (
-          <div className="w-1/2 h-fit rounded-md mr-4 mb-8">
+          <div className="h-fit rounded-md mr-4 mb-8">
             <Image
               src={offer.picture ?? ""}
               alt="Desire"
@@ -86,13 +87,12 @@ export default async function SingleOffer({
             />
           </div>
         )}
-        <p className={`mb-4 ${offer?.picture ? `w-1/2` : ``}`}>
-          {offer?.description}
-        </p>
+        <p className={`mb-4`}>{offer?.description}</p>
       </div>
       <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight first:mt-0 mb-4">
         {t("SingleItems.offer-for")} {offer?.price} Br
       </h2>
+      <CommentBlock entity_id={offer.id} />
       {!offer.isClosed && (
         <OfferAcceptUserDetail
           offer={offer}
