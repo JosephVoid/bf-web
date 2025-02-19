@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:mocked": "set NEXT_PUBLIC_API_MOCK=true&& next dev",
+    "dev:mocked:win": "set NEXT_PUBLIC_API_MOCK=true&& next dev",
+    "dev:mocked": "NEXT_PUBLIC_API_MOCK=true next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

@@ -21,6 +21,8 @@ export default function Header() {
       return "Headers.search-res";
     else if (current_path.split("/")[2] === "make-an-offer")
       return "Headers.offer";
+    else if (current_path.split("/")[1] === "post-a-desire")
+      return "Headers.post";
     else if (
       current_path.split("/")[2] !== "make-an-offer" &&
       current_path.split("/")[2] !== undefined
@@ -49,9 +51,15 @@ export default function Header() {
                 onClick={goBack}
               />
             )}
-          <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-left">
-            {t(getHeader())}
-          </h1>
+          {getHeader() === "Headers.desires" ? (
+            <p className="italic font-extralight text-xl w-2/3">
+              {t(getHeader())}
+            </p>
+          ) : (
+            <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-center">
+              {t(getHeader())}
+            </h1>
+          )}
         </div>
         <div className="hidden md:flex">
           <LangOption />
@@ -62,7 +70,7 @@ export default function Header() {
         <div className="flex justify-start w-full px-3 pt-3">
           <Logo />
         </div>
-        <div className="flex w-full px-3 pt-3 justify-between">
+        <div className="flex w-full px-3 pt-3 justify-between mb-4 mt-3">
           <div className="flex justify-start items-center">
             {current_path.split("/").length >= 2 &&
               current_path.split("/")[1] !== "" && (
@@ -72,9 +80,15 @@ export default function Header() {
                   onClick={goBack}
                 />
               )}
-            <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-center">
-              {t(getHeader())}
-            </h1>
+            {getHeader() === "Headers.desires" ? (
+              <p className="italic font-extralight text-xl w-2/3">
+                {t(getHeader())}
+              </p>
+            ) : (
+              <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl text-center">
+                {t(getHeader())}
+              </h1>
+            )}
           </div>
           <MobileProfile />
         </div>

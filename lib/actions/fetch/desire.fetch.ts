@@ -56,6 +56,7 @@ export async function fetchDesires(
         : await CoreAPI.getDesires(transformParams(filterParams));
     return <IDesireMeta>response.data;
   } catch (error) {
+    console.log("ERR");
     return null;
   }
 }

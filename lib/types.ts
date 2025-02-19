@@ -50,6 +50,7 @@ export interface IDesire {
   postedOn: Date;
   userPostedId: string;
   isClosed: boolean;
+  bounty: number;
 }
 
 export interface IDesireMeta {
@@ -99,6 +100,9 @@ export interface IUser {
   phone: string;
   description?: string;
   picture?: string;
+  buyerScore: number;
+  merchantScore: number;
+  percentile: number;
 }
 
 export interface IOTP {

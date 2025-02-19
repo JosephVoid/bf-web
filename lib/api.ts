@@ -159,7 +159,7 @@ class CoreStub extends APIStub {
       params: {
         "search-string": searchString,
         "sort-dir": params.sortDir,
-        "filter-by:": params.filterBy,
+        "filter-by": params.filterBy,
         "sort-by": params.sortBy,
         "per-page": 20,
         page: params.page,

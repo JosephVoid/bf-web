@@ -13,7 +13,8 @@
     "metric": "1692b3b9-f447-4153-b851-08463a369c70",
     "isClosed": false,
     "minPrice": 50,
-    "maxPrice": 100
+    "maxPrice": 100,
+    "bounty": 10
   },
   {
     "id": "162bf447-413b99-53-b851-084a369c6370",

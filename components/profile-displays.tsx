@@ -14,6 +14,16 @@ import { IUser } from "@/lib/types";
 import { getUserId } from "@/lib/server-helpers";
 import AuthDialogBtn from "./AuthDialogBtn";
 import { useTranslations } from "next-intl";
+import { Badge } from "./ui/badge";
+
+const getBgStyle = (percent: number) => {
+  if (percent > 50) return "hidden";
+  else if (percent < 50 && percent > 10) return "text-black bg-slate-300";
+  else if (percent < 10 && percent > 5)
+    return "text-primary bg-yellow-200 font-extrabold";
+  else if (percent < 5) return "text-white bg-primary font-bold";
+  else "hidden";
+};
 
 export default function Profile() {
   /* These methods ensure that this component is rendered on the client 
@@ -102,6 +112,16 @@ export function SignedInProfile() {
       <h3 className="text-xl text-wrap font-medium mb-3 text-center">{`${
         user?.first_name ?? ""
       } ${user?.last_name ?? ""}`}</h3>
+      <p className="text-xs mb-3">
+        {(user?.buyerScore ?? 0) + (user?.merchantScore ?? 0)} Pts{" "}
+        <span
+          className={`p-1 ${getBgStyle(
+            user?.percentile ?? 100
+          )} rounded-sm ml-2`}
+        >
+          Top {user?.percentile ?? 100}%
+        </span>
+      </p>
       <Link href={"/profile"}>
         <Button variant={"outline"} className="mb-3">
           {t("RightSide.profile")}
@@ -157,21 +177,31 @@ function MobileSignedInProfile() {
   }, []);
 
   return (
-    <div className="">
-      <Link href={"/profile"}>
-        {user?.picture && (
-          <Image
-            height={30}
-            width={30}
-            src={user?.picture}
-            alt="prof pic"
-            className="rounded-full"
-          />
-        )}
-        {!user?.picture && (
-          <AvatarIcon height={50} width={50} className="m-4 opacity-50" />
-        )}
-      </Link>
+    <div className="flex flex-row relative">
+      <div className="absolute -top-2 -left-[3em] scale-75 flex flex-col">
+        <Badge className={`w-fit ${getBgStyle(user?.percentile ?? 100)}`}>
+          Top {user?.percentile}% <br></br>{" "}
+        </Badge>
+        <Badge className="bg-white text-black text-xs rounded-sm flex justify-center">
+          {(user?.buyerScore ?? 0) + (user?.merchantScore ?? 0)} Pts
+        </Badge>
+      </div>
+      <div>
+        <Link href={"/profile"}>
+          {user?.picture && (
+            <Image
+              height={50}
+              width={50}
+              src={user?.picture}
+              alt="prof pic"
+              className="rounded-full"
+            />
+          )}
+          {!user?.picture && (
+            <AvatarIcon height={50} width={50} className="m-4 opacity-50" />
+          )}
+        </Link>
+      </div>
     </div>
   );
 }

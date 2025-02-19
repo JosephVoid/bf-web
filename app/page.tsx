@@ -61,8 +61,8 @@ export default function Home({
       <HomeModal />
     </div>
   ) : (
-    <main className="flex flex-col h-f-v-h">
-      <div className="m-3 rounded-lg p-3 border-[1px]">
+    <main className="flex flex-col">
+      <div className="m-3 rounded-lg p-3 border-[1px] md:block hidden">
         <Suspense
           fallback={
             <div className="flex justify-center h-screen my-20">
@@ -72,14 +72,6 @@ export default function Home({
         >
           <DisplayParams />
         </Suspense>
-      </div>
-      <div className="md:hidden px-3 flex justify-between">
-        <Banner text="LeftSide.post-a-desire" href="post-a-desire" />
-        <Banner
-          text="LeftSide.setup-alerts"
-          href="profile"
-          variant="secondary"
-        />
       </div>
       <div className="m-3">
         <Suspense

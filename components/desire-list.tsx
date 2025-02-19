@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Badge } from "./ui/badge";
-import { Card } from "./ui/card";
+import { Card, CardHeader } from "./ui/card";
 import Image from "next/image";
 import { fetchDesires } from "@/lib/actions/fetch/desire.fetch";
 import { IDesire, IFilterParams } from "@/lib/types";
@@ -21,7 +21,12 @@ export function Desire({ prop }: { prop: IDesire }) {
         prop.picture ? "1" : "0"
       }`}
     >
-      <Card className="md:p-4 md:mb-5 md:flex md:flex-col hidden relative">
+      <Card className="md:p-4 md:mb-5 md:flex md:flex-col hidden relative md:shadow-none">
+        {prop.bounty && prop.bounty >= 10 && (
+          <span className="text-xs absolute -top-4 right-3 bg-white rounded-sm p-2 border-[1px]">
+            <b>{prop.bounty}Pts</b> {t("SingleItems.bounty")}
+          </span>
+        )}
         <div
           className={`flex justify-start ${
             prop.isClosed ? "opacity-60" : "opacity-100"
@@ -81,7 +86,15 @@ export function Desire({ prop }: { prop: IDesire }) {
         )}
       </Card>
       {/* Mobile Verison */}
-      <Card className="p-4 mb-5 flex flex-col md:hidden relative">
+      <Card className="p-4 mb-5 flex flex-col md:hidden relative shadow-none">
+        {prop.bounty && prop.bounty >= 10 && (
+          <span className="text-xs absolute -top-3 right-3 bg-white rounded-sm p-2 border-[1px]">
+            <b>{prop.bounty}Pts</b> {t("SingleItems.bounty")}
+          </span>
+        )}
+        <div className="border-b-[1px] py-1 italic font-light opacity-85 mb-3 flex">
+          <span>{t("SingleItems.someone-wants")}</span>
+        </div>
         <div className={prop.isClosed ? "opacity-60" : "opacity-100"}>
           <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight line-clamp-2 leading-6 mb-3">
             {prop.title}

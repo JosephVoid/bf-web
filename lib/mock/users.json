@@ -7,6 +7,9 @@
     "phone": "+251912345678",
     "description": "",
     "picture": "/black_box.png",
-    "alerts": [1, 2, 3]
+    "alerts": [1, 2, 3],
+    "percentile": 60,
+    "buyerScore": 20,
+    "merchantScore": 13
   }
 ]

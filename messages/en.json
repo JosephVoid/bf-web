@@ -1,10 +1,11 @@
 {
   "Headers": {
-    "desires": "People Want",
+    "desires": "See What People Want Here 👇",
     "search-res": "Search",
     "profile": "Profile",
     "offer": "Offer",
-    "offers": "Offers"
+    "offers": "Offers",
+    "post": "Post"
   },
   "LeftSide": {
     "search-place-holder": "Search Desires",
@@ -112,7 +113,9 @@
     "r-u-sure-header": "Are you sure you want to close this desire?",
     "r-u-sure-sub": "You will not receive offers and they can not be reopened once they have been closed",
     "continue": "Continue",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "someone-wants": "Someone wants this",
+    "bounty": "of Bounty🔥"
   },
   "Toasts": {
     "u-will-be-alerted": "You will be Alerted on Offers",
