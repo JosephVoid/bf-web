@@ -22,7 +22,7 @@ export function Desire({ prop }: { prop: IDesire }) {
       }`}
     >
       <Card className="md:p-4 md:mb-5 md:flex md:flex-col hidden relative md:shadow-none">
-        {prop.bounty && prop.bounty >= 10 && (
+        {prop.bounty >= 10 && (
           <span className="text-xs absolute -top-4 right-3 bg-white rounded-sm p-2 border-[1px]">
             <b>{prop.bounty}Pts</b> {t("SingleItems.bounty")}
           </span>
@@ -87,7 +87,7 @@ export function Desire({ prop }: { prop: IDesire }) {
       </Card>
       {/* Mobile Verison */}
       <Card className="p-4 mb-5 flex flex-col md:hidden relative shadow-none">
-        {prop.bounty && prop.bounty >= 10 && (
+        {prop.bounty >= 10 && (
           <span className="text-xs absolute -top-3 right-3 bg-white rounded-sm p-2 border-[1px]">
             <b>{prop.bounty}Pts</b> {t("SingleItems.bounty")}
           </span>
