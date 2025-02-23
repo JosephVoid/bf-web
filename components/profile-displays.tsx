@@ -17,7 +17,7 @@ import { useTranslations } from "next-intl";
 import { Badge } from "./ui/badge";
 
 const getBgStyle = (percent: number) => {
-  if (percent > 50) return "hidden";
+  if (percent > 50) return "invisible";
   else if (percent < 50 && percent > 10) return "text-black bg-slate-300";
   else if (percent < 10 && percent > 5)
     return "text-primary bg-yellow-200 font-extrabold";
@@ -178,7 +178,7 @@ function MobileSignedInProfile() {
 
   return (
     <div className="flex flex-row relative">
-      <div className="absolute -top-2 -left-[3em] scale-75 flex flex-col">
+      <div className="absolute -top-2 -left-[2em] scale-75 flex flex-col z-10">
         <Badge className={`w-fit ${getBgStyle(user?.percentile ?? 100)}`}>
           Top {Math.ceil(user?.percentile ?? 100)}% <br></br>{" "}
         </Badge>

@@ -6,7 +6,6 @@
     "email": "gonzaljuidad@gmail.com",
     "phone": "+251912345678",
     "description": "",
-    "picture": "/black_box.png",
     "alerts": [1, 2, 3],
     "percentile": 60,
     "buyerScore": 20,
