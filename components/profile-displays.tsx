@@ -119,7 +119,7 @@ export function SignedInProfile() {
             user?.percentile ?? 100
           )} rounded-sm ml-2`}
         >
-          Top {user?.percentile ?? 100}%
+          Top {Math.ceil(user?.percentile ?? 100)}%
         </span>
       </p>
       <Link href={"/profile"}>
