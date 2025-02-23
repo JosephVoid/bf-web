@@ -180,7 +180,7 @@ function MobileSignedInProfile() {
     <div className="flex flex-row relative">
       <div className="absolute -top-2 -left-[3em] scale-75 flex flex-col">
         <Badge className={`w-fit ${getBgStyle(user?.percentile ?? 100)}`}>
-          Top {user?.percentile}% <br></br>{" "}
+          Top {Math.ceil(user?.percentile ?? 100)}% <br></br>{" "}
         </Badge>
         <Badge className="bg-white text-black text-xs rounded-sm flex justify-center">
           {(user?.buyerScore ?? 0) + (user?.merchantScore ?? 0)} Pts
