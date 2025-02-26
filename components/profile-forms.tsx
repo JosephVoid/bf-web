@@ -36,8 +36,8 @@ import { Checkbox } from "./ui/checkbox";
 import { useTranslations } from "next-intl";
 
 const signInFormSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  email: z.string().trim().email(),
+  password: z.string().trim(),
 });
 
 const signUpFormSchema = z.object({
@@ -57,9 +57,10 @@ const signUpFormSchema = z.object({
     .max(15, {
       message: "Last name must be less than 15 characters.",
     }),
-  email: z.string().email("Invalid Email"),
+  email: z.string().trim().email("Invalid Email"),
   phone: z
     .string()
+    .trim()
     .length(13, "Phone number must be 13 characters")
     .refine(
       (phone) => /^\+251\d{9}$/.test(phone),
@@ -67,6 +68,7 @@ const signUpFormSchema = z.object({
     ),
   password: z
     .string()
+    .trim()
     .max(60, "Password too long")
     .min(8, "Password too short"),
 });
