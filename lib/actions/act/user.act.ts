@@ -133,7 +133,7 @@ export async function sendOTP(params: IOTP): Promise<APIResponse> {
       return { result: true };
     } else return { result: false, message: response.data.message };
   } catch (error: any) {
-    console.log(error.response.data.message);
+    console.log(error.response);
     return { result: false, message: error.response.data.message };
   }
 }

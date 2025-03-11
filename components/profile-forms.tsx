@@ -229,6 +229,7 @@ export function SignUpForm({
   async function handleDetails(data: signUpFormSchematype) {
     setIsLoading(true);
     const response = await sendOTP({ ...data, ForReset: false });
+    console.log(response);
     !response.result
       ? toast({
           title: (
@@ -587,7 +588,7 @@ function OTPInput({
     let otp = form.getValues("otp");
     let affCode = form.getValues("affiliateCode");
     const response = await signUp(data, otp.toString(), affCode);
-
+    console.log(response);
     toast({
       title: (
         <div className="flex items-center">
