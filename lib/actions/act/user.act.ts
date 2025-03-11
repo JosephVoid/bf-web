@@ -102,6 +102,7 @@ export async function signUp(
       affiliateCode: affCode,
     };
     const response = await AuthAPI.signUp(paramsWOTP);
+    console.log("SIGNUP RESP: ", JSON.stringify(response));
     if (response.status === 200) {
       cookies().set("auth", response.data, { secure: true, maxAge: 7257600 });
       return {
