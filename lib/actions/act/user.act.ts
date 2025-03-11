@@ -5,6 +5,7 @@ import { wait } from "@/lib/helpers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { AuthAPI, CoreAPI } from "@/lib/api";
+import axios from "axios";
 
 export async function editProfile(params: any): Promise<APIResponse> {
   /* ---When Mocking---- */
@@ -102,7 +103,7 @@ export async function signUp(
       affiliateCode: affCode,
     };
     const response = await AuthAPI.signUp(paramsWOTP);
-    console.log("SIGNUP RESP: ", JSON.stringify(response));
+    console.log("SIGNUP RESP: ", response.data);
     if (response.status === 200) {
       cookies().set("auth", response.data, { secure: true, maxAge: 7257600 });
       return {
@@ -110,8 +111,18 @@ export async function signUp(
       };
     } else return { result: false, message: response.data.message };
   } catch (error: any) {
-    console.log(error.response.data.message);
-    return { result: false, message: error.response.data.message };
+    console.log("RAW ERROR:", error);
+    console.log("ERR MESSAGE:", error?.message);
+    console.log("ERR STACK:", error?.stack);
+    console.log("ERR RESPONSE:", error?.response?.data);
+    console.log("ERR CONFIG:", error?.config);
+    if (axios.isAxiosError(error)) {
+      console.log("AXIOS ERROR:", error.toJSON());
+      return { result: false, message: error.message };
+    } else {
+      console.log("GENERIC ERROR: ", error);
+      return { result: false, message: "Unknown error" };
+    }
   }
 }
 
